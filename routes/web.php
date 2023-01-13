@@ -37,8 +37,19 @@ Route::middleware([
     })->middleware(['auth','verified'])->name('create-project');
 });
 
-Route::resource('project', ProjectController::class);
+//Route::resource('project', ProjectController::class);
 Route::resource('collector', CollectorController::class);
+
+
+Route::get('landpage', function () {
+    return view('landpage.landpage');
+});
+
+
+Route::resource('writiner', ProjectController::class)->middleware(['auth','verified']);
+
+Route::get('page/{id}', [ProjectController::class, 'getProject'])->name('id.detail');
+
 
 
 

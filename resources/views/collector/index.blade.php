@@ -46,7 +46,7 @@
 
                 <td>{{ ++$i }}</td>
                 <td>{{ $projects->name }}</td>
-                <td >{{   print_r(json_decode($projects->collector , true)['collector'])  }}</td>
+                <td >-</td>
                 <td>{{ $projects->created_at }}</td>
                 <td>
                     <form action="{{ route('collector.destroy',$projects->id) }}" method="POST" onsubmit="return confirm('Are you sure?');">

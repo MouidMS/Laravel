@@ -22,8 +22,8 @@ class CollectorController extends Controller
         $id = Auth::id();
         $collector = DB::table('collectors')->where('user_id', $id)->get();
 
-        $a= $collector[1]->collector;
-        $b=json_decode($a, true);
+       // $a= $collector[1]->collector;
+        //$b=json_decode($a, true);
 
         return view('collector.index',compact('collector'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
