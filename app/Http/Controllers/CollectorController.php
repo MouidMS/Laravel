@@ -19,19 +19,74 @@ class CollectorController extends Controller
      */
     public function index()
     {
-        $id = Auth::id();
-        $collector = DB::table('collectors')->where('user_id', $id)->get();
 
-       // $a= $collector[1]->collector;
-        //$b=json_decode($a, true);
-
-        return view('collector.index',compact('collector'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
-
-/*
-        return $b['name'];
-*/
+        return view('ajax.collector');
     }
+//        $id = Auth::id();
+//        $collector = DB::table('collectors')->where('user_id',$id)->select('id','user_id','name','created_by')->get();
+//
+//        foreach ($collector as $value) {
+//            $json = DB::table('collectors')->where('id', $value->id)->get();
+//            $value->collector = json_decode($json[0]->collector);
+//        }
+//        return response()->json($collector);
+
+//        return response()->json($collector);
+
+//         $a= $collector[1]->collector;
+//        $b=json_decode($a, true);
+
+//
+//
+//
+//
+//        return response()->json($b);
+
+
+        /*
+                return $b['name'];
+        */
+
+
+    public function fetch()
+    {
+        $id = Auth::id();
+        $ready = DB::table('collectors')->where('user_id',$id)->select('id','user_id','name')->get();
+
+         foreach ($ready as $value) {
+            $json = DB::table('collectors')->where('id', $value->id)->get();
+            $value->collector = json_decode($json[0]->collector);
+        }
+        return response()->json($ready);
+    }
+
+    public function addProjectInsideCollector()
+    {
+        $id = Auth::id();
+        $ready = DB::table('collectors')->where('user_id',$id)->select('id','user_id','name')->get();
+
+        foreach ($ready as $value) {
+            $json = DB::table('collectors')->where('id', $value->id)->get();
+            $value->collector = json_decode($json[0]->collector);
+        }
+        $array =  (json_decode($json[0]->collector));
+//        $arrayJson = array (
+//            0 =>
+//                array (
+//                    'project_id' => 5555,
+//                ),
+//            1 =>
+//                array (
+//                    'project_id' => 66666,
+//                ),
+//        );
+        //Array ( [0] => Array ( [project_id] => 1 ) [1] => Array ( [project_id] => 5 ) ) 1
+//       $new= array_replace($array , $arrayJson[0]);
+//        array_push($array,test);
+
+        return print_r($array);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -40,38 +95,43 @@ class CollectorController extends Controller
      */
     public function create()
     {
-        $id = Auth::id();
-        $project = DB::table('projects')->where('user_id', $id)->get();
-
-        return view('collector.create',compact('project'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+//        $id = Auth::id();
+//        $project = DB::table('projects')->where('user_id', $id)->get();
+//
+//        return view('collector.create',compact('project'))
+//            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreCollectorRequest  $request
-     * @return false|string
+     * @param \App\Http\Requests\StoreCollectorRequest $request
+     * @return bool|string|null
      */
-    public function store(StoreCollectorRequest $request)
+    public function store(StoreCollectorRequest $request): bool|string|null
     {
-        $input = $request->all();
-        $input['collector'] = $request->input('collector');
+        $insertData = array(
+            'collector' =>
+                array(
+                    0 =>
+                        array(
+                            'id_project' => 1,
+                            'name' => 'nonTitle',
+                        ),
+                ),
+        );
+
         $id = Auth::id();
 
-
-       $a=json_encode($input);
-       $b= json_decode($a);
-
-        DB::table('collectors')->insert([
+        $data = DB::table('collectors')->insert([
             'user_id' => $id,
-            'name' => $request->name,
-            'collector' => $a,
+            'name' => Auth::user()->name,
+            'collector' => $insertData,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
-        return redirect()->route('collector.index')
-            ->with('success', 'created successfully.');
+
+        return response()->json($data);
     }
 
     /**

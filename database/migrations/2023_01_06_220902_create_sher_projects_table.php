@@ -23,14 +23,7 @@ return new class extends Migration
             $table->bigInteger('owner_id')->unsigned()->index();
             $table->foreign('owner_id')->references('user_id')->on('projects')->onDelete('cascade');
             //-------------------------------
-            $table->string('title');
-            $table->string('sher-type');
-            $table->string('description');
-            $table->string('from');
-            $table->string('classification');
-
-
-
+            $table->string('isCopy');
 
             $table->timestamps();
         });

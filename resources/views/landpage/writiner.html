@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writiner_home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+
+
+    <link rel="icon" type="image/x-icon"
+        href="C:/Users/Mouyd/Desktop/Graduation Project II/project ll/gp-app/public/fr/css/Recntl_Style.css">
+
+
+    <!-- Main Writiner_home CSS File -->
+    <link rel="stylesheet" href="./fr/css/Recntl_Style.css">
+    <!-- Render All Elements Normally -->
+    <link rel="stylesheet" href="./fr/css/normalize.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome library -->
+    <link rel="stylesheet" href="C:/Users/Mouyd/Desktop/Graduation Project II/project ll/gp-app/public/fr/css/Recntl_Style.css">
+    ">
+
+</head>
+
+<body>
+
+    <button id="btn">Save</button>
+
+    <!- rename ->
+
+        @php
+        $last_entry = \App\Models\Project::latest()->first();
+        @endphp
+        @if (is_array($last_entry) || is_object($last_entry))
+
+        @endif
+
+        @php $ID = $last_entry; @endphp
+
+        <form action="{{route('writiner.store')}}" method="post">
+            @csrf
+            <button id="Buttonmenuplus--A4" name="type" value="A4">
+                A4
+            </button>
+
+            <button id="Buttonmenuplus--Slide" name="type" value="Slide">Sl
+            </button>
+            <button id="Buttonmenuplus--Blanck" name="type" value="Blanck">
+                Bl
+            </button>
+            <button id="Buttonmenuplus--main" name="type" value="a4">
+                <i class="fa-solid fa-plus "></i>
+            </button>
+
+        </form>
+
+
+
+        <!-- Start Header  -->
+        <header>
+            <div class="container">
+                <i class="fa-solid fa-bars toggle-menu"></i>
+                <a href="{{url('/landpage')}}"><img src="./fr/images/landpage.jpg" alt="logo" class="logo_img"></a>
+                <nav>
+                    <ul class="main-nav">
+                        <li><a class="#" href="#">Home</a></li>
+                        <li><a href="#">Text Design</a></li>
+                        <li><a href="#">Commnuity</a></li>
+                        <li><a href="#">Tutorial</a></li>
+                    </ul>
+                </nav>
+                <div class="navbar-account">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <i class="fa-regular fa-bell"></i>
+                    <img src="./fr/images/black_noun_002_03536.jpg" alt="picture_profiles" class="profiles_img">
+                </div>
+
+                <a href="{{ route('logout') }}"
+                    onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
+                    Logout
+                </a>
+                <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>
+            </div>
+        </header>
+        <!-- End Header  -->
+        <!-- Start content -->
+        <div class="writiner-home-homescreenmain">
+            <div class="writiner-home-header-navbar">
+                <nav>
+                    <ul>
+                        <li>Recntls</li>
+                        <li>Drafts</li>
+                        <li>shared</li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="writiner-home-title">
+                <h3>Recent</h3>
+                <div class="title-header">
+                    <div class="title-rightsaid">
+                        <label class="label">Sort:</label>
+                        <select name="sort" class="select-box">
+                            <optgroup label="Sort">
+                                <option value="">Alphabetical</option>
+                                <option value="">Date created</option>
+                                <option value="">Last viewed</option>
+                            </optgroup>
+                            <optgroup label="Order">
+                                <option value="">A-z</option>
+                                <option value="">Z-A</option>
+                            </optgroup>
+                        </select>
+                        <div>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="title-leftsaid">
+                        <label class="Fillter">Fillter:</label>
+                        <select name="Fillter" class="select-box2">
+                            <option selected="selected" value="">All files</option>
+                            <option value="">Black file</option>
+                            <option value="">A4 flie</option>
+                            <option value="">Pow file</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-holder">
+                <div class="grid-item-section">
+                    <tbody>
+                    </tbody>
+
+                    @foreach ($project as $projects)
+                    <div class="grid-item">
+                        <div class="holder-item">
+
+                            {{-- <div class="grid-item-thumbnail">--}}
+                                {{-- <a href="page/{{$projects->id}}" style="  all: unset;">--}}
+
+                                    {{-- <i class="fa-regular fa-file-lines icon-fileline"></i>--}}
+                                    {{-- <div class="icon-star">--}}
+                                        {{-- <i class="fa-regular fa-star star"></i>--}}
+                                        {{-- </div>--}}
+                                    {{-- </a>--}}
+
+                                {{-- </div>--}}
+                            {{-- <div class="grid-item-metadata">--}}
+                                {{-- <div class="item-title">--}}
+                                    {{-- <h5>{{$projects->name}}</h5>--}}
+                                    {{-- </div>--}}
+
+                                {{-- <div class="item-body">--}}
+
+                                    {{-- <DIV>--}}
+                                        {{-- <img src="./fr/images/black_noun_002_03536.jpg" alt=""
+                                            class="profiles-item_img">--}}
+                                        {{-- <p>{{Carbon\Carbon::parse($projects->created_at)->format('Y-m-d')}}</p>--}}
+                                        {{-- </DIV>--}}
+                                    {{-- <div><!----}}
+{{--                                <form action="{{route('writiner.edit',($projects->id))}}" method="put">--}}
+{{--                                    <input name="name" placeholder="rename" style="width: 70px" id="save">--}}
+{{--                                    <input type="submit">--}}
+{{--                                </form>--}}
+{{--                                -->--}}
+
+
+                                        {{-- <div>--}}
+                                            {{-- <div>--}}
+                                                {{-- <form id="rename" name="rename">--}}
+                                                    {{-- @csrf--}}
+                                                    {{-- <input type="hidden" name="project_id" id="project_id"
+                                                        value="{{$projects->id}}">--}}
+                                                    {{-- <div class="col-sm-12">--}}
+                                                        {{-- <input type="text" class="form-control" id="newname"
+                                                            name="newname" --}} {{-- placeholder="Enter Title" value=""
+                                                            maxlength="50" required="">--}}
+                                                        {{-- </div>--}}
+
+                                                    {{-- <button type="submit" id="saveBtn" value="create">Save
+                                                        changes</button>--}}
+                                                    {{-- </form>--}}
+                                                {{-- </div>--}}
+                                            {{-- </div>--}}
+
+                                        {{-- </div>--}}
+                                    {{-- <i class="fa-solid fa-ellipsis-vertical"></i>--}}
+                                    {{-- </div>--}}
+                                {{-- </div>--}}
+
+                            <div id="main">
+                                <a href="page/{{$projects->id}}" style="  all: unset;">
+                                    <div id="projectTop">
+                                        <img id="projectType"
+                                            src="./m/worky/RichTextEditor/projectVeiw/ellipsis-vertical-solid.svg">
+                                        <div id="isProjectShared">Copy</div>
+                                        <img id="projectSitting"
+                                            src="./m/worky/RichTextEditor/projectVeiw/ellipsis-vertical-solid.svg" />
+                                    </div>
+                                </a>
+
+                                <p id="projectName">{{$projects->name}}</p>
+                                <p id="projectLastUpDate"> Last update:
+                                    {{Carbon\Carbon::parse($projects->updated_at)->format('Y-m-d h-')}}</p>
+                                <img id="isProjectFavre" src="./m/worky/RichTextEditor/projectVeiw/star-regular.svg">
+                                <span id="ownerImageBorder"></span>
+                                <div id="projectOwner"><img
+                                        src="./m/worky/RichTextEditor/projectVeiw/istockphoto-1309328823-170667a.jpg"
+                                        alt=""></div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+                    @endforeach
+
+
+                </div>
+
+            </div>
+            <div class="d-flex justify-content-center" style="padding-bottom: 40px">
+
+                {{-- {{ $project->links() }}--}}
+
+            </div>
+        </div>
+
+
+        <!-- End content -->
+        <!-- Start writiner-home -->
+        <!-- End start writiner-home -->
+        <script>
+
+            var btn = document.getElementById('btn');
+            btn.addEventListener('click', (e) => {
+                window.location.href = 'page/70';
+
+            })
+
+            $(document).ready(function () {
+
+                fetchstudent();
+
+                function fetchstudent() {
+                    $.ajax({
+                        type: "GET",
+                        url: "/fetch-curd",
+                        dataType: "json",
+                        success: function (response) {
+                            console.log(response)
+
+
+                            $.each(response.students, function (key, item) {
+                                console.log(item.id);
+
+                            });
+                        }
+                    });
+                }
+            });
+
+        </script>
+
+</body>
+
+</html>

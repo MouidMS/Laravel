@@ -11,6 +11,7 @@ class Project extends Model
 
     protected $dates = ['created_at'];
 
+
     protected $fillable = [
         'id_user',
         'name',
@@ -18,6 +19,9 @@ class Project extends Model
         'path',
         'created_by',
     ];
+
+
+
 
 
 }

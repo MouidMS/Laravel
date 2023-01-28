@@ -5,27 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Writiner</title>
-    <link rel="icon" type="image/x-icon" href="./fr/images/Screenshot_3.png">
+    <link rel="icon" type="image/x-icon" href="./project/images/Ravicon-loading.png">
 
 
     <!-- Main Writiner_home CSS File -->
-    <link rel="stylesheet" href="./fr/css/Landpage_Style.css">
+    <link rel="stylesheet" href="./project/css/Landpage_Style.css">
     <!-- Render All Elements Normally -->
-    <link rel="stylesheet" href="./fr/css/normalize.css">
+    <link rel="stylesheet" href="./project/css/normalize.css">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Font Awesome library -->
-    <link rel="stylesheet" href="./fr/css/all.min.css">
+    <link rel="stylesheet" href="./project/css/all.min.css">
 </head>
 <body>
 <!-- /////////////////////////////////////////////////////////////////////////////////////////////// -->
 <header id="Overveiw">
     <div class="container">
         <div class="logo-part">
-            <a href="Writiner_Landpage.html" class="logo-part">
-                <img src="./fr/images/Screenshot_3.png" alt="Logopage" class="logo-img">
+            <a href="{{url('/writiner')}}" class="logo-part">
+                <img src="./project/images/Ravicon-loading.png" alt="Logopage" class="logo-img">
                 <span class="logo-name">
                         Writiner
                     </span>
@@ -43,7 +43,7 @@
                 @if (Route::has('login'))
                     <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                         @auth
-                            <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
+{{--                            <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>--}}
                         @else
                             <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
 
@@ -80,7 +80,7 @@
 
         </div>
         <div class="image-part4">
-            <img src="./fr/images/black_noun_002_03536.jpg" alt="">
+            <img src="./project/images/black_noun_002_03536.jpg" alt="">
         </div>
         <a href="#Features" class="go-down">
             <i class="fa-solid fa-angles-down"></i>
@@ -93,7 +93,7 @@
         <div class="services-container">
             <div class="srv-box-1">
                 <div class="image">
-                    <img src="./fr/images/black_noun_002_03536.jpg" alt="">
+                    <img src="./project/images/black_noun_002_03536.jpg" alt="">
                 </div>
                 <div class="text">
                     <h1>Evant for teans</h1>
@@ -104,7 +104,7 @@
             </div>
             <div class="srv-box-2">
                 <div class="image">
-                    <img src="./fr/images/black_noun_002_03536.jpg" alt="">
+                    <img src="./project/images/black_noun_002_03536.jpg" alt="">
                 </div>
                 <div class="text">
                     <h1>Evant for teans</h1>
@@ -115,7 +115,7 @@
             </div>
             <div class="srv-box-3">
                 <div class="image">
-                    <img src="./fr/images/black_noun_002_03536.jpg" alt="">
+                    <img src="./project/images/black_noun_002_03536.jpg" alt="">
                 </div>
                 <div class="text">
                     <h1>Evant for teans</h1>
@@ -146,7 +146,7 @@
         <h1 class="title">our team</h1>
         <div class="team-row">
             <div class="member">
-                <img src="./fr/images/black_noun_002_03536.jpg" alt="">
+                <img src="./project/images/black_noun_002_03536.jpg" alt="">
                 <h2>feras yahya alzahrain</h2>
                 <h3>s439003038@st.uqu.edu.sa</h3>
                 <p>
@@ -154,7 +154,7 @@
                 </p>
             </div>
             <div class="member">
-                <img src="./fr/images/black_noun_002_03536.jpg" alt="">
+                <img src="./project/images/black_noun_002_03536.jpg" alt="">
                 <h2>feras yahya alzahrain</h2>
                 <h3>s439003038@st.uqu.edu.sa</h3>
                 <p>
@@ -162,7 +162,7 @@
                 </p>
             </div>
             <div class="member">
-                <img src="./fr/images/black_noun_002_03536.jpg" alt="">
+                <img src="./project/images/black_noun_002_03536.jpg" alt="">
                 <h2>feras yahya alzahrain</h2>
                 <h3>s439003038@st.uqu.edu.sa</h3>
                 <p>
@@ -170,7 +170,7 @@
                 </p>
             </div>
             <div class="member">
-                <img src="./fr/images/black_noun_002_03536.jpg" alt="">
+                <img src="./project/images/black_noun_002_03536.jpg" alt="">
                 <h2>feras yahya alzahrain</h2>
                 <h3>s439003038@st.uqu.edu.sa</h3>
                 <p>

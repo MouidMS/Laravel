@@ -8,17 +8,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-
-
-    <link rel="icon" type="image/x-icon" href=".fr/images/Ravicon-loading.png">
-
-
     <script
         src="https://code.jquery.com/jquery-3.6.3.min.js"
         integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
         crossorigin="anonymous"></script>
 
+
+    <link rel="icon" type="image/x-icon" href=".fr/images/Ravicon-loading.png">
+
+
     <!-- Main Writiner_home CSS File -->
+    <link rel="stylesheet" href="./fr/css/mainStyle.css">
     <link rel="stylesheet" href="./fr/css/Recntl_Style.css">
     <!-- Render All Elements Normally -->
     <link rel="stylesheet" href="./fr/css/normalize.css">
@@ -31,7 +31,16 @@
 
 </head>
 <body>
-<!- rename ->
+
+<div id="mainContainer">
+    <div id="contanier">
+        <div id="bin1">
+
+            <div id="bin2"></div>
+        </div>
+        <div id="bin3"></div>
+    </div>
+</div>
 
 @php
     $last_entry = \App\Models\Project::latest()->first();
@@ -134,195 +143,134 @@
 
     <div class="grid-holder">
         <div class="grid-item-section">
-
-            @foreach ($project as $projects)
-            <div class="grid-item">
-                <div id="PRJmain">
-                    <div id="PRJprojectTop">
-                        <img id="PRJprojectType" src=".m/worky/RichTextEditor/projectVeiw/ellipsis-vertical-solid.svg" >
-                        <div id="PRJisProjectShared">Copy</div>
-                        <img id="PRJprojectSitting" src="./ellipsis-vertical-solid.svg"/>
-                    </div>
-                    <h2 id="PRJprojectName">Porject-1</h2>
-                    <h6 id="PRJprojectLastUpDate"> Last update: 2023/10/20</h6>
-                    <img id="PRJisProjectFavre" src="./star-regular.svg" >
-                    <span id="PRJownerImageBorder"></span>
-                    <div id="PRJprojectOwner"><img src="./istockphoto-1309328823-170667a.jpg" alt=""></div>
-
-                </div>
-
-
-
+{{--             <div class="grid-item">--}}
 {{--                <div class="holder-item">--}}
-{{--                    <div class="grid-item-thumbnail">--}}
-{{--                        <a href="page/{{$projects->id}}" style="  all: unset;">--}}
-
-{{--                        <i class="fa-regular fa-file-lines icon-fileline"></i>--}}
-{{--                        <div class="icon-star">--}}
-{{--                            <i class="fa-regular fa-star star"></i>--}}
-{{--                        </div>--}}
+{{--                    <div id="main">--}}
+{{--                        <a href="page/" style="  all: unset;">--}}
+{{--                            <div id="projectTop">--}}
+{{--                                <img id="projectType" src="./m/worky/RichTextEditor/projectVeiw/ellipsis-vertical-solid.svg" >--}}
+{{--                                <div id="isProjectShared">Copy</div>--}}
+{{--                                <img id="projectSitting" src="./m/worky/RichTextEditor/projectVeiw/ellipsis-vertical-solid.svg"/>--}}
+{{--                            </div>--}}
 {{--                        </a>--}}
 
+{{--                        <p id="projectName"></p>--}}
+{{--                        <p id="projectLastUpDate"> Last update: </p>--}}
+{{--                        <img id="isProjectFavre" src="./m/worky/RichTextEditor/projectVeiw/star-regular.svg" >--}}
+{{--                        <div id="projectOwner"><img src="./storage/profile-photos/1nZpMnByY6jnrigJMkwfzZd61rXtyNdDZIW5Hiqa.png" alt=""></div>--}}
+
 {{--                    </div>--}}
-{{--                    <div class="grid-item-metadata">--}}
-{{--                        <div class="item-title">--}}
-{{--                            <h5>{{$projects->name}}</h5>--}}
-{{--                        </div>--}}
-
-{{--                        <div class="item-body">--}}
-
-{{--                            <DIV>--}}
-{{--                                <img src="./fr/images/black_noun_002_03536.jpg" alt=""  class="profiles-item_img">--}}
-{{--                                <p>{{Carbon\Carbon::parse($projects->created_at)->format('Y-m-d')}}</p>--}}
-{{--                            </DIV>--}}
-{{--                            <div>--}}
-{{--                                <!----}}
-{{--                                <form action="{{route('writiner.edit',($projects->id))}}" method="put">--}}
-{{--                                    <input name="name" placeholder="rename" style="width: 70px" id="save">--}}
-{{--                                    <input type="submit">--}}
-{{--                                </form>--}}
-
-{{--                                -->--}}
-{{--                                <div>--}}
-{{--                                    @csrf--}}
-{{--                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">--}}
-{{--                                    <input type="hidden" name="_method" value="PUT">--}}
-{{--                                    <input id='id' name="id" placeholder="id" style="width: 70px" value="{{$projects->id}}">--}}
-{{--                                    <input id='name' name="name" placeholder="name" style="width: 70px">--}}
-{{--                                    <button id="save" onclick="reNameFun()">jj</button>--}}
-{{--                                </div>--}}
-
-{{--                            </div>--}}
-{{--                            <i class="fa-solid fa-ellipsis-vertical"></i>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-
-{{--                </div>--}}
+                </div>
 
             </div>
 
+{{--        <ul class="pagination justify-content-center">--}}
+{{--            <li class="page-item disabled">--}}
+{{--                <a class="page-link" href="#" tabindex="-1">Previous</a>--}}
+{{--            </li>--}}
+{{--            <li class="page-item"><a class="page-link" href="?page=1">1</a></li>--}}
+{{--            <li class="page-item"><a class="page-link" href="?page=2">2</a></li>--}}
+{{--            <li class="page-item"><a class="page-link" href="?page=3">3</a></li>--}}
+{{--            <li class="page-item"><a class="page-link" href="?page=4">4</a></li>--}}
+
+{{--            <li class="page-item">--}}
+{{--                <a class="page-link" href="#">Next</a>--}}
+{{--            </li>--}}
+{{--        </ul>--}}
 
 
 
+{{--            @endforeach--}}
 
-            @endforeach
 
         </div>
 
     </div>
-    <div class="d-flex justify-content-center" style="padding-bottom: 40px">
 
-        {{ $project->links() }}
-
-    </div>
 </div>
 
 
 <!-- End content -->
 <!-- Start writiner-home -->
 <!-- End start writiner-home -->
-<script type="text/javascript">
+    <script>
 
 
-    function reNameFun() {
-        /*
-        var id = $('#id').val();
-        var name = $('#name').val();
+//        $(document).ready(function () {
+//            // pages();
+//            fetchstudent();
+////
+//// function pages(){
+////     $('.page-link').on('click', function (e) {
+////         e.preventDefault();
+////         var page = $(this).attr('href').split('?page=')[1];
+////         $('.grid-item-section').html(fetchstudent("?page="+page));
+////         $.ajax({
+////             type: "GET",
+////             url: "/fetch-curd?page="+page+"",
+////             dataType: "json",
+////             success: function (response) {
+////                 console.log(response);
+////             }
+////         });
+////     });
+//// }
+//
+//
+//            function fetchstudent() {
+//
+//                $.ajax({
+//                    type: "GET",
+//                    url: "/fetch-curd/",
+//                    dataType: "json",
+//                    success: function (response) {
+//                        $('.grid-item-section').html("");
+//                        console.log(response);
+//                        $.each(response, function (key, item) {
+//                            // var v = item;
+//                            // if(item.Isfavorite === false){
+//                            //     var img = "./m/worky/RichTextEditor/projectVeiw/star-regular.svg";
+//                            // }else {
+//                            //     var img = "./m/worky/RichTextEditor/projectVeiw/star-solid.svg";
+//                            // }
+//                            //
+//                            // if(item.isCopy === false){
+//                            //     var copy = '<div id="isProjectShared" >Copy</div>';
+//                            // }else {
+//                            //     var copy = '<div id="isProjectShared" hidden>Copy</div>';
+//                            // }
+//                            //
+//                            //
+//                            // var d = new Date(item.created_at);
+//                            // $('.grid-item-section').append(
+//                            //     '<div class="grid-item"><div class="holder-item">' +
+//                            //     '<div id="main"><a href="page/'+item.id+'" style="  all: unset;">' +
+//                            //     '<div id="projectTop">' +
+//                            //     '<img id="projectType" src="./m/worky/RichTextEditor/projectVeiw/ellipsis-vertical-solid.svg" >' +
+//                            //     copy +
+//                            //     '<img id="projectSitting" src="./m/worky/RichTextEditor/projectVeiw/ellipsis-vertical-solid.svg"/></div></a>  ' +
+//                            //     '<p id="projectName">'+item.name+'</p><p id="projectLastUpDate"> Last update:'+ d.toLocaleDateString() +' </p>' +
+//                            //     '<img id="isProjectFavre" src='+img+' ><div id="projectOwner">' +
+//                            //     '<img src='+item.icon+' alt="">' +
+//                            //     '</div>' +
+//                            //     ' </div>' +
+//                            //     '</div>' +
+//                            //     '</div>');
+//
+//                        })
+//
+//                    }
+//            });
+//            }
+//        });
 
-        console.log(id)
-        console.log(name)
 
-        alert("Handler for .submit() called.   " + name);
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            method: 'PUT',
-            url: '{{route('writiner.update',2)}}',
-            contentType: 'application/json; charset=utf-8',
-            data: {
-                "_token": "{{ csrf_token() }}",
-                "name": name,
-    },
-            success: function (data) {
-                alert("Data Updated"+ name);
-                location.reload();
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
-    }
-*/
+    </script>
 
 
-        if (window.XMLHttpRequest) {
-            req = new XMLHttpRequest();
-        } else if (window.ActiveXObject) {
-            req = new ActiveXObject("Microsoft.XMLHTTP");
-        }
+<script type="text/javascript" src="js/recnt.js"></script>
 
-        req.open("POST",`{{route('writiner.update',2)}}`, true)
-        req.onreadystatechange = getInfo;
-        req.send("name=Henry");
-
-
-
-
-
-    function getInfo(req, res, done) {
-        {
-        if (req.readyState !== 4) // check to see if we’re done
-        { return; }
-        else {
-            if (req.status === 200) // check to see if successful
-            { // process server data here. . .
-                var val = req.responseText;
-                document.getElementById('id').innerHTML = val;
-            }
-            else {
-                alert("Request failed: " + req.statusText);
-            }
-        }
-    }}
-    }
-
-/*
-    /open edit modal
-    $(document).on('click','button#save',function() {
-        var id = $('#id').val();
-        var name = $('#name').val();
-
-        let id = $(this).data('id');
-        let dataAction = $(this).data('action');
-        $('#formData').attr('action',dataAction);
-        $.ajax({
-            type: 'GET',
-            url : baseUrl+`/writiner/${id}/edit`,
-            dataType: "json",
-            success: function(res) {
-                $('input[name=title]').val(res.post.title);
-                $('textarea[name=post_content]').val(res.post.post_content);
-                $('#exampleModal').modal('show');
-                console.log(res);
-            },
-            error:function(error) {
-                console.log(error)
-            }
-        })
-    })
-    */
-    /*
-    let loadingView = document.getElementById('loading');
-    window.addEventListener('load', function loading(){
-        setTimeout(function(){
-            loadingView.style.display='none';
-        },5000)
-    })
-    */
-</script>
 </body>
 </html>
+
 

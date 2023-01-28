@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/tets5/Bootstrap/all.min.css">
+    <style>
+
+
+
+    </style>
+</head>
+ <body id="bobo">
+<!--    <div id="main">
+        <div id="projectTop">
+            <img id="projectType" src="./ellipsis-vertical-solid.svg" >
+            <div id="isProjectShared">Copy</div>
+            <img id="projectSitting" src="./ellipsis-vertical-solid.svg"/>
+        </div>
+        <h2 id="projectName">Porject-1</h2>
+        <h6 id="projectLastUpDate"> Last update: 2023/10/20</h6>
+        <img id="isProjectFavre" src="./star-regular.svg" >
+        <span id="ownerImageBorder"></span>
+        <div id="projectOwner"><img src="./istockphoto-1309328823-170667a.jpg" alt=""></div>
+
+    </div> -->
+<!--
+    <div class="setting-project" id="settingProject">
+        <div class="menu-item">
+            <button>
+                <i class="fa-solid fa-users"></i>
+               Share
+            </button>
+            <button>
+                <i class="fa-solid fa-users-slash"></i>
+                Unshare
+            </button>
+            <button>
+                <i class="fa-solid fa-pen"></i>
+                Rename
+            </button>
+            <button>
+                <i class="fa-solid fa-comment"></i>
+                Description
+            </button>
+            <button>
+                <i class="fa-solid fa-trash"></i>
+               Remove project
+            </button>
+        </div>
+
+    </div> -->
+
+
+
+
+
+    <script>
+
+        let currentProject;
+
+
+
+
+        let bobo = document.getElementById('bobo');
+        let projects = [];
+
+
+        let x = new Project(2,32,'project1','A4',"hhh",'mohammed','87823',"9876778",true,true,true,true,true,"igeigcuhicihe")
+        projects.push(x)
+        bobo.appendChild(x.getGridItem());
+
+
+
+
+        let settingProject = document.createElement('div');
+        settingProject.id = "settingProject";
+        settingProject.classList.add('setting-project');
+
+
+        let menuItem = document.createElement('div');
+        menuItem.classList.add('menu-item');
+        settingProject.appendChild(menuItem);
+
+
+        let Share = document.createElement('button');
+        Share.innerHTML('<i class="fa-solid fa-users"></i> Share');
+        Share.addEventListener('click', function(event){});
+        menuItem.appendChild(Share);
+
+
+        let Unshare = document.createElement('button');
+        Unshare.innerHTML(' <i class="fa-solid fa-users-slash"></i> Unshare');
+        Unshare.addEventListener('click', function(event){});
+        menuItem.appendChild(Unshare);
+
+        let Rename = document.createElement('button');
+        Rename.innerHTML('<i class="fa-solid fa-pen"></i> Rename');
+        Rename.addEventListener('click', function(event){});
+        menuItem.appendChild(Rename);
+
+
+        let Description = document.createElement('button');
+        Description.innerHTML(' <i class="fa-solid fa-comment"></i> Description');
+        Description.addEventListener('click', function(event){});
+        menuItem.appendChild(Description);
+
+        let RemoveProject = document.createElement('button');
+        RemoveProject.innerHTML(' <i class="fa-solid fa-trash"></i> Remove project');
+        RemoveProject.addEventListener('click', function(event){});
+        menuItem.appendChild(RemoveProject);
+
+
+
+    class Project{
+
+    id;
+    userId;
+    name;
+    type;
+    des;
+    rightTo;
+    createAt;
+    upDateAt;
+    isFavorit;
+    isSherProject;
+    isSherCopy;
+    isProjectCopy
+    isReceved;
+    userIcon;
+
+
+    gridItem;
+    projectType;
+    projectName;
+    projectLastUpDate;
+    isProjectFavorit;
+    isProjectShared;
+
+
+
+    constructor(id,userId,name,type,des,rightTo,createAt,upDateAt,isFavorit,isSherCopy,isSherProject,isProjectCopy,isReceved,userIcon){
+        prepairProject();
+        this.setId(id);
+        this.setUserId(userId);
+        this.setName(name);
+        this.setType(type);
+        this.setDes(des);
+        this.setRightTo(rightTo);
+        this.setCreateAt(createAt);
+        this.setUpDateAt(upDateAt);
+        this.setIsFavorit(isFavorit);
+        this.setIsSherProject(isSherProject);
+        this.setIsSherCopy(isSherCopy);
+        this.setIsReceved(isReceved);
+        this.setUserIcon(userIcon);
+        this.setIsProjectCopy(isProjectCopy)
+
+    }
+
+
+    prepairProject(){
+        this.gridItem = document.createElement('div');
+        this.gridItem.id = 'grid-item';
+        this.gridItem.addEventListener('contextmenu', this.openSettingMenu)
+
+        let holder = document.createElement('div');
+        holder.id = 'horlder-item';
+        this.gridItem.appendChild(holder);
+
+
+        let main = document.createElement('div');
+        main.id = 'main';
+        this.gridItem.appendChild(main);
+
+
+        let projectTop = document.createElement('div');
+        projectTop.id = 'projectTop';
+        main.appendChild(projectTop);
+
+
+        // let openProject = document.createElement('a');
+        // openProject.id = "openProjectA";
+        // openProject.href = `page/${this.getId()}`;
+        // projectTop.appendChild(openProject);
+
+        this.projectType = document.createElement('img');
+        projectType.id = 'projectType';
+        projectType.addEventListener('click', this.openProject)
+        projectTop.appendChild(projectType);
+
+        this.projectName = document.createElement('p');
+        projectName.id = 'projectName'
+        main.appendChild(projectName);
+
+        this.projectLastUpDate = document.createElement('p');
+        projectLastUpDate.id = 'projectLastUpDate';
+        main.appendChild(projectLastUpDate);
+
+        this.isProjectFavorit = document.createElement('img');
+        isFavorit.id = 'isProjectFavre';
+        main.appendChild(isFavorit);
+
+
+        this.isProjectShared = document.createElement('div');
+        isProjectShared.id = 'isProjectShared';
+        projectTop.appendChild(isProjectShared);
+
+
+    }
+
+
+
+    // let projectOwner = document.createElement('div');
+    // projectOwner.id = 'projectOwner';
+
+    // let projectOwnerImage = document.createElement('img');
+
+    openSettingMenu = (e) =>{
+        currentProject = this;
+        Share.remove()
+        Unshare.remove()
+        if (this.getIsSherProject()) {
+            settingProject.appendChild(Unshare)
+        } else {
+            settingProject.appendChild(Share)
+        }
+        this.getGridItem().appendChild(settingProject);
+    }
+
+
+    openProject = (e) =>{
+        window.location = `page/${this.getId()}`;
+    }
+
+    setId(value){
+
+        this.id = value;
+    }
+    setUserId(value){
+
+        this.userId = value;
+    }
+    setName(value){
+
+        this.name = value;
+    }
+    setType(value){
+
+        this.type = value;
+    }
+    setDes(value){
+        this.des = value;
+    }
+    setRightTo(value){
+
+        this.rightTo = value;
+    }
+    setCreateAt(value){
+
+        this.createAt = value;
+    }
+    setUpDateAt(value){
+
+        this.upDateAt = value;
+    }
+    setIsFavorit(value){
+
+        this.isFavorit = value;
+    }
+    setisSherCopy(value){
+
+        this.isSherCopy = value;
+    }
+    setIsSherProject(value){
+
+        this.isSherProject = value;
+    }
+    setIsReceved(value){
+        this.isReceved = value;
+    }
+    setUserIcon(value){
+        this.userIcon = value;
+    }
+    setIsProjectCopy(value){
+        this.isProjectCopy = value;
+    }
+
+
+
+    getGridItem(){return this.gridItem}
+    getId(){return this.id;}
+    getUserId(){return this.userId;}
+    getName(){return this.name;}
+    getType(){return this.type;}
+    getRightTo(){return this.rightTo;}
+    getCreateAt(){return this.createAt;}
+    getUpDateAt(){return this.upDateAt;}
+    getIsFavorit(){return this.isFavorit;}
+    getIsSherCopy(){return this.isSherCopy;}
+    getIsSherProject(){return this.isSherProject;}
+    getIsReceved(){return this.isReceved;}
+    getUserIcon(){return this.userIcon;}
+    getDes(){return this.des;}
+    getIsProjectCopy(){return this.isProjectCopy;}
+
+
+}
+
+    </script>
+</body>
+</html>
