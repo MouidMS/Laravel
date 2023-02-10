@@ -1,0 +1,76 @@
+:root{
+    --pnX: 0px;
+    --pnY: 0px;
+    
+}
+.outer2{
+    position: relative;
+    box-sizing: border-box;
+    min-width: 8.27in;
+    min-height: 11.69in;
+    max-width: 8.27in;
+    max-height: 11.69in;
+    background-color: white;
+    box-shadow: 0px 0px 3px 0.1px black;
+    counter-increment: page-number;
+    margin-bottom: 100px;
+    border: 1px solid;
+    display: block;
+}
+
+.outer1{
+ position: absolute;
+ top: 20px;
+ left: 20px;
+ min-width: 753.92px;
+ min-height: 1082.24px;
+ max-width: 753.92px;
+ max-height: 1082.24px;
+}
+
+.page{
+    min-width: 733.92px;
+    min-height: 1042.24px;
+    max-width: 733.92px;
+    max-height: 1042.24px;
+    background-color: white;
+    position: relative; 
+    margin-top: 20px;
+    margin-left: 10px;
+    /* border: 1px solid; */
+    box-sizing: border-box;
+    page-break-after: always;
+
+}
+
+@media print {
+    .outer2 {
+        margin: 0;
+        border: initial;
+        border-radius: initial;
+        width: initial;
+        min-height: initial;
+        box-shadow: initial;
+        background: initial;
+        page-break-after: always;
+    }
+}
+@page {
+    size: A4;
+    margin: 0;
+}
+
+
+
+.pagenumber{
+    position:absolute;
+    /* top: var(--pnY);
+    left: var(--pnX); */
+    z-index: 109;
+
+}
+
+.pagenumber::after{
+    content: counter(page-number);
+    
+} 

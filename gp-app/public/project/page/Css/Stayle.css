@@ -1,0 +1,819 @@
+
+[contenteditable=true]:empty:not(:focus):before{
+    content: "Text...";
+    color:grey;
+    font-style:italic;
+}
+
+[contenteditable] {
+    outline: 0px solid transparent;
+}
+
+/* [contenteditable] ~ data-gramm{
+  display: none;
+}
+ */
+
+*{
+    padding: 0;
+    margin: 0;
+    user-select: none;
+}
+
+body{
+    background-color: #f5f5ff;
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    display: flex;
+    overflow: hidden;
+}
+
+#context_menu{
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    width: 200px;
+    background-color: white;
+    z-index: 10000;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-shadow: rgba(0,0, 0, 0.3) 0px 0px 0px 1px;
+    border-radius: 10PX;
+    display: none;
+}
+
+#context_menu button{
+
+    background-color: transparent;
+    border: 0px;
+    width: 100%;
+    text-align: left;
+    padding-left: 30px;
+    position: relative;
+    margin-bottom: 5PX;
+
+
+}
+
+#menuCut::before{
+    position: absolute;
+    top: 0px;
+    right: 30px;
+    content: "Ctrl-X";
+}
+#menuCopy::before{
+    position: absolute;
+    top: 0px;
+    right: 30px;
+    content: "Ctrl-C";
+}
+#menuPaste::before{
+    position: absolute;
+    top: 0px;
+    right: 30px;
+    content: "Ctrl-V";
+}
+#menuSelectAll::before{
+    position: absolute;
+    top: 0px;
+    right: 30px;
+    content: "Ctrl-A";
+}
+
+#context_menu button:hover{
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+
+
+#main-content{
+    position: relative;
+    width: 90%;
+    background-color: #f5f5ff;
+    display: flex;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    padding: 0 20px;
+}
+#main-content::-webkit-scrollbar{
+    width: 0px;
+}
+#main-content::-webkit-scrollbar{
+    width: 0px;
+}
+
+
+
+
+#pages{
+    margin: 0 auto;
+    background-color: #f5f5ff;
+    padding-top: 100px;
+    min-height: 1140px;
+    
+}
+
+
+@media print {
+    /* top-level divs with ids */
+    .outer2{
+        margin-bottom: 0px !important;
+        page-break-before: always !important;
+    }
+    #pages{
+        padding-top: 0px !important;
+        min-height: auto !important;
+    }
+}
+
+
+
+
+
+
+
+.text-editor-header{
+    background-color: #ecf0f1;
+    padding: 5px;
+    margin-bottom: 50px;
+    position: fixed;
+    width: 100%;
+    z-index: 1 ;
+}
+
+.text-editor-header .btn{
+    border: none;
+    outline: none;
+    background-color: transparent;
+    margin-right: 5px;
+    cursor: pointer;
+    
+}
+
+#content{
+    min-width: 300px;
+    min-height: 100px;
+    background-color: coral;
+    padding: 20px;
+    
+
+}
+
+#drag{
+    cursor: pointer;
+    display: none;
+    position: absolute;
+    top: -20px;    
+}
+
+.addBlock{
+    position: absolute;
+    border: 2px solid black;
+    background-color: #f5f5ff;
+    box-sizing: border-box;
+    z-index: 110;
+    overflow-y: scroll;
+}
+
+.addBlock::-webkit-scrollbar{
+    width: 2px;
+}
+
+.addBlock::-webkit-scrollbar-track{
+    background: transparent;
+}
+.addBlock::-webkit-scrollbar-thumb{
+    background: transparent;
+    border-radius: 30px;
+}
+.addBlock:hover::-webkit-scrollbar-thumb{
+    background: green;
+    border-radius: 30px;
+}
+
+.mainComponentBtn{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin-left: 5px;
+    margin-top: 5px;
+}
+
+#edit{
+    width: 100%;
+    height: 100%;
+    min-width: 50px;
+    min-height: 50px;
+    background-color: aqua;
+    overflow: auto;
+    resize: horizontal;
+    padding: 15px;
+    
+}
+
+#main-grag{
+    position:absolute;
+    background-color: blueviolet;
+    min-width: 50px;
+    min-height: 50px;
+
+}
+
+#pageEdit{
+    width: 555px;
+    border: 1px solid black;
+    border-radius: 10px;
+    height: 80px;
+    background-color: white;
+    box-sizing: border-box;
+    position: absolute;
+    top: -85px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+}
+
+#topic{
+
+    margin: 0px;
+    display: inline;
+}
+#space{
+   
+    position: absolute;
+    top: 78px;
+    width: 555px;
+    height: 40px;
+    
+}
+
+
+#TextEditContainer{
+    position: fixed;
+    width: 400px;
+    height: 100px;
+    border: 1px solid;
+    z-index: 1000;
+    box-sizing: border-box;
+    display: none;
+    padding: 1px;
+    background-color: white;
+    box-shadow: 0px 0px 3px 0.1px black;
+    
+
+}
+.TextEditButton{}
+
+#reading{
+    flex: 1;
+    height: 100%;
+    background-color: white;
+    /* display: flex; */
+    box-sizing: border-box;
+    overflow: hidden;
+    
+}
+
+#slider{
+    width: 10px;
+    height: 100%;
+    background-color: white;
+    box-sizing: border-box;
+    background-color: #cbd5e0;
+    cursor: ew-resize;
+    transition: 0.8s;
+}
+#slider:hover{
+    transform: scaleX(2);
+}
+
+
+
+
+/* .component::-webkit-scrollbar{
+    width: 1px;
+}
+
+.component::-webkit-scrollbar-track{
+    background: inherit;
+}
+.component::-webkit-scrollbar-thumb{
+    background: inherit;
+    border-radius: 30px;
+}
+.component:hover::-webkit-scrollbar-thumb{
+    background: green;
+    border-radius: 30px;
+} */
+.controlbtn{
+    position: fixed;
+    /* bottom: 20px;
+    left: 20px; */
+    border: none;
+    border-radius: 50%;
+    background-color:#aedada;
+    user-select: none;
+    
+}
+
+#settingbtn{
+    transition: 1s;   
+    bottom: 40px;
+    left: 40px;
+    width: 35px;
+    height: 35px;
+}
+#Back{
+    transition: 1s; 
+    bottom: 40px;
+    left: 40px;
+    width: 35px;
+    height: 35px;
+}
+#Display{
+    transition: 1s;
+    bottom: 40px;
+    left: 40px;
+    width: 35px;
+    height: 35px;
+}
+#Save{
+    transition: 1s; 
+    bottom: 40px;
+    left: 40px;
+    width: 35px;
+    height: 35px;
+}
+#addpage{
+    bottom: 30px;
+    left: 30px;
+    font-size: 40px;
+    transition: 2s;
+    width: 50px;
+    height: 50px;
+}
+
+
+
+#readingHeed{
+    height: 50px;
+    position: relative;
+    width: auto;
+    border: 1px solid;
+    padding: 15px 15px 15px 40px ;
+}
+#addFile{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #aedada;
+    text-align: center;
+    font-size: 27px;
+    font-weight: 900;
+}
+#deleteFile{
+    position: absolute;
+    bottom:5px;
+    left: 5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #aedada;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 400;
+    border: none;
+}
+
+#readingFiles{
+    padding: 13px;
+    height: 50px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    box-sizing: border-box;
+    
+}
+
+#readingFiles::-webkit-scrollbar{
+    
+    height: 5px;
+    border-radius: 20px;
+}
+
+#readingFiles::-webkit-scrollbar-track{
+    background: inherit;
+}
+#readingFiles::-webkit-scrollbar-thumb{
+    background: inherit;
+    border-radius: 30px;
+}
+#readingFiles:hover::-webkit-scrollbar-thumb{
+    background: green;
+    border-radius: 30px;
+}
+#frame{
+    width: 100%;
+    height: 100%;
+   
+}
+
+.fileContainer{
+    margin-right: 10px ;
+    padding: 10px;
+    border: 1px solid;
+    cursor: pointer;
+}
+.pdfViwer{
+    height: 100%;
+}
+
+
+#scroler{
+    height: 5px;
+    background-color: aqua;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    z-index: 1020;
+    transition: 1s;
+}
+
+
+#scrollUp{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width:100%;
+    height: 100px;;
+    opacity: 0;
+    z-index: 10000;
+    display: none;
+
+}
+
+#scrolldown{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    opacity: 0;
+    z-index: 10000;
+    display: none;
+
+}
+
+
+#editPage{
+    position: absolute;
+    top: 0;
+    right: 250;
+    border: 1px solid;
+    width:200px;
+    height:100px;
+    overflow-y: scroll;
+}
+
+
+#editContainer{
+    position:absolute;
+    left: -205px;
+    top: 0px;
+    height: 200px;
+    width: 200px;
+    overflow-y:scroll;
+
+}
+
+#sizesContainer{
+    margin: 3px 0px 3px 0px ;
+    padding: 2px;
+    border: 1px solid red;
+}
+
+#textContainer{
+    margin: 3px 0px 3px 0px ;
+    padding: 2px;
+    border: 1px solid blue;
+}
+
+#designContainer{
+    margin: 3px 0px 3px 0px ;
+    padding: 2px;
+    border: 1px solid orangered;
+}
+
+#controlContainer{
+    margin: 3px 0px 3px 0px ;
+    padding: 2px;
+    border: 1px solid green;
+}
+
+#customContainer{
+    margin: 3px 0px 3px 0px ;
+    padding: 2px;
+    border: 1px solid skyblue;
+}
+
+/* ====================================================================== */
+
+.heman {
+    font: 1.4rem molot;
+    text-shadow: 1px 1px 1px #fff, 2px 2px 1px #000;
+}
+
+.skeletor {
+    font: 1.7rem rapscallion;
+    letter-spacing: 3px;
+    text-shadow: 1px 1px 0 #fff, 0 0 9px #000;
+}
+.FontEffect1{
+    font-family: 'Calligraffitti', cursive;
+  font-weight: 900;
+  text-shadow: -15px 5px 20px #ced0d3;
+  color: #F9f1cc;
+  font-size: 60px;
+  text-shadow: 5px 5px 0px #FFB650, 
+    10px 10px 0px #FFD662, 
+    15px 15px 0px  #FF80BF, 
+    20px 20px 0px #EF5097, 
+    25px 25px 0px #6868AC, 
+    30px 30px 0px #90B1E0;
+}
+
+
+
+
+@import url('https://fonts.googleapis.com/css?family=Coiny');
+.FontCloud{
+	font-family: 'Coiny', cursive;
+	-webkit-background-clip: text;
+  	-webkit-text-fill-color: transparent;	
+    font-weight: 900;
+    background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/769286/clouds.jpg);
+	background-size: auto;
+	background-attachment: unset;
+	background-position: 0%;
+	animation: clouds-moving infinite 220s;
+	animation-fill-mode: forwards;
+	animation-play-state: running;
+	animation-timing-function: linear;
+}
+@keyframes clouds-moving {
+	0% {
+		background-position: 0%;	
+	}
+	50% {
+		background-position: 100%;	
+	}
+	100% {
+		background-position: 0%;
+	}
+}
+
+.FontWaves{
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-family: "Josefin Sans", sans-serif;
+    background: linear-gradient(to right,#095fab 10%, #25abe8 50%, #57d75b 60%);
+    background-size: auto auto;
+    background-clip: border-box;
+    background-size: 200% auto;
+    color: #fff;
+    background-clip: text;
+    text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textclip 1.5s linear infinite;
+    display: inline-block;
+}
+
+
+@keyframes textclip {
+to {
+    background-position: 200% center;
+}
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+.FontUnderLine{
+      font-family: 'Bebas Neue', cursive;
+      background-image: linear-gradient(gold, gold);
+      background-size: 100% 10px;
+      background-repeat: no-repeat;
+      background-position: 100% 0%;
+       transition: background-size .7s, background-position .5s ease-in-out;
+    }
+    
+    .FontUnderLine:hover {
+      background-size: 100% 100%;
+      background-position: 0% 100%;
+      transition: background-position .7s, background-size .5s ease-in-out;
+    }
+
+
+.FontEffect2{
+    --s: 0.1em;   /* the thickness of the line */
+    --c: #2c4bff; /* the color */
+    
+    color: #0000;
+    padding-bottom: var(--s);
+    background: 
+      linear-gradient(90deg,var(--c) 50%,#000 0) calc(100% - var(--_p,0%))/200% 100%,
+      linear-gradient(var(--c) 0 0) 0% 100%/var(--_p,0%) var(--s) no-repeat;
+    -webkit-background-clip: text,padding-box;
+            background-clip: text,padding-box;
+    transition: 0.5s;
+  }
+  .FontEffect2:hover {--_p: 100%}
+
+
+.FontTyping{ 
+    
+}
+
+
+.normalL div{
+    border-bottom: 1px solid;
+}
+
+
+
+.englishL div{
+    position: relative;
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+    margin-top: 10px
+}
+
+.englishL div::before{
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 25%;
+    left: 0;
+    height: 35%;
+    width: 100%;
+    background-color: transparent;
+    border-bottom: 1px solid red;
+    border-top: 1px solid red;
+    opacity: 0.2;
+}
+
+.numbered div{
+    position: relative;
+    counter-increment: line-number;
+    padding-left: 37px;
+
+}
+.numbered div::before{
+     content: counter(line-number)".";
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.numberedL div{
+    position: relative;
+    counter-increment: lineL-number;
+    padding-left: 37px;
+    border-bottom: 1px solid;
+
+}
+.numberedL div::before{
+     content: counter(lineL-number)".";
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+.circle div{
+    position: relative;
+    padding-left: 10px;
+}
+.circle div::before{
+     content:"";
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
+    background-color: black;
+}
+
+.circleL div{
+    position: relative;
+    padding-left: 10px;
+    border-bottom: 1px solid;
+
+}
+.circleL div::before{
+    content:"";
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
+    background-color: black;
+}
+
+
+/*=====================================*/
+
+.BRD1{
+    border-image:linear-gradient(to right bottom, #260B3C, #a053df);
+    border-image-slice: 1;
+}
+
+
+/*=========================================*/
+
+.BCD1{
+    background-image: linear-gradient(to right bottom, #260B3C, #a053df);
+}
+
+
+/*====================image picker===================*/
+/* #imageContainer{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    min-width: 300px;
+    min-height: 200px;
+    background-color: #6868AC;
+    border: 5px outset;
+    z-index: 10000000;
+}
+
+#addUrl{
+    position: absolute;
+    top: 10px;
+    left: 5px;
+    width: 200px;
+
+}
+#imageContainer label{
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    background-color: #EF5097;
+
+}
+#uploadImage{
+    display: none;
+}
+#uploadImage{
+    position: absolute;
+    top: 40px;
+    left: 0;
+}
+#addImageToList{
+    position: absolute;
+    top: 35px;
+    left: 5px;
+}
+#deleteImageFromList{
+    position: absolute;
+    top: 35px;
+    left: 50px;
+}
+#imageList{
+    position: absolute;
+    top: 60px;
+    left: 5px;
+    width: 290px;
+    height: 100px;
+    background-color: white;
+
+}
+#OK{
+    position: absolute;
+    bottom: 10px;
+    left: 70px;
+    width: 50px;
+    height: 25px;
+    border: 0px;
+    border-radius: 15px;
+}
+#cansel{
+    position: absolute;
+    bottom: 10px;
+    right: 70px;
+    width: 50px;
+    height: 25px;
+    border: 0px;
+    border-radius: 15px;
+} */
+
