@@ -18,6 +18,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Font Awesome library -->
     <link rel="stylesheet" href="./project/css/all.min.css">
+
+
 </head>
 <body>
 <!-- /////////////////////////////////////////////////////////////////////////////////////////////// -->
@@ -83,7 +85,7 @@
                 creative interfaces.
             </p>
             <div class="butt-part2">
-                <a href="Writiner_Recntl.html">Go to Writiner</a>
+                <a href="{{url('writiner')}}">Go to Writiner</a>
             </div>
 
             @if (Route::has('login'))
@@ -99,7 +101,7 @@
             @endif
         </div>
         <div class="image-part4">
-            <img src="./project/images/black_noun_002_03536.jpg" alt="">
+            <img src="./project/images/Group 14.png" alt="">
         </div>
 
         <div class="wave">
@@ -115,8 +117,31 @@
     <div class="container">
         <div class="services-container">
             <div class="srv-box-1">
-                <div class="image">
-                    <img src="./project/images/black_noun_002_03536.jpg" alt="" />
+                <div class="FS-textBox">
+                    <h1>
+                        <a href="" class="typewrite" data-period="2000"
+                           data-type='[ "Hi, Im Moayed.", "I am Back-End.", "I Love Back-End.", "I Love to Develop." ]'>
+                            <span class="wrap"></span>
+                        </a>
+                    </h1>
+                    <div class="FS-Format">
+                        <div class="FS-sutt">
+                            <button class="FS-moveButt tooltip"><span class="FS-tooltiptextSmall">Move Box</span><i
+                                    class="fa-solid fa-arrows-up-down-left-right "></i></button>
+                            <button class="FS-propertiesButt tooltip"><span class="FS-tooltiptextSmall">Properties</span><i
+                                    class="fa-solid fa-gear "></i></button>
+                            <button class="FS-cerateButt tooltip"><span class="FS-tooltiptextSmall">Cerate Box</span><i
+                                    class="fa-solid fa-plus "></i></button>
+                            <button class="FS-removeButt tooltip"><span class="FS-tooltiptextSmall">Remove Box</span><i
+                                    class="fa-solid fa-trash "></i></button>
+                            <p class="tooltip"><span class="FS-tooltiptextSmall">Text Box</span>Text</p>
+                        </div>
+                        <div class="FS-resize tooltip">
+
+                        </div>
+
+                    </div>
+
                 </div>
                 <div class="text">
                     <h1>Host your space</h1>
@@ -125,10 +150,20 @@
                         variety of elements on the page.
                     </p>
                 </div>
+                <!-- <div class="image">
+                  <img src="/images/Screenshot_3.png" alt="" />
+                </div>
+                <div class="text">
+                  <h1>Host your space</h1>
+                  <p>
+                    By using the block system, users can simply and freely control a
+                    variety of elements on the page.
+                  </p>
+                </div> -->
             </div>
             <div class="srv-box-2">
                 <div class="image">
-                    <img src="./project/images/black_noun_002_03536.jpg" alt="" />
+                    <img src="./project/images/Screenshot_26.png" alt="" />
                 </div>
                 <div class="text">
                     <h1>
@@ -143,7 +178,7 @@
             </div>
             <div class="srv-box-3">
                 <div class="image">
-                    <img src="./project/images/black_noun_002_03536.jpg" alt="" />
+                    <img src="./project/images/Screenshot_27.png" alt="" />
                 </div>
                 <div class="text">
                     <h1>Do it all with file collector</h1>
@@ -173,7 +208,7 @@
             community.
         </p>
         <div class="butt-gocommunty">
-            <a href="Writiner_community.html">Go to Communty</a>
+            <a href="{{url('community')}}">Go to Communty</a>
         </div>
         <!-- </div> -->
     </div>
@@ -183,22 +218,22 @@
         <h1 class="title">our team</h1>
         <div class="team-row">
             <div class="member">
-                <img src="./project/images/black_noun_002_03536.jpg" alt="" />
+                <img src="./project/images/user-picture.png" alt="" />
                 <h2>Muhammad Y Alyamni</h2>
                 <h3>439005652@st.uqu.edu.sa</h3>
             </div>
             <div class="member">
-                <img src="./project/images/black_noun_002_03536.jpg" alt="" />
+                <img src="./project/images/user-picture.png" alt="" />
                 <h2>Muayyad M Alsubhi</h2>
                 <h3>439005487@st.uqu.edu.sa</h3>
             </div>
             <div class="member">
-                <img src="./project/images/black_noun_002_03536.jpg" alt="" />
+                <img src="./project/images/user-picture.png" alt="" />
                 <h2>Yazeed K Alhomidhi</h2>
                 <h3>439004374@st.uqu.edu.sa</h3>
             </div>
             <div class="member">
-                <img src="./project/images/black_noun_002_03536.jpg" alt="" />
+                <img src="./project/images/user-picture.png" alt="" />
                 <h2>Feras Y Alzahrain</h2>
                 <h3>s439003038@st.uqu.edu.sa</h3>
             </div>
@@ -244,7 +279,7 @@
             <div class="line">
                 <i class="fa-solid fa-envelope"></i>
                 <div class="info">
-                    <a href="">xxxxxxxx@hotmail.com</a>
+                    <a href="">mfmyteem@gmail.com</a>
                 </div>
             </div>
             <div class="line">
@@ -255,5 +290,7 @@
     </div>
     <p class="copyright">2023</p>
 </div>
+<script type="text/javascript" src="./project/js/Landpage.js"></script>
 </body>
+
 </html>

@@ -2,8 +2,12 @@
 
 namespace App\Actions\Fortify;
 
+use App\Http\Controllers\ProjectController;
+use App\Models\Ready_text_edit;
 use App\Models\User;
 use App\Rules\IsValidPassword;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -38,6 +42,67 @@ class CreateNewUser implements CreatesNewUsers
             'password' => Hash::make($input['password']),
         ]);
 
+        $data = [];
+
+        $data = array (
+            0 =>
+                array (
+                    'name' => 'Untiteld',
+                    'bold' => false,
+                    'italic' => false,
+                    'underline' => false,
+                    'strikethrough' => false,
+                    'backColor' => '#ffffff',
+                    'fontSize' => 1,
+                    'fontName' => 'Sans-serif',
+                    'foreColor' => '#000000',
+                    'justifyCenter' => false,
+                    'justifyLeft' => false,
+                    'justifyRight' => false,
+                    'justifyFull' => false,
+                    'subscript' => false,
+                    'superscript' => false,
+                    'link' => NULL,
+                    'container' =>
+                        array (
+                        ),
+                    'nameVeiw' =>
+                        array (
+                        ),
+                ),
+            1 =>
+                array (
+                    'name' => 'Untiteld',
+                    'bold' => false,
+                    'italic' => false,
+                    'underline' => false,
+                    'strikethrough' => false,
+                    'backColor' => '#ffffff',
+                    'fontSize' => 1,
+                    'fontName' => 'Sans-serif',
+                    'foreColor' => '#000000',
+                    'justifyCenter' => false,
+                    'justifyLeft' => false,
+                    'justifyRight' => false,
+                    'justifyFull' => false,
+                    'subscript' => false,
+                    'superscript' => false,
+                    'link' => NULL,
+                    'container' =>
+                        array (
+                        ),
+                    'nameVeiw' =>
+                        array (
+                        ),
+                ),
+        );
+
+        $ready = new Ready_text_edit();
+        $ready->user_id =$user->id;
+        $ready->json = json_encode($data);
+        $ready->save();
+
+
         $path="users/".$user->id;
         $folderExist= Storage::exists($path);
         echo $folderExist;
@@ -62,8 +127,12 @@ class CreateNewUser implements CreatesNewUsers
             ];
             Storage::disk('jsonUser')->put($user->id .'/info.json', json_encode($data));
 
+
+
+
+
         }
-        echo $user;
+//        echo $user;
         return $user;
 
 

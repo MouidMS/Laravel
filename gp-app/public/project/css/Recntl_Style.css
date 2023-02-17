@@ -284,6 +284,9 @@ a{
     position: relative;
     height: 200px;
 }
+.writiner-home-homescreenmain .grid-item-section .grid-item:hover {
+  z-index: 5;
+}
 .writiner-home-homescreenmain .grid-item-section .grid-item .holder-item {
     position: absolute;
     width: 180px;
@@ -451,6 +454,7 @@ a{
     height: 100px;
     border-radius: 25px;
     /*z-index: 3;*/
+    cursor: pointer;
 }
 #projectName{
     position: absolute;
@@ -500,6 +504,7 @@ a{
     bottom: 19px;
     width: 30px;
     height: 30px;
+    cursor: pointer;
     color: rgb(107, 216, 235);
 }
 
@@ -522,12 +527,101 @@ a{
     box-sizing: border-box;
 }
 
-#desViewer{
+
+/*#desViewer{*/
+/*    position: absolute;*/
+/*    top: 100px;*/
+/*    left: 100px;*/
+/*    display: none;*/
+/*}*/
+
+/*#likViewer{*/
+/*    display: none;*/
+/*    border: 1px solid;*/
+/*    POSITION: absolute;*/
+/*    top: 2px;*/
+/*    left: -56px;*/
+/*    width: 41px;*/
+/*}*/
+
+/*#likeContainer{*/
+/*    display: none;*/
+/*    border: 1px solid;*/
+/*    POSITION: absolute;*/
+/*    top: 2px;*/
+/*    left: -56px;*/
+/*    width: 41px;*/
+/*}*/
+/*#likeIcon{*/
+
+/*}*/
+/*#likeViewer{*/
+
+/*}*/
+
+.aaaa {
+    visibility: hidden;
+    color: #f5f5ff;
+    font-weight:bold;
+    background-color: rgb(3 102 214 / 30%);
+    box-shadow: rgb(3 102 214 / 30%) 0px 0px 0px 3px;
+    border-radius: 5px;
     position: absolute;
-    top: 100px;
-    left: 100px;
-    display: none;
+    top: -1px;
+    right:  -130px;
+    /* display: none; */
 }
+.aaaa h5{
+    font-size: 11px;
+}
+#desViewer{
+    background-color: white;
+    border-radius: 5px;
+    max-width: 120px;
+    min-width: 120px;
+    padding: 8px;
+    word-break: break-all;
+    font-size: 8px;
+    max-height: 140px;
+    overflow-y:scroll;
+    user-select: none;
+    color: #454555;
+}
+#desViewer::-webkit-scrollbar{
+    width: 4px;
+}
+#desViewer::-webkit-scrollbar-track{
+    background: transparent;
+}
+#desViewer::-webkit-scrollbar-thumb{
+    background: #19c8fa;
+    border-radius: 5px;
+}
+.textOverflow {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.textOverflow:hover {
+    z-index: 2;
+    overflow: initial;
+    white-space: initial;
+    text-overflow: initial;
+}
+/* New Updata */
+#main:hover .aaaa, #main:hover .likeContainer {
+    visibility: visible;
+}
+.fakeDiv {
+    position: absolute;
+    right: -30px;
+    top: 0;
+    background-color: transparent;
+    width: 58px;
+    height: 42px;
+}
+
+
 
 #likViewer{
     display: none;
@@ -538,17 +632,22 @@ a{
     width: 41px;
 }
 
+/* New Updata */
 #likeContainer{
-    display: none;
-    border: 1px solid;
-    POSITION: absolute;
-    top: 2px;
-    left: -56px;
-    width: 41px;
+    visibility: hidden;
+    padding: 4px;
+    /* display: none; */
+    box-shadow: rgb(3 102 214 / 30%) 0px 0px 0px 3px;
+    border-radius: 5px;
+    position: absolute;
+    top: -30px;
+    left: 70px;
+    width: 50px;
+    /* overflow-x: hidden; */
 }
-#likeIcon{
+.bbbb {
 
-}
-#likeViewer{
-
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
 }

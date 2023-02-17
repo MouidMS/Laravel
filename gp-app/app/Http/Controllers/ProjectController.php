@@ -5,6 +5,7 @@ use App\Models\Collector;
 use App\Models\Favorite;
 use App\Models\Friend;
 use App\Models\Like;
+use App\Models\Notification;
 use App\Models\Rate;
 use App\Models\Ready_text_edit;
 use App\Models\Receive;
@@ -38,45 +39,86 @@ class ProjectController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function getProject($id){
+    public function getProject($id)
+    {
         $id_user = Auth::id();
-        $project = DB::table('projects')->where('id',$id)->get();
-        $filename=   Storage::disk('jsonUser')->get($id_user . '/projects/' .$id.'.json');
-       // $filename = json_encode(Storage::disk('jsonUser')->get($id_user . '/projects/' .$id.'.json'), true);
+        $project = DB::table('projects')->where('id', $id)->get();
+        $filename = Storage::disk('jsonUser')->get($id_user . '/projects/' . $id . '.json');
+        // $filename = json_encode(Storage::disk('jsonUser')->get($id_user . '/projects/' .$id.'.json'), true);
 
-        return view('landpage.page',compact('project'))->with(['id'=> $id])->with(['filename'=> $filename]);
-//        return response()->json([
-//            'id_user'  =>$id_user,
-//            'projects' => $project,
-//            'filename' => $filename,
-//        ]);
+        $receive = null;
+        $commuinty = null;
+        $collector = null;
+        $type = $project[0]->type;
+        $readOnly = false;
+        return view('landpage.page', compact('project'))->with(['id' => $id])->with(['readOnly' => $readOnly])->with(['filename' => $filename])->with(['receive' => $receive])->with(['commuinty' => $commuinty])->with(['collector' => $collector])->with(['type' => $type]);
+
+    }
+
+    public static function getProjectInfo($id)
+    {
+        $ck = Project::Find($id);
+
+        $project = DB::table('projects')->where('id', $id)->get()[0];
+        $project_id = $project->id;
+        if ($ck) {
+            $project = DB::table('projects')->where('id', $id)->get()[0];
+            $project_id = $project->id;
+            foreach ($project as $value) {
+
+                $id_user_array = DB::table('projects')->where('id', $project->id)->select('user_id')->get();
+                $id_user = $id_user_array[0]->user_id;
+                if ($id_user == Auth::id()) {
+                    $nameUser = DB::table('users')->where('id', $id_user)->get('name')[0]->name;
+                    if ($project->user_id == $project->right_to) {
+                        $value->permission = true;
+                    } else {
+                        $value->permission = false;
+                    }
+
+                }
+
+
+//                return view('landpage.page', compact('id'))->with(['recave' => $recave])->with(['commuinty' => $commuinty])->with(['collector' => $collector]);;
+
+//                return View::make('landpage.page', ["id"=>$id,"recave"=>$id]);
+
+//                return view("landpage.page", ["id"=>$id , "id2"=>$id] );
+                return view('landpage.page', compact('id'));
+            }
+        } else {
+            return redirect(url('login'));
+
+        }
     }
 
 
-    public function getFileProject($id){
+    public function getFileProject($id)
+    {
         $id_user = Auth::id();
-        $filename=   Storage::disk('jsonUser')->get($id_user . '/projects/' .$id.'.json');
+        $filename = Storage::disk('jsonUser')->get($id_user . '/projects/' . $id . '.json');
         return response()->json($filename);
     }
 
-    public function getFav($id_project,$state,Request $request){
+    public function getFav($id_project, $state, Request $request)
+    {
         $id_user = Auth::id();
-        if($state == 'true'){
-            if(DB::table('favorites')->where('user_id',$id_user)->where('id_file',$id_project)->exists()){
+        if ($state == 'true') {
+            if (DB::table('favorites')->where('user_id', $id_user)->where('id_file', $id_project)->exists()) {
                 return response()->json(true);
-            }else{
+            } else {
                 $student = new Favorite();
                 $student->id_file = $id_project;
                 $student->user_id = $id_user;
                 $student->save();
-                return response()->json( DB::table('favorites')->where('user_id',$id_user)->where('id_file',$id_project)->exists());
+                return response()->json(DB::table('favorites')->where('user_id', $id_user)->where('id_file', $id_project)->exists());
             }
 
-        }else if ($state == 'false'){
-                DB::table('favorites')->where('id_file',$id_project)->delete();
-                return response()->json( DB::table('favorites')->where('user_id',$id_user)->where('id_file',$id_project)->exists());
-            }
+        } else if ($state == 'false') {
+            DB::table('favorites')->where('id_file', $id_project)->delete();
+            return response()->json(DB::table('favorites')->where('user_id', $id_user)->where('id_file', $id_project)->exists());
         }
+    }
 
 
 
@@ -116,72 +158,78 @@ class ProjectController extends Controller
     }
 
 
-    public function DeleteSherProject($id){
+    public function DeleteSherProject($id)
+    {
 
-        $getIdSherProject = DB::table('sher_projects')->where('project_id',$id)->get('id');
+        $getIdSherProject = DB::table('sher_projects')->where('project_id', $id)->get('id');
 
         if (array_key_exists(0, json_decode($getIdSherProject))) {
             $getIdSherProject = $getIdSherProject[0]->id;
             $project = SherProject::find($getIdSherProject);
-            if($project)
-            {
+            if ($project) {
                 $project->delete();
                 return response()->json('Done');
             }
-        }else{
+        } else {
             return response()->json('Not found');
         }
     }
 
 
-    public function getFriend($id){
+    public function getFriend($id)
+    {
         $sher_reiend = SherProject::find($id);
     }
 
 
-
-    public function AddSherFriend(Request $request){
+    public function AddSherFriend(Request $request)
+    {
         $student = new Receive();
-        $getIdFromEmailUser = DB::table('users')->where('email',$request->input('email'))->get('id');
+        $getIdFromEmailUser = DB::table('users')->where('email', $request->input('email'))->get('id');
 
         if (array_key_exists(0, json_decode($getIdFromEmailUser))) {
             $getIdFromEmailUser = $getIdFromEmailUser[0]->id;
 
 
             $project = Project::Find($request->input('project_id'));
-                if ($project) {
-                    if (DB::table('receives')->where('user_id', $getIdFromEmailUser)->where('project_id', $request->input('project_id'))->exists()) {
-                        return response()->json('All ready saved');
-                    } else {
-                        $student->user_id = $getIdFromEmailUser;
-                        $student->project_id = $request->input('project_id');
-                        $student->isCopy = $request->input('isCopy');
-                        $student->save();
-                        return response()->json('Done');
-                    }
+            if ($project) {
+                if (DB::table('receives')->where('user_id', $getIdFromEmailUser)->where('project_id', $request->input('project_id'))->exists()) {
+                    return response()->json('All ready saved');
                 } else {
-                    return response()->json("Project not found");
+                    $student->user_id = $getIdFromEmailUser;
+                    $student->project_id = $request->input('project_id');
+                    $student->isCopy = $request->input('isCopy');
+                    $student->save();
+
+                    $nofiaction = new Notification();
+                    $nofiaction->user_id_receive = $getIdFromEmailUser;
+                    $nofiaction->type_id = Auth::id();
+//                    $name_user = User::where('id', $getIdFromEmailUser)->get('name');
+                    $nofiaction->text = Auth::user()->name. ' sher project to you';
+                    $nofiaction->save();
+                    return response()->json('Done');
                 }
-            }else{
-                return response()->json("Error");
+            } else {
+                return response()->json("Project not found");
             }
+        } else {
+            return response()->json("Error");
+        }
     }
 
-    public function DeleteSherFriend($id){
+    public function DeleteSherFriend($id)
+    {
         $student = Receive::find($id);
-        if($student)
-        {
+        if ($student) {
             $student->delete();
             return response()->json([
-                'status'=>200,
-                'message'=>'Deleted Successfully.'
+                'status' => 200,
+                'message' => 'Deleted Successfully.'
             ]);
-        }
-        else
-        {
+        } else {
             return response()->json([
-                'status'=>404,
-                'message'=>'No Found.'
+                'status' => 404,
+                'message' => 'No Found.'
             ]);
         }
 
@@ -189,23 +237,24 @@ class ProjectController extends Controller
 
 
     ////////////////////////-------------likes---------////////////////////////
-    public function addLike($user_id,$project_id)
+    public function addLike($user_id, $project_id)
     {
 
+        if($user_id){
+            if (DB::table('likes')->where('user_id', $user_id)->where('project_id_sher_project', $project_id)->exists()) {
+                return redirect(url('community'));
+            } else {
+                $student = new Like();
+                $student->user_id = $user_id;
+                $student->project_id_sher_project = $project_id;
+                $student->save();
+                return redirect(url('community'));
+            }
+        }else{
+            return redirect(url('login'));
 
-//        $project = SherProject::find($project_id);
-
-//        if($project){
-
-        if (DB::table('likes')->where('user_id', $user_id)->where('project_id_sher_project', $project_id)->exists()) {
-            return response()->json(true);
-        } else {
-            $student = new Like();
-            $student->user_id = $user_id;
-            $student->project_id_sher_project = $project_id;
-            $student->save();
-            return response()->json(DB::table('likes')->where('user_id', $user_id)->where('project_id_sher_project', $project_id)->exists());
         }
+
 
 
 //        }else{
@@ -217,27 +266,24 @@ class ProjectController extends Controller
     }
 
 
-    public function DeleteLike($id){
-        $student = DB::table('likes')->where('id', $id)->delete();;
-        if($student)
-        {
-            return response()->json([
-                'status'=>200,
-                'message'=>'Deleted Successfully.'
-            ]);
-        }
-        else
-        {
-            return response()->json([
-                'status'=>404,
-                'message'=>'No Found.'
-            ]);
+    public function DeleteLike($user_id, $project_id){
+        if(Auth::id()){
+            if (DB::table('likes')->where('user_id', $user_id)->where('project_id_sher_project', $project_id)->exists()) {
+                DB::table('likes')->where('user_id', $user_id)->where('project_id_sher_project', $project_id)->delete();
+                return redirect(url('community'));
+            } else {
+                return redirect(url('community'));
+            }
+        }else{
+            return redirect(url('login'));
+
         }
     }
 
 
-    public function getLikes($id_project){
-        $following = DB::table('likes')->where('project_id_sher_project',$id_project)->count();
+    public function getLikes($id_project)
+    {
+        $following = DB::table('likes')->where('project_id_sher_project', $id_project)->count();
         return $following;
 
     }
@@ -247,10 +293,10 @@ class ProjectController extends Controller
     {
 //        $id = Auth::id();
 //        $project = DB::table('projects')->where('user_id', $id)->paginate(15);
-       $lastId = DB::getPdo()->lastInsertId();
+        $lastId = DB::getPdo()->lastInsertId();
 
         $project = Project::all();
-        return view('landpage.writinerNew',compact('project','lastId'));
+        return view('landpage.writinerNew', compact('project', 'lastId'));
 
     }
 
@@ -272,12 +318,23 @@ class ProjectController extends Controller
 
     public function indexProfileFrined($id)
     {
-        return view('landpage.ProfileFriend',compact('id'));
+        $ck = Friend::Find($id);
+
+        if ($ck){
+            return view('landpage.ProfileFriend', compact('id'));
+
+        }else{
+            return redirect(url('login'));
+        }
     }
 
     public function indexWritinerCommunity()
     {
-        return view('landpage.Writiner_community');
+        $c = SherProject::all();
+        $c1 = $this->getCommuitny();
+//        $data = json_decode($c1, true);
+
+        return view('landpage.Writiner_community', compact('c1'));
     }
 
 
@@ -289,68 +346,143 @@ class ProjectController extends Controller
 
     /*********** Start Route *************/
 
+//    public function PageProject($id){
+//        $prject = 1;
+//        return view('landpage.page', compact('id'));
+//}
+//$id,$json
+
+    public function SaveProject(Request $request){
+        $id = $request->input('id');
+        $ck = Project::Find($id);
+        if($ck){
+
+            $id_user_ouner = DB::table('projects')->where('id', $id)->select('user_id', 'name','type')->get();
+            $name_user = DB::table('users')->where('id', $id_user_ouner[0]->user_id)->select('name')->get();
+            Storage::disk('jsonUser')->put( $id_user_ouner[0]->user_id . '/projects/' .$id.'.json', $request->input('json'));
+
+            $affected = DB::table('projects')
+                ->where('id', $id)
+                ->update(['updated_at' => Carbon::now()->format('Y-m-d H:i:s')]);
+
+
+            return response()->json($request->input('json'));
+
+        }else{
+            return response()->json('Not found');
+
+        }
+
+    }
+
+
+
+    public function setIdPage($id){
+        $sher_project = Project::Find($id);
+        if($sher_project){
+            $id_user_ouner = DB::table('projects')->where('id', $sher_project->id)->select('user_id', 'name','type')->get();
+            $name_user = DB::table('users')->where('id', $id_user_ouner[0]->user_id)->select('name')->get();
+            $filename = Storage::disk('jsonUser')->get($id_user_ouner[0]->user_id . '/projects/' . $sher_project->project_id . '.json');
+            $type = $id_user_ouner[0]->type;
+
+            $receive = 0;
+            $commuinty = 0;
+            $collector = 0;
+            $project=$id;
+            return view('landpage.page', compact('receive','type','commuinty','collector','project'));
+        }else{
+            return redirect(url('login'));
+        }
+    }
+
     public function PageProject($id)
     {
         $project = Project::Find($id);
-        if($project){
-            $id_user_array = DB::table('projects')->where('id',$project->id)->select('user_id')->get();
-            $id_user=$id_user_array[0]->user_id;
+        if ($project) {
+            $id_user_array = DB::table('projects')->where('id', $project->id)->select('user_id')->get();
+            $id_user = $id_user_array[0]->user_id;
 
-            if($id_user == Auth::id()){
+            if ($id_user == Auth::id()) {
 
-                $filename=   Storage::disk('jsonUser')->get($id_user . '/projects/' .$project->id.'.json');
-                $nameUser= Auth::user()->name;
-                if($project->user_id == $project->right_to) {
+                $filename = Storage::disk('jsonUser')->get($id_user . '/projects/' . $project->id . '.json');
+                $nameUser = Auth::user()->name;
+                if ($project->user_id == $project->right_to) {
                     $permission = true;
-                }
-                else{
+                } else {
                     $permission = false;
-                    }
+                }
 
                 return response()->json([
-                    'id'=>$project->id,
-                    'user_id'=>$id_user,
-                    'name_project'=>$project->name,
-                    'name_user'=>$nameUser,
-                    'file'=>$filename,
-                    'permission'=>$permission,
+                    'id' => $project->id,
+                    'user_id' => $id_user,
+                    'name_project' => $project->name,
+                    'name_user' => $nameUser,
+                    'file' => $filename,
+                    'permission' => $permission,
+                    'read_only'=> false,
+                    'type'=> $project->type,
+
                 ]);
-            }else{
+            } else {
                 return response()->json('Access is not authorized');
             }
-        }else{
+        } else {
             return response()->json('Not found');
         }
+    }
+
+
+    public function setIdReceive($id){
+        $sher_project = Receive::Find($id);
+
+        if($sher_project){
+            $id_user_ouner = DB::table('projects')->where('id', $sher_project->project_id)->select('user_id', 'name','type')->get();
+            $name_user = DB::table('users')->where('id', $id_user_ouner[0]->user_id)->select('name')->get();
+            $filename = Storage::disk('jsonUser')->get($id_user_ouner[0]->user_id . '/projects/' . $sher_project->project_id . '.json');
+            $type = $id_user_ouner[0]->type;
+
+            $receive = $id;
+            $commuinty = 0;
+            $collector = 0;
+            $project=0;
+            return view('landpage.page', compact('receive','type','commuinty','collector','project'));
+        }else{
+            return redirect(url('login'));
+
+        }
+
 
     }
 
     public function PageReceive($id)
     {
         $receive = Receive::Find($id);
-        if ($receive){
-            $id_user_array = DB::table('receives')->where('id',$id)->select('user_id')->get();
-            $id_user=$id_user_array[0]->user_id;
+        if ($receive) {
+            $id_user_array = DB::table('receives')->where('id', $id)->select('user_id')->get();
+            $id_user = $id_user_array[0]->user_id;
 
-            if($id_user == Auth::id()){
+            if ($id_user == Auth::id()) {
 
-                $receive = DB::table('receives')->where('id',$id)->where('user_id',Auth::id())->select('project_id')->get();
-                $project_id=$receive[0]->project_id;
-                $id_user_ouner = DB::table('projects')->where('id',$project_id)->select('user_id','name')->get();
-                $name_user = DB::table('users')->where('id',$id_user_ouner[0]->user_id)->select('name')->get();
-                $filename=   Storage::disk('jsonUser')->get($id_user_ouner[0]->user_id. '/projects/' .$project_id.'.json');
+                $receive = DB::table('receives')->where('id', $id)->where('user_id', Auth::id())->select('project_id')->get();
+                $project_id = $receive[0]->project_id;
+                $id_user_ouner = DB::table('projects')->where('id', $project_id)->select('user_id', 'name','type')->get();
+                $name_user = DB::table('users')->where('id', $id_user_ouner[0]->user_id)->select('name')->get();
+                $filename = Storage::disk('jsonUser')->get($id_user_ouner[0]->user_id . '/projects/' . $project_id . '.json');
                 return response()->json([
-                    'name_project'=>$id_user_ouner[0]->name,
-                    'name_user'=>$name_user[0]->name,
-                    'file'=>$filename,
+                    'name_project' => $id_user_ouner[0]->name,
+                    'name_user' => $name_user[0]->name,
+                    'file' => $filename,
+                    "read_only"=> true,
+                    "permission"=> false,
+                    'type'=> $id_user_ouner[0]->type,
                 ]);
-            }else{
+            } else {
                 return response()->json('Access is not authorized');
 
             }
 
 
-
-        }else{
+        } else {
             return response()->json('Not Found');
         }
     }
@@ -358,29 +490,149 @@ class ProjectController extends Controller
 
     public function PageCommunity($id)
     {
-       $sher_project= SherProject::Find($id);
+        $sher_project = SherProject::Find($id);
 
-       if($sher_project){
+        if ($sher_project) {
 
-           $id_user_ouner = DB::table('projects')->where('id',$sher_project->project_id)->select('user_id','name')->get();
-           $name_user = DB::table('users')->where('id',$id_user_ouner[0]->user_id)->select('name')->get();
-           $filename=   Storage::disk('jsonUser')->get($id_user_ouner[0]->user_id. '/projects/' .$sher_project->project_id.'.json');
-           return response()->json([
-               'name_project'=>$id_user_ouner[0]->name,
-               'name_user'=>$name_user[0]->name,
-               'file'=>$filename,
-           ]);
+            $id_user_ouner = DB::table('projects')->where('id', $sher_project->project_id)->select('user_id', 'name','type')->get();
+            $name_user = DB::table('users')->where('id', $id_user_ouner[0]->user_id)->select('name')->get();
+            $filename = Storage::disk('jsonUser')->get($id_user_ouner[0]->user_id . '/projects/' . $sher_project->project_id . '.json');
+            return response()->json([
+                'name_project' => $id_user_ouner[0]->name,
+                'name_user' => $name_user[0]->name,
+                'file' => $filename,
+                "read_only"=> true,
+                "permission"=> false,
+                'type'=> $id_user_ouner[0]->type,
+            ]);
 
+//            $type = $id_user_ouner[0]->type;
+//            $data = [
+//                'name_project' => $id_user_ouner[0]->name,
+//                'name_user' => $name_user[0]->name,
+//                'file' => $filename,
+//                "read_only"=> true,
+//                "permission"=> false,
+//                'type'=> $id_user_ouner[0]->type,
+//
+//            ];
+//
+//            $receive = 0;
+//            $commuinty = $id;
+//            $collector = 0;
+//            $project=0;
+//
+//
+//            return view('landpage.page', compact('data','receive','type','commuinty','collector','project'));
 
-       }else{
-           return response()->json('Not Found');
-       }
+        } else {
+            return response()->json('Not Found');
+        }
     }
 
-    public function getCommunityLike($id){
-        $likes = DB::table('likes')->where('project_id_sher_project',$id)->count();
+
+    public function setIdCommuinty($id){
+        $sher_project = SherProject::Find($id);
+
+        if($sher_project){
+            $id_user_ouner = DB::table('projects')->where('id', $sher_project->project_id)->select('user_id', 'name','type')->get();
+            $name_user = DB::table('users')->where('id', $id_user_ouner[0]->user_id)->select('name')->get();
+            $filename = Storage::disk('jsonUser')->get($id_user_ouner[0]->user_id . '/projects/' . $sher_project->project_id . '.json');
+            $type = $id_user_ouner[0]->type;
+            $receive = 0;
+            $commuinty = $id;
+            $collector = 0;
+            $project=0;
+            return view('landpage.page', compact('receive','type','commuinty','collector','project'));
+        }else{
+            return redirect(url('login'));
+        }
+    }
+
+
+
+    public function PageCollector($id)
+    {
+
+        $ck = Collector::Find($id);
+
+        if ($ck) {
+            $ck2 = DB::table('collectors')->where('id', $id)->where('user_id', Auth::id())->exists();
+            if ($ck2) {
+
+                $collector = DB::table('collectors')->where('id', $id)->where('user_id', Auth::id())->get();
+                foreach ($collector as $value) {
+//            $icon = DB::table('users')->where('id', $value->user_id)->get('name');
+//            $name = $icon[0]->name;
+//            $value->user_name= $name;
+                    $items = array();
+                    $data = json_decode($value->collector);
+                    if ($data == NULL) {
+                        $value->collector = null;
+                    } else {
+                        foreach (json_decode($value->collector) as $project) {
+                            $items[] = ($this->IdCollectorProjectFile($project))->original;
+//            $value->$collectorArrya[]= $this->IdCollectorProject($project);
+                        }
+                    }
+////            echo print_r($items);
+                    $value->collectorArrya = $items;
+                }
+                return response()->json($collector[0]->collectorArrya);
+            } else {
+                return response()->json('Not Allow');
+
+            }
+        } else {
+            return response()->json('Not found');
+
+        }
+    }
+
+
+    public function setIdCollector($id)
+    {
+        $sher_project = Collector::Find($id);
+        if ($sher_project) {
+            $type  = $sher_project->type;
+            $receive = 0;
+            $commuinty = 0;
+            $collector = $id;
+            $project=0;
+            return view('landpage.page', compact('receive','type','commuinty','collector','project'));
+        } else
+            return redirect(url('login'));
+
+    }
+
+
+    public function IdCollectorProjectFile($id)
+    {
+        $project = Project::Find($id);
+        if ($project) {
+            $projects = DB::table('projects')->where('id', $id)->select('id', 'user_id','type')->get();
+            foreach ($projects as $value) {
+                $filename = Storage::disk('jsonUser')->get($projects[0]->user_id . '/projects/' . $id . '.json');
+                $value->id_project = $projects[0]->id;
+                $value->file = $filename;
+                $value->permission = false;
+                $value->read_only = true;
+                $value->type = $projects[0]->type;
+                unset($value->id);
+            }
+            return response()->json($projects[0]);
+        } else {
+            return response()->json('Not found');
+        }
+    }
+
+
+    public function getCommunityLike($id)
+    {
+        $likes = DB::table('likes')->where('project_id_sher_project', $id)->count();
         return response()->json($likes);
     }
+
     public function addCommunityLike($id)
     {
         $community = DB::table('sher_projects')->where('project_id', $id)->select('id')->get();
@@ -388,47 +640,171 @@ class ProjectController extends Controller
         if (array_key_exists(0, json_decode($community))) {
             $community = $community[0]->id;
 
-            if(Auth::id()){
-                if(DB::table('likes')->where('project_id_sher_project', $community)->where('user_id',Auth::id())->exists()){
+            if (Auth::id()) {
+                if (DB::table('likes')->where('project_id_sher_project', $community)->where('user_id', Auth::id())->exists()) {
                     return response()->json('All ready saved');
-                }else{
+                } else {
                     $like = new Like();
                     $like->user_id = Auth::id();
-                    $like->project_id_sher_project =$community;
+                    $like->project_id_sher_project = $community;
                     $like->save();
                     return response()->json('Done');
                 }
-            }else{
+            } else {
                 return response()->json('Access is not authorized');
             }
-        }else{
+        } else {
             return response()->json('Not Found');
         }
     }
-    public function removeCommunityLike($id){
+
+    public function removeCommunityLike($id)
+    {
 
         $community = DB::table('likes')->where('project_id_sher_project', $id)->select('project_id_sher_project')->get();
 
         if (array_key_exists(0, json_decode($community))) {
             $community = $community[0]->project_id_sher_project;
-            if(Auth::id()){
-                if(DB::table('likes')->where('project_id_sher_project', $community)->where('user_id',Auth::id())->exists()){
-                    DB::table('likes')->where('project_id_sher_project', $community)->where('user_id',Auth::id())->select('id')->delete();
+            if (Auth::id()) {
+                if (DB::table('likes')->where('project_id_sher_project', $community)->where('user_id', Auth::id())->exists()) {
+                    DB::table('likes')->where('project_id_sher_project', $community)->where('user_id', Auth::id())->select('id')->delete();
                     return response()->json('Done');
-                }else{
+                } else {
                     return response()->json('All ready saved');
                 }
-            }else{
+            } else {
                 return response()->json('Access is not authorized');
             }
-        }else{
+        } else {
             return response()->json('Not Found');
         }
 
     }
 
+// not testin
+    public function getReceiveProjectToListProject($id): \Illuminate\Http\JsonResponse
+    {
+
+        $project = Receive::find($id);
+
+        if ($project) {
+            $rec = DB::table('receives')->where('id', $id)->select('project_id', 'updated_at', 'isCopy')->get()[0];
+            $projectNew = DB::table('projects')->where('id', $rec->project_id)->get()[0];
+
+            $filename = Storage::disk('jsonUser')->get($projectNew->user_id . '/projects/' . $projectNew->id . '.json');
+            $pr = DB::table('projects')->insertGetId([
+                'user_id' => Auth::id(),
+                'name' => $projectNew->name,
+                'type' => $projectNew->type,
+                'right_to' => $projectNew->right_to,
+                'updated_at' => $projectNew->updated_at
+            ]);
+
+            $lastId = DB::getPdo()->lastInsertId();
+
+            $affected = DB::table('projects')
+                ->where('id', $lastId)
+                ->update(['path' => Auth::id() . '/projects/' . $lastId . '.json',]);
+            $filename_new = Storage::disk('jsonUser')->put(Auth::id() . '/projects/' . $lastId . '.json', $filename);
+
+            return response()->json(DB::table('projects')->where('id',$lastId)->get()[0]);
+        } else {
+            return response()->json('Not Found');
+
+        }
+    }
+    // ToRecacev
+    // not testing //
+    public static function AddToReceiveFromCommunity($id_community)
+    {
+        $project = SherProject::find($id_community);
+
+        if ($project) {
+            $rec = DB::table('sher_projects')->where('id', $id_community)->select('project_id', 'updated_at', 'isCopy')->get()[0];
+            $projectNew = DB::table('projects')->where('id', $rec->project_id)->get()[0];
+
+            $save = new Receive();
+            $save->user_id = Auth::id();
+            $save->isCopy = 1;
+            $save->project_id = $projectNew->id;
+            $save->updated_at = $projectNew->updated_at;
+            $save->save();
+
+
+//            $pr =DB::table('receives')->insertGetId([
+//                'user_id' => Auth::id(),
+//                'project_id' => $projectNew->user_id,
+//                'isCopy' => $rec->isCopy,
+//                'updated_at' => $projectNew->updated_at
+//            ]);
+            $url = url()->previous();
+            return redirect($url);
+        } else {
+            return response()->json('Not Found');
+
+        }
+    }
+
+    public static function getCopyLink($id_community)
+    {
+        $project = SherProject::find($id_community);
+
+        if ($project) {
+            $rec = DB::table('sher_projects')->where('id', $id_community)->get('id')[0];
+            $id_project = $rec->id;
+            return response()->json('http://127.0.0.1:8000/page-community/' . $id_project);
+
+        } else {
+            return response()->json('Not Found');
+
+        }
+    }
+
+
+    // not testing
+    //toProject
+    public static function AddToShareFromCommunity($id_community)
+    {
+        $project = SherProject::find($id_community);
+
+        if ($project) {
+            $rec = DB::table('sher_projects')->where('id', $id_community)->select('project_id', 'updated_at', 'isCopy')->get()[0];
+            $projectNew = DB::table('projects')->where('id', $rec->project_id)->get()[0];
+
+            $filename = Storage::disk('jsonUser')->get($projectNew->user_id . '/projects/' . $projectNew->id . '.json');
+            $pr = DB::table('projects')->insertGetId([
+                'user_id' => Auth::id(),
+                'name' => $projectNew->name,
+                'type' => $projectNew->type,
+                'right_to' => $projectNew->right_to,
+                'updated_at' => $projectNew->updated_at
+            ]);
+
+            $lastId = DB::getPdo()->lastInsertId();
+
+            $affected = DB::table('projects')
+                ->where('id', $lastId)
+                ->update(['path' => Auth::id() . '/projects/' . $lastId . '.json',]);
+            $filename_new = Storage::disk('jsonUser')->put(Auth::id() . '/projects/' . $lastId . '.json', $filename);
+            $url = url()->previous();
+            return redirect($url);
+        } else {
+            return response()->json('Not Found');
+        }
+    }
+
 
     /*********** End Route *************/
+
+
+    /************************ Strat *****************/
+
+//    // type project(){
+//
+//}
+
+
+
 
 
     /********* Start Collector *********/
@@ -657,9 +1033,66 @@ public function RenameCollector($id,$rename){
         if($state) {
             return response()->json('All ready saved');
         }else{
+
+            $data = [];
+
+            $data = array (
+                0 =>
+                    array (
+                        'name' => 'Untiteld',
+                        'bold' => false,
+                        'italic' => false,
+                        'underline' => false,
+                        'strikethrough' => false,
+                        'backColor' => '#ffffff',
+                        'fontSize' => 1,
+                        'fontName' => 'Sans-serif',
+                        'foreColor' => '#000000',
+                        'justifyCenter' => false,
+                        'justifyLeft' => false,
+                        'justifyRight' => false,
+                        'justifyFull' => false,
+                        'subscript' => false,
+                        'superscript' => false,
+                        'link' => NULL,
+                        'container' =>
+                            array (
+                            ),
+                        'nameVeiw' =>
+                            array (
+                            ),
+                    ),
+                1 =>
+                    array (
+                        'name' => 'Untiteld',
+                        'bold' => false,
+                        'italic' => false,
+                        'underline' => false,
+                        'strikethrough' => false,
+                        'backColor' => '#ffffff',
+                        'fontSize' => 1,
+                        'fontName' => 'Sans-serif',
+                        'foreColor' => '#000000',
+                        'justifyCenter' => false,
+                        'justifyLeft' => false,
+                        'justifyRight' => false,
+                        'justifyFull' => false,
+                        'subscript' => false,
+                        'superscript' => false,
+                        'link' => NULL,
+                        'container' =>
+                            array (
+                            ),
+                        'nameVeiw' =>
+                            array (
+                            ),
+                    ),
+            );
+
+
             $ready = new Ready_text_edit();
             $ready->user_id = $id;
-            $ready->json = $json;
+            $ready->json = json_decode($data);
             $ready->save();
             return response()->json(DB::table('ready_text_edits')->where('user_id',$id)->get());
         }
@@ -669,13 +1102,17 @@ public function RenameCollector($id,$rename){
         $id_user = Auth::id();
         $state =  DB::table('ready_text_edits')->where('user_id',$id_user)->exists();
 
+
+
+
         if($state) {
             $id =  DB::table('ready_text_edits')->where('user_id',$id_user)->get('id');
+
 
                 DB::table('ready_text_edits')
                 ->where('id',$id[0]->id)
                 ->update([
-                    'json' =>$json,
+                    'json' =>json_encode($json),
                 ]);
             return response()->json(DB::table('ready_text_edits')->where('id',$id[0]->id)->get());
         }else{
@@ -708,6 +1145,67 @@ public function RenameCollector($id,$rename){
         return response()->json($users);
     }
 
+    public function SearchCommunity($name_project){
+
+//        $users =SherProject::where('name','LIKE',"{$name_project}%")->select('id as user_id','email')->get();
+
+        $data = DB::table('projects')
+            ->join('sher_projects', 'projects.id', '=', 'sher_projects.project_id')
+            ->where('projects.name','LIKE',"{$name_project}%")->get('name');
+
+        return response()->json($data);
+    }
+
+
+
+    /************ Community ***********/
+
+
+    public static function getCommuitny(){
+        // we need to know name project and id and type and created_at and dec and likes
+        $commuinty = SherProject::all();
+        foreach ($commuinty as $value){
+
+            $type = DB::table('sher_projects')->where('project_id', $value->project_id)->where('owner_id',$value->owner_id)->select('isCopy','id')->get();
+            $name_project = DB::table('projects')->where('id',$value->project_id)->get();
+            if (array_key_exists(0, json_decode($name_project))) {
+                $value->name = $name_project[0]->name;
+            }
+            if (array_key_exists(0, json_decode($type))) {
+                if( $type[0]->isCopy  == 1){
+                    $value->isCopy = true;
+                }else{
+                    $value->isCopy = false;
+                }
+            }
+            $value->isLike = DB::table('likes')->where('project_id_sher_project',$type[0]->id)->where('user_id',Auth::id())->exists();
+
+            //            $value->isLike = DB::table('likes')->where('id',7)->where('user_id',Auth::id())->exists();
+            $value->type = $name_project[0]->type;
+            $value->created_at = $name_project[0]->created_at;
+            $value->dec = $name_project[0]->dec;
+            $value->likes = (new static)->getLikes($type[0]->id);
+            unset($value->updated_at);
+        }
+        return $commuinty;
+    }
+
+    public function AddToMyProjects($id){
+
+    }
+    public function CopySherProject($id){
+
+    }
+
+    public function getImage(){
+
+    }
+    public function UploadImage(){
+
+    }
+    public function getLinkAndSaveImage(){
+
+}
 
 
 
@@ -744,10 +1242,12 @@ public function RenameCollector($id,$rename){
                 if($icon == null){
                     $icon = DB::table('users')->where('id', $value->right_to)->get('name');
                     $name = $icon[0]->name;
-                    $value->icon = "https://ui-avatars.com/api/?name=$name&color=7F9CF5&background=EBF4FF";
+//                    $value->icon = "https://ui-avatars.com/api/?name=$name&color=7F9CF5&background=EBF4FF";
+                    $value->icon = null;
 
                 }else{
-                    $value->icon = "/storage/$icon";
+//                    $value->icon = "/storage/$icon";
+                    $value->icon = null;
 
                 }
 
@@ -826,7 +1326,7 @@ public function RenameCollector($id,$rename){
 
     public function DeleteProject($id,$value){
 
-        if($value){
+        if($value == 1){
             $student = Receive::find($id);
             if($student)
             {
@@ -844,8 +1344,7 @@ public function RenameCollector($id,$rename){
                 return response()->json('notExist');
             }
 
-        }else{
-
+        }else if ($value == 0){
             $student = Project::find($id);
             if($student)
             {
@@ -967,6 +1466,14 @@ public function RenameCollector($id,$rename){
                 $student->user_id_friend = $id;
                 $student->user_id =Auth::id();
                 $student->save();
+
+                $nofiaction = new Notification();
+                $nofiaction-> user_id_receive = $id;
+                $nofiaction->type_id = Auth::id();
+//                $name_user = User::where('id',$id)->get('name');
+                $nofiaction->text = Auth::user()->name .' has followed you';
+                $nofiaction->save();
+
                 return redirect(url('/profile-friend/'.$id));
 
             }
@@ -1034,6 +1541,7 @@ public function RenameCollector($id,$rename){
 
     public static function getIcon(){
 
+
         $icon = DB::table('users')->where('id', Auth::id())->get('profile_photo_path')[0]->profile_photo_path;
 
         if($icon == null){
@@ -1092,13 +1600,43 @@ public function RenameCollector($id,$rename){
     }
 
 
+//    public function getNotification(){
+//        $id = Auth::id();
+//        $project = DB::table('notifications')->where('user_id_receive', $id)->where('type','project')->select('id','text','user_id_receive')->get();
+//        $friend = DB::table('notifications')->where('user_id_receive', $id)->where('type','friend')->select('id','text','user_id_receive')->get();
+//        $system = DB::table('notifications')->where('user_id_receive', $id)->where('type','')->select('id','text','user_id_receive')->get();
+//
+//        return response()->json(['projects'=>$project,'friends'=>$friend,'others'=>$system]);
+//
+//    }
+
+
     public function getNotification(){
         $id = Auth::id();
-        $project = DB::table('notifications')->where('user_id_receive', $id)->where('type','project')->select('id','text','user_id_receive')->get();
-        $friend = DB::table('notifications')->where('user_id_receive', $id)->where('type','friend')->select('id','text','user_id_receive')->get();
-        $system = DB::table('notifications')->where('user_id_receive', $id)->where('type','')->select('id','text','user_id_receive')->get();
-        return response()->json(['projects'=>$project,'friends'=>$friend,'others'=>$system]);
+
+//        $project = DB::table('notifications')->where('user_id_receive', $id)->where('type','project')->select('id','text','user_id_receive')->get();
+//        $friend = DB::table('notifications')->where('user_id_receive', $id)->where('type','friend')->select('id','text','user_id_receive')->get();
+//        $system = DB::table('notifications')->where('user_id_receive', $id)->where('type','')->select('id','text','user_id_receive')->get();
+//
+//        return response()->json(['projects'=>$project,'friends'=>$friend,'others'=>$system]);
+
+        $nav = DB::table('notifications')->where('user_id_receive', $id)->get();
+                return response()->json($nav);
     }
+
+
+    public function DeleteNotification($id){
+        DB::table('notifications')->where('id',$id)->delete();
+        $url = url()->previous();
+        return redirect($url);
+    }
+
+
+
+    public function BackPage(){
+        return redirect(url('writiner'));
+    }
+
 
 
 
@@ -1311,7 +1849,7 @@ public function RenameCollector($id,$rename){
                     'topics' =>
                         array (
                         ),
-                    'images' =>
+                    'image' =>
                         array (
                         ),
                     'icons' =>
@@ -1384,7 +1922,7 @@ public function RenameCollector($id,$rename){
                                     'topics' =>
                                         array (
                                         ),
-                                    'images' =>
+                                    'image' =>
                                         array (
                                         ),
                                     'icons' =>
@@ -1451,9 +1989,14 @@ public function RenameCollector($id,$rename){
             Storage::disk('jsonUser')->put($id . '/projects/' .$lastId.'.json', json_encode($data));
             DB::commit();
 
+            $receive =0;
+            $commuinty = 0;
+            $collector=0;
+            $project=$lastId;
 
-            return redirect()->to('page/'.$lastId)
-                ->with('success', 'User created successfully.');
+//             return view(route('page-project-id'), compact('receive','type','commuinty','collector','project'));
+
+            return redirect()->to('page-project-id/'.$lastId)->with( ['receive' => $receive,'commuinty'=>$commuinty , 'collector'=>$collector,'project'>$project,'type'>$type] );
 
         } else {
 // redirect the user to the login page

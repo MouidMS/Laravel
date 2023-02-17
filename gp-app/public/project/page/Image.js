@@ -1,12 +1,12 @@
 import ImageComponent from "./ImageComponent.js"
-import {compomnentBtn,componentList,isFullPreemption} from "./main.js";
+import {compomnentBtn, componentList, isFullPreemption, IsReadOnly} from "./main.js";
 import { currentComponent,setCurrentComponent,currentComponentFlag,setCurrentComponentFlag,setIsSupComponent} from "./Component.js";
 import { compInFlag } from "./ParentComponent.js";
 
 
-export default class Icon extends ImageComponent{
-    
-    path = [];
+export default class Image extends ImageComponent{
+
+    path;
     constructor(path,
         blur,brightness,contrast,grayscale,hueRotate,invert,saturate,sepia,
         width,height,xAxis,yAxis,zAxis,opacity,rotation,padding,skew,
@@ -31,80 +31,68 @@ export default class Icon extends ImageComponent{
         current.appendChild(comp);
         return comp;
     }
-    
-    compomnentIn = (e) =>{
-        componentList.getAddComponentList().remove();
-        if(this != currentComponent){
-            setCurrentComponentFlag(true);
-        }
 
-        if(currentComponentFlag){
-            setIsSupComponent(false);
-            setCurrentComponentFlag(false);
-            if (compInFlag) {
-                console.log('componentIn');
-                console.log("Image")
-                compomnentBtn.setComponentName('Image');
-                setCurrentComponent(this);
-                this.addControlBtn();
-                compomnentBtn.prepairImageEdit(
-                this.getBlur(),this.getBrightness(),this.getContrast(),this.getGrayscale(),this.getHueRotate(),this.getInvert(),this.getSaturate(),this.getSepia(),
-                this.getWidth(),this.getHeight(),this.getOpacity(),this.getXAxis(),this.getYAxis(),this.getZAxis(),this.getRotation(),this.getPadding(),this.getskew(),
-                this.getBackGrounColor(),this.getBackGrounDesign(),this.getBorderColor(),this.getBorderDesign(),this.getBorderStyle(),this.getBorderWidth(),this.getBorderRadius(),this.getpolygon(),
-                this.getIsSizesEditable(),this.getIsDesignEditable(),this.getIsContentEditable());
-                this.getCompomnent().parentNode.appendChild(compomnentBtn.getEditContainer());
-            
+    compomnentIn = (e) =>{
+        if(!IsReadOnly){
+            componentList.getAddComponentList().remove();
+            if(this != currentComponent){
+                setCurrentComponentFlag(true);
+            }
+
+            if(currentComponentFlag){
+                setIsSupComponent(false);
+                setCurrentComponentFlag(false);
+                if (compInFlag) {
+                    console.log('componentIn');
+                    console.log("Image")
+                    compomnentBtn.setComponentName('Image');
+                    setCurrentComponent(this);
+                    this.addControlBtn();
+                    compomnentBtn.prepairImageSideBtn(this.getIsSizesEditable(),this.getIsDesignEditable(),this.getIsContentEditable());
+                    this.getCompomnent().parentNode.appendChild(compomnentBtn.getSideBtnContainer());
+                    compomnentBtn.prepairImageEdit(
+                        this.getBlur(),this.getBrightness(),this.getContrast(),this.getGrayscale(),this.getHueRotate(),this.getInvert(),this.getSaturate(),this.getSepia(),
+                        this.getWidth(),this.getHeight(),this.getOpacity(),this.getXAxis(),this.getYAxis(),this.getZAxis(),this.getRotation(),this.getPadding(),this.getskew(),
+                        this.getBackGrounColor(),this.getBackGrounDesign(),this.getBorderColor(),this.getBorderDesign(),this.getBorderStyle(),this.getBorderWidth(),this.getBorderRadius(),this.getpolygon(),
+                        this.getIsSizesEditable(),this.getIsDesignEditable(),this.getIsContentEditable());
+                    this.getCompomnent().parentNode.appendChild(compomnentBtn.getEditContainer());
+
+                }
             }
         }
     }
 
 
-    
+
     setPath(value){
         if (isFullPreemption) {
-            if (value == 'none') {
+            if (value == '' || value == null) {
+                this.path = '';
+                this.getCompomnent().src = './Images/ComponentList/I m.png'
             }else{
-                value.forEach(element => {
-                    this.Add(element);
-                });
-                this.getCompomnent().src = this.getPath()[0];
-            }   
+                this.path = value;
+                this.getCompomnent().src = value;
+            }
         } else {
             if (this.getIsContentEditable()) {
-                if (value == 'none') {
+                if (value == '' || value == null) {
+                    this.path = '';
+                    this.getCompomnent().src = './Images/ComponentList/images.png'
                 }else{
-                    value.forEach(element => {
-                        this.add(element);
-                    });
-                this.getCompomnent().src = this.getPath()[0];
-
-                } 
+                    this.path = value;
+                    this.getCompomnent().src = value;
+                }
             }
         }
     }
 
-    Add(value){
-        this.path.push(value);
-    }
-    Delete(value){
-        let index = this.getPath().indexOf(value);
-        this.getPath().splice(index,1);
 
-        // .removeChild(value);
-    }
 
     getPath(){
         return this.path;
     };
-    getCurrntPath(){
-
-    }
-    getNumberOfPaths(){
-        return this.path.length;
-    }
 
 
-    
     addEvents(){
         this.getCompomnent().addEventListener("click",this.compomnentIn);
     }
@@ -112,7 +100,7 @@ export default class Icon extends ImageComponent{
     removeComponentFormat(){
         this.setBlur(0)
         this.setBrightness(0)
-        this.setContrast(0)
+        this.setContrast(100)
         this.setGrayscale(0)
         this.setHueRotate(0)
         this.setInvert(0)

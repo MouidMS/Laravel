@@ -147,3 +147,28 @@ z-index: 2 !important;
         aspect-ratio: 3/2;
     }
     
+
+    .itemContainer{
+        display: flex;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .itemText{
+        max-width: 80%;
+        overflow: hidden;
+        white-space: nowrap;
+        min-width: 20px;
+    }
+    .itemDot{
+        flex: 1;
+        border-bottom: 3px dotted;
+        margin-bottom: 5px;
+        min-width: 2px;
+    }
+    .itemNum{
+        min-width: 20px;
+        max-width: 15%;
+        overflow: hidden;
+        white-space: nowrap;
+    }

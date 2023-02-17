@@ -1,6 +1,6 @@
 import Compomnent from "./Component.js";
-import { currentPage } from "./Page.js";
-import { compomnentBtn} from "./main.js";
+import { currentPage,heighestlowestCmponent} from "./Page.js";
+import { compomnentBtn,ProjectTyp} from "./main.js";
 
 
 export let compInFlag = true;
@@ -8,6 +8,9 @@ export let compInFlag = true;
 export function setCompInFlag(value){
     compInFlag = value;
 }
+
+export let heighestComponent = 0;
+
 
 
 export default class ParentComponent extends Compomnent{
@@ -18,8 +21,8 @@ export default class ParentComponent extends Compomnent{
     yAxis;
     zAxis;
 
-    
-    
+
+
 
     constructor(width,height,xAxis,yAxis,zAxis,
         opacity,rotation,padding,skew,
@@ -31,7 +34,7 @@ export default class ParentComponent extends Compomnent{
             this.xAxis = xAxis;
             this.yAxis = yAxis;
             this.zAxis = zAxis;
-            
+
     }
 
     applyparentComponentEdites(){
@@ -41,7 +44,7 @@ export default class ParentComponent extends Compomnent{
         this.setZAxis(this.getZAxis());
     }
 
-    
+
     // if(addleft < 0 ){
     //     addleft = addleft ;
     // }else if(addleft > rect.width ){
@@ -101,7 +104,8 @@ export default class ParentComponent extends Compomnent{
             this.setMaxWidth(value);
 
         } else {
-            if (((value >= 0)&&(value + this.getWidth() <= currentPage.getPage().getBoundingClientRect().width))){    
+            console.log(currentPage.getPage().getBoundingClientRect().width)
+            if (((value >= 0)&&(value + this.getWidth() <= currentPage.getPage().getBoundingClientRect().width))){
                 this.xAxis = value;
                 this.getCompomnent().parentNode.style.left = `${value}px`;
                 this.setMaxWidth(value);
@@ -111,11 +115,18 @@ export default class ParentComponent extends Compomnent{
     }
 
     setYAxis(value){
-        if (false) {
+        if (ProjectTyp == "WB") {
             if(value >= 0){
                 this.yAxis = value;
                 this.getCompomnent().parentNode.style.top = `${value}px`;
                 this.getCompomnent().parentNode.style.maxHeight = `unset`;
+                console.log((heighestlowestCmponent >=  value +this.getHeight()) && (heighestlowestCmponent - 20 <=  value +this.getHeight()))
+                if (((heighestlowestCmponent >=  value +this.getHeight())
+                && (heighestlowestCmponent - 20 <=  value +this.getHeight()))
+                || (heighestlowestCmponent < value +this.getHeight())) {
+                    console.log("heighest")
+                    currentPage.setPageWidth();
+                }
             }
         } else if(value >= 0 && this.getHeight() == 'auto'){
             this.yAxis = value;
@@ -134,6 +145,10 @@ export default class ParentComponent extends Compomnent{
     setZAxis(value){
         this.zAxis = value;
         this.getCompomnent().style.zIndex = `${value}`;
+        console.log(heighestComponent,value)
+        if (heighestComponent < value) {
+            heighestComponent = parseInt(value)
+        }
     }
 
     setMaxWidth(value){
@@ -149,6 +164,7 @@ export default class ParentComponent extends Compomnent{
 
     addControlBtn(){
         if (compInFlag) {
+            // compomnentBtn.clearBlock();
             this.getCompomnent().parentNode.appendChild(compomnentBtn.getDrager());
             this.getCompomnent().parentNode.appendChild(compomnentBtn.getCopy());
             this.getCompomnent().parentNode.appendChild(compomnentBtn.getDelete());

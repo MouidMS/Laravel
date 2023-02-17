@@ -56,7 +56,7 @@
     <div id="poupChild">
         <div class="popupShare" id="popupShare">
             <ul class="pop-link">
-                <li><button class="share-btn" id="btn-community">Commnuity</button></li>
+                <li><button class="share-btn" id="btn-community">Community</button></li>
                 <li><button class="share-btn" id="btn-friend" >Friend</button></li>
             </ul>
             <div class="pop-commnuity" id="pop-commnuity">
@@ -166,13 +166,13 @@
 
 <div id="blur">
     <button id="Buttonmenuplus--A4">
-        <img src="./project/images/A4.png">
+        <img src="./project/images/A4B.png">
     </button>
     <button id="Buttonmenuplus--Slide">
-        <img src="./project/images/Slide.png">
+        <img src="./project/images/SLB.png">
     </button>
     <button id="Buttonmenuplus--Blanck">
-        <img src="./project/images/blackboard.png">
+        <img src="./project/images/WBB.png">
     </button>
     <button id="Buttonmenuplus--main">
         <i class="fa-solid fa-plus "></i>
@@ -180,14 +180,14 @@
     <!-- Start Header  -->
     <header>
         <div class="container">
-            <i class="fa-solid fa-bars toggle-menu" onclick="toggleMenuMainNav()"></i>
-            <a href="{{url('/')}}"><img src="./project/images/Logopage.png" alt="logo" class="logo_img"></a>
-            <nav>
+            <i class="fa-solid fa-bars toggle-menu"  id="btn-toggleMenu"></i>
+            <a href="{{url('/')}}" id="logoHead"><img src="./project/images/Logopage.png" alt="logo" class="logo_img"></a>
+            <nav id="mainMenuHead">
                 <ul class="main-nav" id="main-navMenu">
                     <li><a class="active" href="{{url('/writiner')}}">Home</a></li>
-                    <li><a href="{{url('/edit-text')}}">Edit Text</a></li>
-                    <li><a href="{{url('/document')}}">Documents</a></li>
-                    <li><a href="{{url('/collector')}}">Commnuity</a></li>
+                    <li><a href="{{url('/edit-text')}}">ReadyEdit Text</a></li>
+                    <li><a href="{{url('/document')}}">Collector</a></li>
+                    <li><a href="{{url('/community')}}">Community</a></li>
                 </ul>
             </nav>
             <div class="navbar-account">
@@ -197,41 +197,48 @@
                     <i id="iconSearch" class="fa-solid fa-magnifying-glass"></i>
                 </div>
                 <div class="ballStar">
+
+                    @if(\Illuminate\Support\Facades\DB::table('notifications')->where('user_id_receive',\Illuminate\Support\Facades\Auth::id())->exists())
                     <div class="star"></div>
+                    @else
+
+                    @endif
 
                     <i class="fa-solid fa-bell" onclick="toggleMenuNot()"></i>
                 </div>
                 <div class="notification-menu">
                     <div class="notification-menu-wrap" id="notificationMenu">
-                        <div class="menu">
-                            <button>
-                                <div class="massage">
-                                    <i class="fa-solid fa-bell"></i>
-                                    <p class="Message-text">ssssssssssssssssssssss</p>
-                                </div>
-                                <div class="close">
-                                    <i class="fa-solid fa-xmark close"></i>
-                                </div>
-                            </button>
-                            <button>
-                                <div class="massage">
-                                    <i class="fa-solid fa-bell"></i>
-                                    <p class="Message-text">ssssssssssssssssssssss</p>
-                                </div>
-                                <div class="close">
-                                    <i class="fa-solid fa-xmark close"></i>
-                                </div>
-                            </button>
-                            <button>
-                                <div class="massage">
-                                    <i class="fa-solid fa-bell"></i>
-                                    <p class="Message-text">ssssssssssssssssssssss</p>
-                                </div>
-                                <div class="close">
-                                    <i class="fa-solid fa-xmark close"></i>
-                                </div>
-                            </button>
-                        </div>
+
+                        @if(\Illuminate\Support\Facades\DB::table('notifications')->where('user_id_receive',\Illuminate\Support\Facades\Auth::id())->exists())
+
+                            @foreach(\Illuminate\Support\Facades\DB::table('notifications')->where('user_id_receive',\Illuminate\Support\Facades\Auth::id())->get() as $value)
+                            <div class="menu">
+                                    <button>
+                                        <div class="massage">
+                                            <i class="fa-solid fa-bell"></i>
+                                            <p class="Message-text">{{$value->text}}</p>
+                                        </div>
+                                        <a href="{{url('delete-notification/'.$value->id)}}"><div class="close">
+                                            <i class="fa-solid fa-xmark close"></i>
+                                        </div></a>
+                                    </button>
+
+                            </div>
+                            @endforeach
+
+                        @else
+                            <div class="menu">
+                                <button>
+                                    <div class="massage">
+                                        <p class="Message-text">There are no new alerts for you</p>
+                                    </div>
+
+                                </button>
+
+                            </div>
+                        @endif
+
+
                     </div>
                 </div>
                 <div class="fff">
@@ -247,8 +254,8 @@
                                 Profile
                             </a>
                             <a href="#">
-                                <i class="fa-solid fa-fill-drip"></i>
-                                Theme
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                Search Friends
                             </a>
 
                             <a href="#" onclick="document.getElementById('form1').submit();">

@@ -1,6 +1,6 @@
 import { currentPage } from "./Page.js";
 import Compomnent from "./Component.js";
-import { textEdit,context_menu,componentList, setTextEdit } from "./main.js";
+import { textEdit,context_menu,componentList,Translait,setTextEdit} from "./main.js";
 
 export default class SupTextComponent extends Compomnent{
     text;
@@ -104,6 +104,7 @@ export default class SupTextComponent extends Compomnent{
         // console.log(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0)
         if (sel !== "" && sel !== undefined) {
             setTextEdit();
+            Translait();
             componentList.getAddComponentList().remove();
                 console.log('insertTectEdit//leftClick');
                 var addleft = e.clientX ;
@@ -129,6 +130,7 @@ export default class SupTextComponent extends Compomnent{
         let sel;
         try{sel = window.getSelection().getRangeAt(0).toString();}catch{}
         setTextEdit();
+        Translait();
         componentList.getAddComponentList().remove();
         console.log('insertTectEdit//rightClick');
         var addleft = e.clientX;
@@ -166,7 +168,7 @@ export default class SupTextComponent extends Compomnent{
     }
     saveText = (e) =>{
         this.text = this.getCompomnent().innerHTML;
-        console.log(this.getText())
+        // console.log(this.getText())
     }
 
 

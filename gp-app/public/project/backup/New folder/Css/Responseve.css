@@ -1,0 +1,26 @@
+@media screen and (max-width:825px) {
+    body{
+
+        zoom: 95%;
+    }
+}
+@media screen and (max-width: 785px) {
+    body{
+
+        zoom: 90%;
+    }
+}
+
+@media screen and (max-width:745px) {
+    body{
+
+        zoom: 85%;
+    }
+}
+
+@media screen and (max-width:705px) {
+    body{
+
+        zoom: 80%;
+    }
+}

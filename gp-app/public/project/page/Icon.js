@@ -1,5 +1,5 @@
 import ParentComponent from "./ParentComponent.js";
-import {compomnentBtn,componentList,isFullPreemption} from "./main.js";
+import {compomnentBtn,componentList,isFullPreemption,IsReadOnly} from "./main.js";
 import { currentComponent,setCurrentComponent,currentComponentFlag,setCurrentComponentFlag,setIsSupComponent} from "./Component.js";
 import { compInFlag } from "./ParentComponent.js";
 
@@ -39,28 +39,32 @@ export default class Icon extends ParentComponent{
         current.appendChild(comp);
         return comp;
     }
-    
-    compomnentIn = (e) =>{
-        componentList.getAddComponentList().remove();
-        if(this != currentComponent){
-            setCurrentComponentFlag(true);
-        }
 
-        if(currentComponentFlag){
-            setIsSupComponent(false);
-            setCurrentComponentFlag(false);
-            if (compInFlag) {
-                console.log('componentIn');
-                console.log("ICON")
-                compomnentBtn.setComponentName('Icon');
-                setCurrentComponent(this);
-                this.addControlBtn();
-                compomnentBtn.prepairIconEdit(this.getIcon(),this.getColor(),this.getSize(),
-                this.getWidth(),this.getHeight(),this.getOpacity(),this.getXAxis(),this.getYAxis(),this.getZAxis(),this.getRotation(),this.getPadding(),this.getskew(),
-                this.getBackGrounColor(),this.getBackGrounDesign(),this.getBorderColor(),this.getBorderDesign(),this.getBorderStyle(),this.getBorderWidth(),this.getBorderRadius(),this.getpolygon(),
-                this.getIsSizesEditable(),this.getIsDesignEditable(),this.getIsContentEditable());
-                this.getCompomnent().parentNode.appendChild(compomnentBtn.getEditContainer());
-            
+    compomnentIn = (e) =>{
+        if(!IsReadOnly){
+            componentList.getAddComponentList().remove();
+            if(this != currentComponent){
+                setCurrentComponentFlag(true);
+            }
+
+            if(currentComponentFlag){
+                setIsSupComponent(false);
+                setCurrentComponentFlag(false);
+                if (compInFlag) {
+                    console.log('componentIn');
+                    console.log("ICON")
+                    compomnentBtn.setComponentName('Icon');
+                    setCurrentComponent(this);
+                    this.addControlBtn();
+                    compomnentBtn.prepairParagraphSideBtn(this.getIsSizesEditable(),this.getIsDesignEditable(),this.getIsContentEditable());
+                    this.getCompomnent().parentNode.appendChild(compomnentBtn.getSideBtnContainer());
+                    compomnentBtn.prepairIconEdit(this.getIcon(),this.getColor(),this.getSize(),
+                        this.getWidth(),this.getHeight(),this.getOpacity(),this.getXAxis(),this.getYAxis(),this.getZAxis(),this.getRotation(),this.getPadding(),this.getskew(),
+                        this.getBackGrounColor(),this.getBackGrounDesign(),this.getBorderColor(),this.getBorderDesign(),this.getBorderStyle(),this.getBorderWidth(),this.getBorderRadius(),this.getpolygon(),
+                        this.getIsSizesEditable(),this.getIsDesignEditable(),this.getIsContentEditable());
+                    this.getCompomnent().parentNode.appendChild(compomnentBtn.getEditContainer());
+
+                }
             }
         }
     }
@@ -85,7 +89,7 @@ export default class Icon extends ParentComponent{
                 classlist.forEach(element => {
                     this.getCompomnent().classList.add(element);
                 });
-            }   
+            }
         } else {
             if (this.getIsContentEditable()) {
                 if (value == 'none') {
@@ -94,7 +98,7 @@ export default class Icon extends ParentComponent{
                         this.getCompomnent().classList.remove(element);
                     });
                     this.icon = value;
-                    
+
                 }else{
                     classlist = this.icon.split(" ");
                     classlist.forEach(element => {
@@ -105,7 +109,7 @@ export default class Icon extends ParentComponent{
                     classlist.forEach(element => {
                         this.getCompomnent().classList.add(element);
                     });
-                } 
+                }
             }
         }
     }
@@ -130,7 +134,7 @@ export default class Icon extends ParentComponent{
     }
 
 
-    
+
     addEvents(){
         this.getCompomnent().addEventListener("click",this.compomnentIn);
     }

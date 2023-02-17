@@ -142,6 +142,7 @@ a {
 .doc-list {
     height: 450px;
     overflow-y: scroll;
+    padding: 1rem;
 }
 .doc-list .doc-header {
   display: flex;
@@ -177,8 +178,18 @@ a {
   }
   .doc-list .doc-header .date {
     margin: 0 0.4rem;
+
   }
+
 }
+@media (min-width: 375px) and (max-width: 767px) {
+    .doc-list .doc-header {
+        font-size: 1.4rem;
+        padding: .4rem;
+
+    }
+}
+
 .doc-list .doc-body Details {
   margin-top: 8px;
 }
@@ -211,24 +222,23 @@ a {
   flex:2;
 }
 .textOverflow {
-  overflow-x: hidden;
+  overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 .textOverflow:hover {
   z-index: 1;
-  overflow-x: initial;
+  overflow: initial;
   white-space: initial;
   text-overflow: initial;
 }
 @media (min-width: 375px) and (max-width: 767px) {
   .doc-list .doc-body Details > summary {
-    font-size: 1.2rem;
-    padding: 0.1rem;
+      font-size: 1rem;
+      padding: 1rem;
   }
   .doc-list .doc-body Details > summary .typefolder {
-    padding: 1rem;
-    font-size: 1.6rem;
+      height: 16px;
   }
   .doc-list .doc-body Details > summary .title {
     /* width: 82px;
@@ -335,11 +345,10 @@ a {
   margin-bottom: 0;
 }
 .project .typefolder {
-  margin-left: 3.2rem;
-  padding: 1.2rem;
-  display: inline-block;
-  font-size: 1.6rem;
-  cursor: default;
+    margin-left: 3.2rem;
+    display: inline-block;
+    cursor: default;
+    height: 24px;
 }
 .project .title {
   /* width: 52%; */
@@ -380,18 +389,25 @@ a {
     padding: 1rem;
   }
   .project {
-    font-size: 1.2rem;
+      font-size: 1.2rem;
+      padding: 0.4rem;
+      margin-bottom: 1rem;
   }
   .project .title {
-    flex: 7;
+    flex: 3;
     /* width: 32%; */
     /* margin-left: 0.8rem;
     margin-right: 1.6rem; */
-
+      font-size: 1rem;
   }
+
+    .project .date {
+        font-size: 1rem;
+    }
+
   .project .typefolder {
     margin-left: 1.6rem;
-    padding: 0.8rem;
+    height: 16px;
   }
 
   .project .butt-short button {

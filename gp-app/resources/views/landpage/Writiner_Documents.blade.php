@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Collector</title>
 
     <link rel="icon" type="image/x-icon" href="./project/images/Ravicon-loading.png">
     <!-- Docments CSS File -->
@@ -40,17 +40,17 @@
 <!-- Start header  -->
 <header>
     <div class="container">
-        <i class="fa-solid fa-bars toggle-menu" onclick="toggleMenuMainNav()"></i>
+        <i class="fa-solid fa-bars toggle-menu" id="btn-toggleMenu"></i>
         <a href="{{url('/')}}"><img src="./project/images/Logopage.png" alt="logo" class="logo_img"></a>
         <nav>
-            <ul class="main-nav" id="main-navMenu">
+{{--            <ul class="main-nav" id="main-navMenu">--}}
                 <ul class="main-nav" id="main-navMenu">
                     <li><a href="{{url('/writiner')}}">Home</a></li>
-                    <li><a href="{{url('/edit-text')}}">Edit Text</a></li>
-                    <li><a class="active" href="{{url('/document')}}">Documents</a></li>
-                    <li><a href="{{url('/collector')}}">Commnuity</a></li>
+                    <li><a href="{{url('/edit-text')}}">ReadyText Edit</a></li>
+                    <li><a class="active" href="{{url('/document')}}">Collector</a></li>
+                    <li><a href="{{url('/community')}}">Commnuity</a></li>
                 </ul>
-            </ul>
+{{--            </ul>--}}
         </nav>
         <div class="navbar-account">
             <div class="search" id="search">
@@ -58,40 +58,48 @@
                 <i id="iconSearch" class="fa-solid fa-magnifying-glass"></i>
             </div>
             <div class="ballStar">
-                <div class="star"></div>
+
+                @if(\Illuminate\Support\Facades\DB::table('notifications')->where('user_id_receive',\Illuminate\Support\Facades\Auth::id())->exists())
+                    <div class="star"></div>
+                @else
+
+                @endif
+
                 <i class="fa-solid fa-bell" onclick="toggleMenuNot()"></i>
             </div>
             <div class="notification-menu">
                 <div class="notification-menu-wrap" id="notificationMenu">
-                    <div class="menu">
-                        <button>
-                            <div class="massage">
-                                <i class="fa-solid fa-bell"></i>
-                                <p class="Message-text">ssssssssssssssssssssss</p>
+
+                    @if(\Illuminate\Support\Facades\DB::table('notifications')->where('user_id_receive',\Illuminate\Support\Facades\Auth::id())->exists())
+
+                        @foreach(\Illuminate\Support\Facades\DB::table('notifications')->where('user_id_receive',\Illuminate\Support\Facades\Auth::id())->get() as $value)
+                            <div class="menu">
+                                <button>
+                                    <div class="massage">
+                                        <i class="fa-solid fa-bell"></i>
+                                        <p class="Message-text">{{$value->text}}</p>
+                                    </div>
+                                    <a href="{{url('delete-notification/'.$value->id)}}"><div class="close">
+                                            <i class="fa-solid fa-xmark close"></i>
+                                        </div></a>
+                                </button>
+
                             </div>
-                            <div class="close">
-                                <i class="fa-solid fa-xmark close"></i>
-                            </div>
-                        </button>
-                        <button>
-                            <div class="massage">
-                                <i class="fa-solid fa-bell"></i>
-                                <p class="Message-text">ssssssssssssssssssssss</p>
-                            </div>
-                            <div class="close">
-                                <i class="fa-solid fa-xmark close"></i>
-                            </div>
-                        </button>
-                        <button>
-                            <div class="massage">
-                                <i class="fa-solid fa-bell"></i>
-                                <p class="Message-text">ssssssssssssssssssssss</p>
-                            </div>
-                            <div class="close">
-                                <i class="fa-solid fa-xmark close"></i>
-                            </div>
-                        </button>
-                    </div>
+                        @endforeach
+
+                    @else
+                        <div class="menu">
+                            <button>
+                                <div class="massage">
+                                    <p class="Message-text">There are no new alerts for you</p>
+                                </div>
+
+                            </button>
+
+                        </div>
+                    @endif
+
+
                 </div>
             </div>
             <div class="fff">
@@ -107,8 +115,8 @@
                             Profile
                         </a>
                         <a href="#">
-                            <i class="fa-solid fa-fill-drip"></i>
-                            Theme
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            Search Friends
                         </a>
 
                         <a href="#" onclick="document.getElementById('form1').submit();">
@@ -129,11 +137,11 @@
 <!-- Start documents -->
 <div class="doc-container">
     <div class="documents">
-        <h1>Document</h1>
+        <h1>Collector</h1>
         <hr>
         <div class="doc-title">
-            <h2>My document list</h2>
-            <button class="newFolder"  id="addNewProject"><i class="fa-solid fa-folder-plus"></i>New Folder</button>
+            <h2>My collector list</h2>
+            <button class="newFolder"  id="addNewProject"><i class="fa-solid fa-folder-plus"></i>New Collector</button>
             <hr>
         </div>
         <div class="doc-list">
@@ -149,38 +157,6 @@
                 </div>
             </div>
             <div class="doc-body">
-                <Details>
-                    <summary>
-                        <div class="typefolder">
-                            <i class="fa-solid fa-file"></i>
-                        </div>
-                        <div class="title textOverflow" >
-                            document default
-                        </div>
-                        <div class="username textOverflow">
-                            feras feras feras feras
-                        </div>
-                        <div class="date textOverflow">
-                            22 Dec 2022
-                        </div>
-                    </summary>
-                    <div class="details-content">
-                        <div class="project" id="test676">
-                            <div class="typefolder">
-                                <i class="fa-solid fa-file"></i>
-                            </div>
-                            <div class="title textOverflow">
-                                <p>project CS</p>
-                            </div>
-                            <div class="date textOverflow">
-                                22 Dec 2022
-                            </div>
-                            <div class="butt-short">
-                                <button class="trash"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </Details>
             </div>
         </div>
     </div>
@@ -217,15 +193,16 @@
 
 <div id="poupParent">
     <div id="poupChild">
+        // pop add file
         <div class="popupAddFile" id="popupAddFile">
-            <h1><i class="fa-solid fa-file-circle-plus"></i> Add file</h1>
+            <h1><i class="fa-solid fa-file-circle-plus"></i> Add project</h1>
             <div class="con-pop-AddFile">
-                <h1>What you type flie is added ?</h1>
+                <h1>What you type project is added ?</h1>
                 <ul class="AddFile-list" id="AddFileList">
                     <li>
                         <i class="fa-solid fa-file"></i>
                         <div class="typefile">
-                            <h3>feras yahya al zahrani</h3>
+                            <h3 class="textOverflow">feras yahya al zahrani</h3>
                         </div>
                         <input type="checkbox" class="checkbox-input">
                     </li>
@@ -241,11 +218,11 @@
 
         <!-- popupAddFolder -->
         <div class="popupAddFolder" id="popupAddFolder">
-            <h1><i class="fa-solid fa-folder-plus"></i></i> New Folder</h1>
+            <h1><i class="fa-solid fa-folder-plus"></i></i> New Collectors</h1>
             <div class="input-container">
-                <label class="text">Name folder :</label>	<br>
+                <label class="text">Name Collector :</label>	<br>
                 <input type="text" id="collectorName">
-                <labal class="text" >What you type folder ?</labal>
+                <labal class="text" >What you type collector ?</labal>
             </div>
 
             <div>

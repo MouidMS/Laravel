@@ -58,6 +58,33 @@ function disableBtn(){
     // console.log(Buttonmenuplus_Blanck)
     Buttonmenuplus_main.disabled = false;
 }
+
+
+
+
+/*********************** Search ******************************/
+// let searchFlag = false;
+// let search = document.getElementById('search');
+// search.addEventListener('click',function () {
+//
+//     if (searchFlag){
+//
+//     }else {
+//
+//     }
+//     searchFlag = !searchFlag;
+//
+// })
+// let searchBar = document.getElementById('searchBar');
+//
+// searchBar.addEventListener('input', function () {
+//
+//     if (){
+//
+//     }else{}
+//
+// })
+
 /*********************** pupRedXmark *********************/
 
 let popupRedXmark = document.getElementById('popupRedXmark');
@@ -208,7 +235,7 @@ popRemoveok.addEventListener('click', function (event){
     poupParent.style.display = "none";
     currentProjectMenu.hideProject();
     settingProject.remove();
-    deleteProject(currentProjectMenu.getId(),currentProjectMenu.getIsReceved());
+    deleteProject(currentProjectMenu.getId(),currentProjectMenu.getIsReceved()? 1: 0);
 });
 
 let popupDescription = document.getElementById("popupDescription");
@@ -526,14 +553,10 @@ function DeleteSherFriend(id){
 }
 
 function deleteProject(id,value){
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+
 
     $.ajax({
-        type: "DELETE",
+        type: "GET",
         url: "/delete-project/" + id+"/"+value,
         dataType: "json",
         success: function (response) {
@@ -763,6 +786,57 @@ function getNotification(){
     });
 }
 
+function SearchUsers(email){
+    $.ajax({
+        type: "GET",
+        url: "/search-user/"+email,
+        dataType: "json",
+        success: function (response) {
+            console.log(response)
+        }, error: function (xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(thrownError);
+        }
+    });
+}
+
+function getReceiveProjectToListProject(id){
+    $.ajax({
+        type: "GET",
+        url: "/rev_get/"+id,
+        dataType: "json",
+        success: function (response) {
+
+            menuFlag = true;
+            Nproject = new Project(response.id,
+                response.user_id,
+                response.name,
+                response.type,
+                response.dec,
+                response.right_to,
+                response.created_at,
+                response.updated_at,
+                response.Isfavorite,
+                response.isSherCopy,
+                response.IsSher_project,
+                response.isProjectCopy,
+                false,
+                response.icon);
+
+            projectlist.push(Nproject);
+            gridItemSection.appendChild(Nproject.getGridItem());
+
+            console.log(response)
+        }, error: function (xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(thrownError);
+        }
+    });
+}
+
+
+
+
 
 //
 // let projectList = [];
@@ -834,7 +908,8 @@ function displayProject(projectList){
             projects.IsSher_project,
             projects.isProjectCopy,
             false,
-            projects.icon);
+            projects.icon,
+            projects.likes);
 
         projectlist.push(Nproject);
         gridItemSection.appendChild(Nproject.getGridItem());
@@ -861,6 +936,8 @@ function displayProject(projectList){
         gridItemSection.appendChild(Nproject.getGridItem());
     }
 }
+
+
 
 
 let menuItem = document.createElement('div');
@@ -941,7 +1018,7 @@ currntI = document.createElement("i");
 currntI.classList.add("fa-solid");
 currntI.classList.add("fa-trash");
 RemoveProject.appendChild(currntI);
-currntI = document.createTextNode("Romove");
+currntI = document.createTextNode("Remove");
 RemoveProject.appendChild(currntI);
 RemoveProject.addEventListener('click', function(event){
     removeAllPop();
@@ -950,6 +1027,23 @@ RemoveProject.addEventListener('click', function(event){
     poupParent.style.display = "block";
 });
 menuItem.appendChild(RemoveProject);
+
+
+let CopyProject = document.createElement('button');
+currntI = document.createElement("i");
+currntI.classList.add("fa-solid");
+currntI.classList.add("fa-trash");
+CopyProject.appendChild(currntI);
+currntI = document.createTextNode("Copy");
+CopyProject.appendChild(currntI);
+CopyProject.addEventListener('click', function(event){
+    menuFlag = false;
+    getReceiveProjectToListProject(currentProjectMenu.getId())
+
+});
+menuItem.appendChild(CopyProject);
+
+
 
 
 
@@ -984,6 +1078,8 @@ class Project {
     desViewer;
     likViewer;
     likeContainer;
+    copuBtn
+    des1;
 
 
     constructor(id, userId, name, type, des, rightTo, createAt, upDateAt, isFavorit, isSherCopy, isSherProject, isProjectCopy, isReceved, userIcon,like) {
@@ -999,9 +1095,10 @@ class Project {
         this.setIsFavorit(isFavorit);
         this.setIsSherProject(isSherProject);
         this.setIsSherCopy(isSherCopy);
-        this.setIsReceved(isReceved);
-        this.setUserIcon(userIcon);
         this.setIsProjectCopy(isProjectCopy)
+        this.setIsReceved(isReceved);
+        console.log(userIcon)
+        this.setUserIcon(userIcon);
         this.setLike(like);
     }
 
@@ -1022,24 +1119,60 @@ class Project {
         this.main.addEventListener('mouseout', this.hideInfo)
         holder.appendChild(this.main);
 
-        this.desViewer = document.createElement('p');
+
+//
+// <div className="fakeDiv"></div>
+//
+// <div className="aaaa">
+//
+//     <h5>Description</h5>
+// </div>
+//
+
+            this.main.insertAdjacentHTML('beforeend', '<div className="fakeDiv"></div>')
+
+        this.des1 = document.createElement('div');
+        this.des1.classList.add('aaaa');
+        // this.des1.insertAdjacentHTML('beforeend','<p className="textOverflow" id="desViewer" style="display: block;"></p>')
+
+        this.desViewer = document.createElement('h5');
         this.desViewer.id = 'desViewer';
 
-        this.main.appendChild(this.desViewer);
+        this.des1.appendChild(this.desViewer);
+
+        this.main.appendChild(this.des1);
+
+
+        // <div className="likeContainer" id="likeContainer" style="display: block;">
+        //     <div className="bbbb">
+        //         <i id="likeIcon" className="fa-solid fa-heart"></i>
+        //         <div id="likeViewer" style="display: block;">
+        //             0
+        //         </div>
+        //     </div>
+        // </div>
+
 
         this.likeContainer = document.createElement('div')
         this.likeContainer.id = 'likeContainer';
+        this.likeContainer.classList.add('likeContainer');
 
+        let likename = document.createElement('div')
+        likename.classList.add('bbbb');
+        likename.insertAdjacentHTML('beforeend', '<i id="likeIcon" className="fa-solid fa-heart"></i>');
 
-        let likeIcon = document.createElement('i');
-        likeIcon.id = 'likeIcon';
-        likeIcon.classList.add('fa-solid');
-        likeIcon.classList.add('fa-heart');
-        this.likeContainer.appendChild(likeIcon);
+        //
+        // let likeIcon = document.createElement('i');
+        // likeIcon.id = 'likeIcon';
+        // likeIcon.classList.add('fa-solid');
+        // likeIcon.classList.add('fa-heart');
+        // this.likeContainer.appendChild(likeIcon);
 
         this.likViewer = document.createElement('div');
         this.likViewer.id = 'likeViewer';
-        this.likeContainer.appendChild(this.likViewer)
+        likename.appendChild(this.likViewer)
+
+        this.likeContainer.appendChild(likename)
 
 
 
@@ -1081,11 +1214,37 @@ class Project {
 
         this.projectOwnerImage = document.createElement('img');
         this.projectOwnerImage.addEventListener('click', this.openInfoFreind)
-        this.projectOwner.appendChild(this.projectOwnerImage)
+        this.projectOwner.appendChild(this.projectOwnerImage);
+
+
+        // this.copuBtn = document.createElement('button');
+        // this.copuBtn.id = 'copyBtn';
+        // this.copuBtn.classList.add('FS-optionButt',);
+        // // this.copuBtn.insertAdjacentHTML('beforeend','kk');
+        // this.copuBtn.insertAdjacentHTML('beforeend','<span class="tooltiptext">Copy project</span>');
+        // this.copuBtn.insertAdjacentHTML('beforeend','<i class="fa-solid fa-copy"></i>');
 
     }
 
 
+//des
+// <div className="aaaa viewDs-Lk">
+// <p className="textOverflow" id="desViewer" style="display: block;">
+// rjymtmmtu
+// </p>
+// <h5>Description</h5>
+// </div>
+
+//like
+// <div className="likeContainer" id="likeContainer" style="display: block;">
+// <div className="bbbb">
+// <i id="likeIcon" className="fa-solid fa-heart"></i>
+// <div id="likeViewer" style="display: block;">
+// 0
+// </div>
+// </div>
+//
+// </div>
     hideProject(){
         this.getGridItem().style.display = "none";
     };
@@ -1105,16 +1264,32 @@ class Project {
                 currentProjectMenu.getGridItem().style.zIndex = 1;
             }
 
+            Share.remove();
+            Unshare.remove();
+            Rename.remove();
+            Description.remove();
+            RemoveProject.remove();
+            CopyProject.remove();
+
+            if (this.getIsReceved()){
+                if (this.getIsProjectCopy()){
+                    menuItem.appendChild(CopyProject)
+                }
+                menuItem.appendChild(RemoveProject)
+            }else{
+                menuItem.appendChild(Rename)
+                menuItem.appendChild(Description)
+                menuItem.appendChild(RemoveProject)
+                if (this.getIsSherProject()) {
+                    menuItem.appendChild(Unshare)
+                } else {
+                    menuItem.appendChild(Share)
+                }
+            }
+
             this.getGridItem().style.zIndex = 10;
             currentProjectMenu = this;
             console.log(currentProjectMenu.getId())
-            Share.remove();
-            Unshare.remove()
-            if (this.getIsSherProject()) {
-                menuItem.appendChild(Unshare)
-            } else {
-                menuItem.appendChild(Share)
-            }
             let rect = this.getMain().getBoundingClientRect();
             let x = e.clientX - rect.left;
             let y = e.clientY - rect.top;
@@ -1126,13 +1301,15 @@ class Project {
     }
 
     displayInfo = (e) =>{
-        this.desViewer.style.display = "block";
+        this.main.style.zIndex = 5;
+        this.des1.style.display = "block";
         this.likeContainer.style.display = "block";
 
     }
 
     hideInfo = (e) =>{
-        this.desViewer.style.display = "none";
+        this.main.style.zIndex = 1;
+        this.des1.style.display = "none";
         this.likeContainer.style.display = "none";
     }
 
@@ -1142,7 +1319,12 @@ class Project {
 
 
     openProject = (e) => {
-        window.location = `page/${this.getId()}`;
+        // console.log(this.getIsReceved())
+        if(this.getIsReceved()){
+            window.location = `page-receive-id/${this.getId()}`;
+        } else {
+            window.location = `page-project-id/${this.getId()}`;
+        }
     }
 
     openInfoFreind = (e) => {
@@ -1181,13 +1363,13 @@ class Project {
         this.type = value;
         switch (value) {
             case 'A4':
-                this.getProjectType().src = "./project/images/A4.png";
+                this.getProjectType().src = "./project/images/A4B.png";
                 break;
             case 'SL':
-                this.getProjectType().src = "./project/images/Slide.png";
+                this.getProjectType().src = "./project/images/SLB.png";
                 break;
             case 'WB':
-                this.getProjectType().src = "./project/images/blackboard.png";
+                this.getProjectType().src = "./project/images/WBB.png";
                 break
         }
     }
@@ -1197,7 +1379,7 @@ class Project {
             this.getDesViewer().remove();
         }else {
             this.des = value;
-            this.getMain().appendChild(this.getDesViewer());
+            this.des1.appendChild(this.getDesViewer());
             this.setdesViewer(value);
         }
     }
@@ -1249,26 +1431,31 @@ class Project {
 
     setIsReceved(value) {
         this.isReceved = value;
+        if (value){
+            if (this.getIsProjectCopy()){
+                // this.getMain().appendChild(this.getCopuBtn())
+            }else{
+                // this.getCopuBtn().remove();
+            }
+        }
     }
+
 
     setUserIcon(value) {
         this.userIcon = value;
         if (value != null) {
             this.getProjectOwnerImage().src = value;
+            this.getMain().appendChild(this.getProjectOwner());
         }
 
     }
 
     setIsProjectCopy(value) {
         this.isProjectCopy = value;
-        if (value) {
-            this.getMain().appendChild(this.getProjectOwner());
-        } else {
-            this.getProjectOwner().remove();
-        }
     }
 
     setLike(value){
+        console.log(value)
         if (this.getIsSherProject()){
             this.like = value;
             this.getMain().appendChild(this.getLikeContainer());
@@ -1382,6 +1569,7 @@ class Project {
     getLike(){return this.like}
     getLikViewer(){return this.likViewer}
     getLikeContainer(){return this.likeContainer;}
+    getCopuBtn(){return this.copuBtn;}
 }
 
 

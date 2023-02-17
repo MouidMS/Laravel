@@ -27,6 +27,19 @@ function toggleMenuNot(e){
    notificationMenu.classList.toggle("open-menu")
 }
 
+let btn_toggleMenu =document.getElementById("btn-toggleMenu")
+let main_navMenu =document.getElementById("main-navMenu")
+
+let menuFlagm = true;
+btn_toggleMenu.addEventListener("click", function (e) {
+    if (menuFlagm){
+        main_navMenu.style.display="flex";
+    }else {
+        main_navMenu.style.display="none";
+    };
+    menuFlagm = !menuFlagm;
+});
+
 
 
 

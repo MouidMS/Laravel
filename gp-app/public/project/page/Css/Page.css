@@ -1,7 +1,7 @@
 :root{
     --pnX: 0px;
     --pnY: 0px;
-    
+
 }
 .outer2{
     position: relative;
@@ -13,7 +13,7 @@
     background-color: white;
     box-shadow: 0px 0px 3px 0.1px black;
     counter-increment: page-number;
-    margin-bottom: 100px;
+    margin-bottom: 140px;
     border: 1px solid;
     display: block;
 }
@@ -26,15 +26,20 @@
  min-height: 1082.24px;
  max-width: 753.92px;
  max-height: 1082.24px;
+ border-image-repeat: stretch;
+border-image-slice: 30;
+box-sizing: content-box;
+
 }
 
 .page{
+
     min-width: 733.92px;
     min-height: 1042.24px;
     max-width: 733.92px;
     max-height: 1042.24px;
     background-color: white;
-    position: relative; 
+    position: relative;
     margin-top: 20px;
     margin-left: 10px;
     /* border: 1px solid; */
@@ -72,5 +77,37 @@
 
 .pagenumber::after{
     content: counter(page-number);
-    
-} 
+
+}
+
+
+
+#main-content{
+    position: relative;
+    width: 90%;
+    background-color: #f5f5ff;
+    display: flex;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    padding: 0 20px;
+}
+#main-content::-webkit-scrollbar{
+    width: 0px;
+}
+#main-content::-webkit-scrollbar{
+    width: 0px;
+}
+
+
+
+
+#pages{
+    margin: 0 auto;
+    background-color: #f5f5ff;
+    padding-top: 140px;
+    min-height: 1140px;
+
+}
+
+
+

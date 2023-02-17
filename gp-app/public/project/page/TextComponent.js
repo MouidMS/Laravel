@@ -1,6 +1,6 @@
 import { currentPage } from "./Page.js";
 import ParentComponent from "./ParentComponent.js";
-import { textEdit,context_menu,componentList, setTextEdit } from "./main.js";
+import { textEdit,context_menu,componentList,Translait,setTextEdit} from "./main.js";
 
 export default class TextComponent extends ParentComponent{
     text;
@@ -99,6 +99,7 @@ export default class TextComponent extends ParentComponent{
 
 
     addTextEdit = (e) =>{
+        
         let sel;
         try{sel = window.getSelection().getRangeAt(0).toString();}catch{}
         let rect = currentPage.getPage().getBoundingClientRect();
@@ -106,6 +107,7 @@ export default class TextComponent extends ParentComponent{
         let menurect = context_menu.getBoundingClientRect();
         // console.log(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0)
         if (sel !== "" && sel !== undefined) {
+            Translait();
             setTextEdit();
             componentList.getAddComponentList().remove();
                 console.log('insertTectEdit//leftClick');
@@ -135,6 +137,7 @@ export default class TextComponent extends ParentComponent{
         let sel;
         try{sel = window.getSelection().getRangeAt(0).toString();}catch{}
         setTextEdit();
+        Translait();
         componentList.getAddComponentList().remove();
         console.log('insertTectEdit//rightClick');
         var addleft = e.clientX;

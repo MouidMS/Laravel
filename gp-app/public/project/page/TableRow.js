@@ -1,4 +1,4 @@
-import {compomnentBtn,componentList,isFullPreemption} from "./main.js";
+import {compomnentBtn, componentList, isFullPreemption, IsReadOnly} from "./main.js";
 import Compomnent, { currentComponent,setCurrentComponent,currentComponentFlag,setCurrentComponentFlag, setIsSupComponent} from "./Component.js";
 import { compInFlag } from "./ParentComponent.js";
 import TableHeader from "./TableHeader.js";
@@ -6,7 +6,7 @@ import TableCell from "./TableCell.js";
 
 
 export default class TableRow{
-    
+
     compomnent;
     opacity;
     rotation;
@@ -45,18 +45,18 @@ export default class TableRow{
             curentCell = new TableCell("","none","none","normal","normal","normal",
                 1,0,5,0,
                 "#ffffff","none",['#000000','#000000','#000000','#000000','#000000'],"none",['solid','solid','solid','solid','solid'],[1,1,1,1,1],[0,0,0,0,0],"none",
-                true,true,true)    
+                true,true,true)
         }
         curentCell.addEvents();
         this.getCells().push(curentCell);
         this.getCompomnent().appendChild(curentCell.getCompomnent());
     }
 
-    deleteCell(){  
+    deleteCell(){
         if (this.getCells().length > 1) {
             this.getCells().splice(-1,1);
             this.getCompomnent().removeChild(this.getCompomnent().lastChild);
-        }          
+        }
     }
 
     prepairComponent(){
@@ -64,25 +64,27 @@ export default class TableRow{
         comp.classList.add('tableRow');
         return comp;
     }
-    
+
 
     compomnentIn = (e) =>{
-        if (e.shiftKey) {
-            if(this != currentComponent){
-                setCurrentComponentFlag(true);
-            }
-            if(currentComponentFlag){
-                setIsSupComponent(true);
-                setCurrentComponentFlag(false);
-                console.log('componentIn//TableRow');
-                compomnentBtn.setComponentName('Table Row');
-                setCurrentComponent(this);
-                compomnentBtn.prepairTbleRowEdit(this.getOpacity(),this.getRotation(),this.getSkew(),this.getIsSizesEditable());
-                this.getCompomnent().parentNode.parentNode.appendChild(compomnentBtn.getEditContainer());
+        if (!IsReadOnly){
+            if (e.shiftKey) {
+                if(this != currentComponent){
+                    setCurrentComponentFlag(true);
+                }
+                if(currentComponentFlag){
+                    setIsSupComponent(true);
+                    setCurrentComponentFlag(false);
+                    console.log('componentIn//TableRow');
+                    compomnentBtn.setComponentName('Table Row');
+                    setCurrentComponent(this);
+                    compomnentBtn.prepairTbleRowEdit(this.getOpacity(),this.getRotation(),this.getSkew(),this.getIsSizesEditable());
+                    this.getCompomnent().parentNode.parentNode.appendChild(compomnentBtn.getEditContainer());
+                }
             }
         }
     }
-    
+
 
 
     addEvents(){
@@ -99,7 +101,7 @@ export default class TableRow{
     }
     setSkew(value){
         this.skew = value;
-        this.getCompomnent().style.transform = `skew(${value}deg)`; 
+        this.getCompomnent().style.transform = `skew(${value}deg)`;
     }
     setIsSizesEditable(value){
         this.isSizesEditable = value;

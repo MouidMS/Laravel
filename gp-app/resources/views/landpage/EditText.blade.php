@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Text</title>
+    <title>ReadyEdit Text</title>
 
     <link rel="icon" type="image/x-icon" href="./project/images/Ravicon-loading.png">
     <!-- Main Writiner_home CSS File -->
@@ -40,15 +40,15 @@
 <!-- Start header  -->
 <header>
     <div class="container">
-        <i class="fa-solid fa-bars toggle-menu" onclick="toggleMenuMainNav()"></i>
+        <i class="fa-solid fa-bars toggle-menu" id="btn-toggleMenu"></i>
         <a href="{{url('/')}}"><img src="./project/images/Logopage.png" alt="logo" class="logo_img"></a>
         <nav>
             <ul class="main-nav" id="main-navMenu">
                 <ul class="main-nav" id="main-navMenu">
                     <li><a href="{{url('/writiner')}}">Home</a></li>
-                    <li><a class="active" href="{{url('/edit-text')}}">Edit Text</a></li>
-                    <li><a href="{{url('/document')}}">Documents</a></li>
-                    <li><a href="{{url('/collector')}}">Commnuity</a></li>
+                    <li><a class="active" href="{{url('/edit-text')}}">ReadyText Edit </a></li>
+                    <li><a href="{{url('/document')}}">Collector</a></li>
+                    <li><a href="{{url('/community')}}">Commnuity</a></li>
                 </ul>
             </ul>
         </nav>
@@ -59,40 +59,48 @@
                 <i class="fa-solid fa-magnifying-glass"></i>
             </div>
             <div class="ballStar">
-                <div class="star"></div>
+
+                @if(\Illuminate\Support\Facades\DB::table('notifications')->where('user_id_receive',\Illuminate\Support\Facades\Auth::id())->exists())
+                    <div class="star"></div>
+                @else
+
+                @endif
+
                 <i class="fa-solid fa-bell" onclick="toggleMenuNot()"></i>
             </div>
             <div class="notification-menu">
                 <div class="notification-menu-wrap" id="notificationMenu">
-                    <div class="menu">
-                        <button>
-                            <div class="massage">
-                                <i class="fa-solid fa-bell"></i>
-                                <p class="Message-text">ssssssssssssssssssssss</p>
+
+                    @if(\Illuminate\Support\Facades\DB::table('notifications')->where('user_id_receive',\Illuminate\Support\Facades\Auth::id())->exists())
+
+                        @foreach(\Illuminate\Support\Facades\DB::table('notifications')->where('user_id_receive',\Illuminate\Support\Facades\Auth::id())->get() as $value)
+                            <div class="menu">
+                                <button>
+                                    <div class="massage">
+                                        <i class="fa-solid fa-bell"></i>
+                                        <p class="Message-text">{{$value->text}}</p>
+                                    </div>
+                                    <a href="{{url('delete-notification/'.$value->id)}}"><div class="close">
+                                            <i class="fa-solid fa-xmark close"></i>
+                                        </div></a>
+                                </button>
+
                             </div>
-                            <div class="close">
-                                <i class="fa-solid fa-xmark close"></i>
-                            </div>
-                        </button>
-                        <button>
-                            <div class="massage">
-                                <i class="fa-solid fa-bell"></i>
-                                <p class="Message-text">ssssssssssssssssssssss</p>
-                            </div>
-                            <div class="close">
-                                <i class="fa-solid fa-xmark close"></i>
-                            </div>
-                        </button>
-                        <button>
-                            <div class="massage">
-                                <i class="fa-solid fa-bell"></i>
-                                <p class="Message-text">ssssssssssssssssssssss</p>
-                            </div>
-                            <div class="close">
-                                <i class="fa-solid fa-xmark close"></i>
-                            </div>
-                        </button>
-                    </div>
+                        @endforeach
+
+                    @else
+                        <div class="menu">
+                            <button>
+                                <div class="massage">
+                                    <p class="Message-text">There are no new alerts for you</p>
+                                </div>
+
+                            </button>
+
+                        </div>
+                    @endif
+
+
                 </div>
             </div>
             <div class="fff">
@@ -107,10 +115,12 @@
                             <i class="fa-solid fa-user"></i>
                             Profile
                         </a>
+
                         <a href="#">
-                            <i class="fa-solid fa-fill-drip"></i>
-                            Theme
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            Search Friends
                         </a>
+
 
                         <a href="#" onclick="document.getElementById('form1').submit();">
                             <i class="fa-solid fa-pen"></i>
@@ -129,38 +139,17 @@
 <!-- Start edit text -->
 <div class="editText-container">
     <div class="filesText">
-        <H1>Edit Text</H1>
+        <H1>ReadyText Edit</H1>
         <hr>
         <h2>Files Text</h2>
         <div class="filesText-box">
-            <div class="hold-files">
-                <div class="file">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                    <p>lodsfsfsdf</p>
-                </div>
-                <div class="file">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                    <p>lodsfsfsdf</p>
-                </div>
-                <div class="file">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                    <p>lodsfsfsdf</p>
-                </div>
-                <div class="file">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                    <p>lodsfsfsdf</p>
-                </div>
-                <div class="file">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                    <p>lodsfsfsdf</p>
-                </div>
-
+            <div class="hold-files" id="fileHolder">
 
             </div>
             <div class="butt-arow">
-                <button>+</button>
+                <button id="addRDE">+</button>
                 <hr>
-                <button>-</button>
+                <button id="deleteRDE">-</button>
             </div>
         </div>
     </div>
@@ -187,10 +176,10 @@
                 </select>
                 <button id="bold"><i class="fa-solid fa-bold"></i></button>
                 <button id="italic"><i class="fa-solid fa-italic"></i></button>
-                <button id="underline>"><i class="fa-solid fa-underline"></i></button>
+                <button id="underline" ><i class="fa-solid fa-underline"></i></button>
                 <button id="strikethrough"><i class="fa-solid fa-strikethrough"></i></button>
-                <button id="highlighter"><i class="fa-solid fa-highlighter"></i></button>
-                <button id="color"><i class="fa-solid fa-a"></i><i class="fa-solid fa-caret-down"></i></button>
+                <button> <i class="fa-solid fa-highlighter"></i> <input type="color" id="highlighter"></button>
+                <button> <i class="fa-solid fa-a"></i><i class="fa-solid fa-caret-down"></i> <input type="color" id="color"></button>
                 <button id="align-left"><i class="fa-solid fa-align-left"></i></button>
                 <button id="align-center"><i class="fa-solid fa-align-center"></i></button>
                 <button id="align-right"><i class="fa-solid fa-align-right"></i></button>
@@ -198,6 +187,7 @@
                 <button id="superscript"><i class="fa-solid fa-superscript"></i></button>
                 <button id="subscript"><i class="fa-solid fa-subscript"></i></button>
                 <button id="link"><i class="fa-solid fa-link"></i></button>
+                <button id="unLink"><i class="fa-solid fa-link"></i></button>
 
                 <!-- </div> -->
             </div>
@@ -205,7 +195,7 @@
         <!-- <h2>Text:</h2> -->
         <div class="text">
             <div class="text-box">
-                <P>Writiner</P>
+                <P id="targitText">Writiner</P>
             </div>
             <div class="butt-saveText">
                 <button>Save</button>
@@ -214,6 +204,8 @@
     </div>
 </div>
 <!-- End edit text -->
-<script src="./project/js/readytext.js"></script>
+<script type="module" src="./project/js/readytext.js"></script>
+<script type="text/javascript" src="./project/js/header.js"></script>
+
 </body>
 </html>

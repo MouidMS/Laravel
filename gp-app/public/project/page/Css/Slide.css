@@ -52,5 +52,30 @@
 } 
 
 
+#main-content{
+    position: relative;
+    width: 90%;
+    background-color: #f5f5ff;
+    display: flex;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    padding: 0 20px;
+}
+#main-content::-webkit-scrollbar{
+    width: 0px;
+}
+#main-content::-webkit-scrollbar{
+    width: 0px;
+}
+
+
+#pages{
+    margin: 0 auto;
+    background-color: #f5f5ff;
+    padding-top: 140px;
+    min-height: 1140px;
+    
+}
+
 
 

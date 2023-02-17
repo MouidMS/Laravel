@@ -1,5 +1,5 @@
 import  TextComponent  from "./TextComponent.js";
-import {compomnentBtn,componentList,isFullPreemption} from "./main.js";
+import {compomnentBtn, componentList, isFullPreemption, IsReadOnly} from "./main.js";
 import { currentComponent,setCurrentComponent,currentComponentFlag,setCurrentComponentFlag, setIsSupComponent} from "./Component.js";
 import { compInFlag } from "./ParentComponent.js";
 
@@ -7,10 +7,10 @@ import { compInFlag } from "./ParentComponent.js";
 export default class Topic extends TextComponent{
     topicLevel;
 
-   
-  
+
+
     constructor(text,topicLevel,isLined,textEffect,wordSpace,letterSpace,lineHeight,width,height,xAxis,yAxis,zAxis,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable){
-        super(text,isLined,textEffect,wordSpace,letterSpace,lineHeight,width,height,xAxis,yAxis,zAxis,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable);   
+        super(text,isLined,textEffect,wordSpace,letterSpace,lineHeight,width,height,xAxis,yAxis,zAxis,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable);
         this.setCompomnent(this.prepairComponent());
         this.applyTextEdits();
         this.applyparentComponentEdites();
@@ -25,12 +25,14 @@ export default class Topic extends TextComponent{
         comp.classList.add('topic');
         comp.classList.add('TextRoot');
         comp.classList.add('component');
-        if (isFullPreemption) {
-            comp.setAttribute("contenteditable", true);
-        } else {
-            if (this.getIsContentEditable()) {
-                comp.setAttribute("contenteditable", false);
-            } 
+        if (!IsReadOnly){
+            if (isFullPreemption) {
+                comp.setAttribute("contenteditable", true);
+            } else {
+                if (this.getIsContentEditable()) {
+                    comp.setAttribute("contenteditable", false);
+                }
+            }
         }
         let current = document.createElement('div');
         current.classList.add('parentComponent');
@@ -39,31 +41,35 @@ export default class Topic extends TextComponent{
     }
 
     compomnentIn = (e) =>{
-        componentList.getAddComponentList().remove();
-        if(this != currentComponent){
-            setCurrentComponentFlag(true);
-        }
+        if (!IsReadOnly) {
+            componentList.getAddComponentList().remove();
+            if(this != currentComponent){
+                setCurrentComponentFlag(true);
+            }
 
-        if(currentComponentFlag){
-            compomnentBtn.getSideBtnContainer().remove();
-            setIsSupComponent(false);
-            setCurrentComponentFlag(false);
-            if (compInFlag) {
-                console.log('componentIn');
-                console.log("Topic")
-                compomnentBtn.setComponentName('Topic');
-                setCurrentComponent(this);
-                this.addControlBtn();
-                compomnentBtn.prepairTopicEdit(this.getTopicLevel(),this.getIsLined(),this.getTextEffect(),this.getWordSpace(),this.getLetterSpace(),this.getLineHeight(),this.getWidth(),this.getHeight(),this.getXAxis(),
-                this.getYAxis(),this.getZAxis(),this.getOpacity(),this.getRotation(),this.getPadding(),this.getskew(),this.getBackGrounColor(),this.getBackGrounDesign(),this.getBorderColor(),this.getBorderDesign(),
-                this.getBorderStyle(),this.getBorderWidth(),this.getBorderRadius(),this.getpolygon(),
-                this.getIsSizesEditable(),this.getIsDesignEditable(),this.getIsContentEditable());
-                this.getCompomnent().parentNode.appendChild(compomnentBtn.getEditContainer());
-            
+            if(currentComponentFlag){
+                compomnentBtn.getSideBtnContainer().remove();
+                setIsSupComponent(false);
+                setCurrentComponentFlag(false);
+                if (compInFlag) {
+                    console.log('componentIn');
+                    console.log("Topic")
+                    compomnentBtn.setComponentName('Topic');
+                    setCurrentComponent(this);
+                    this.addControlBtn();
+                    compomnentBtn.prepairParagraphSideBtn(this.getIsSizesEditable(),this.getIsDesignEditable(),this.getIsContentEditable());
+                    this.getCompomnent().parentNode.appendChild(compomnentBtn.getSideBtnContainer());
+                    compomnentBtn.prepairTopicEdit(this.getTopicLevel(),this.getIsLined(),this.getTextEffect(),this.getWordSpace(),this.getLetterSpace(),this.getLineHeight(),this.getWidth(),this.getHeight(),this.getXAxis(),
+                        this.getYAxis(),this.getZAxis(),this.getOpacity(),this.getRotation(),this.getPadding(),this.getskew(),this.getBackGrounColor(),this.getBackGrounDesign(),this.getBorderColor(),this.getBorderDesign(),
+                        this.getBorderStyle(),this.getBorderWidth(),this.getBorderRadius(),this.getpolygon(),
+                        this.getIsSizesEditable(),this.getIsDesignEditable(),this.getIsContentEditable());
+                    this.getCompomnent().parentNode.appendChild(compomnentBtn.getEditContainer());
+
+                }
             }
         }
     }
-    
+
     setTopicLevel(value){
         this.topicLevel = value;
         this.getCompomnent().style.fontWeight = `900`;
@@ -110,7 +116,7 @@ export default class Topic extends TextComponent{
     removeComponentFormat(){
         // text, isLined,textEffect,wordSpace,letterSpace,lineHeight, width,height,opacity,xAxis,yAxis,zAxis,rotation,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,isSizesEditable,isDesignEditable,isContentEditable
         //"", "none","none",0,0,0, 100,100,1,x,y,0,0,"#ffffff","none","#ffffff","none","solid",0,0,false,false,false
-        
+
         this.setIsLined("none")
         this.setTextEffect("none")
         this.setWordSpace("normal")

@@ -213,25 +213,7 @@ export default class Compomnent{
     
     setPolygon(value){
         this.polygon = value;
-        switch (value) {
-            case "none":
-                this.getCompomnent().style.clipPath = "none";
-                break;
-            case "Triangle":
-                this.getCompomnent().style.clipPath = "polygon(50% 0%, 0% 100%, 100% 100%)";
-                break;
-            case "Star":
-                this.getCompomnent().style.clipPath = " polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)";
-                break;
-            case "Message":
-                this.getCompomnent().style.clipPath = "polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%)";
-                break;
-            case "Ocagon":
-                this.getCompomnent().style.clipPath = " polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)";
-                break;
-
-        }
-        
+        this.getCompomnent().style.clipPath = value;
     }
 
     setIsDesignEditable(value){

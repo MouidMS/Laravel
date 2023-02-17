@@ -73,9 +73,9 @@ export default class TempFile{
     setFalg(value){
         this.flag = value;
         if (value) {
-            this.getContainer().style.border = '5px solid blue';
+            this.getContainer().style.border = '2px solid blue';
         } else {
-            this.getContainer().style.border = '2px solid black';
+            this.getContainer().style.border = '1px solid black';
         }
     }
 

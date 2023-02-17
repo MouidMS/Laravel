@@ -28,14 +28,14 @@
 <!-- Start header  -->
 <header>
     <div class="container">
-        <i class="fa-solid fa-bars toggle-menu" onclick="toggleMenuMainNav()"></i>
+        <i class="fa-solid fa-bars toggle-menu" id="btn-toggleMenu"></i>
         <a href="{{url('/')}}"><img src="../project/images/Logopage.png" alt="logo" class="logo_img"></a>
         <nav>
             <ul class="main-nav" id="main-navMenu">
                 <li><a href="{{url('/writiner')}}">Home</a></li>
                 <li><a href="{{url('/edit-text')}}">Edit Text</a></li>
                 <li><a href="{{url('/document')}}">Documents</a></li>
-                <li><a href="{{url('/collector')}}">Commnuity</a></li>
+                <li><a href="{{url('/community')}}">Commnuity</a></li>
             </ul>
         </nav>
         <div class="navbar-account">
@@ -170,7 +170,7 @@
 
                 @foreach($projects as $p)
 
-               <a href="{{url('page/'.$p->id)}}" style="    text-decoration:none; "><li><i class="fa-solid fa-file"></i>{{App\Http\Controllers\ProjectController::getNameProject($p->project_id) }}</li></a>
+               <a href="{{url('page-community-id/'.$p->id)}}" style="    text-decoration:none; "><li><i class="fa-solid fa-file"></i>{{App\Http\Controllers\ProjectController::getNameProject($p->project_id) }}</li></a>
 
                 @endforeach
             </ul>

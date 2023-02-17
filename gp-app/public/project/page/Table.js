@@ -1,5 +1,5 @@
 import ParentComponent from "./ParentComponent.js";
-import {compomnentBtn,componentList,isFullPreemption} from "./main.js";
+import {compomnentBtn, componentList, isFullPreemption, IsReadOnly} from "./main.js";
 import { currentComponent,setCurrentComponent,currentComponentFlag,setCurrentComponentFlag,setIsSupComponent,setCurrentComponentParent,setCurrentComponentParentFlag,currentComponentParent,currentComponentParentFlag} from "./Component.js";
 import { compInFlag } from "./ParentComponent.js";
 import TableRow from "./TableRow.js";
@@ -16,7 +16,7 @@ export default class Table extends ParentComponent{
     rows = [];
 
     constructor(isCollapse,isSticyCol,isSticyRow,rowSpace,colSpace,width,height,xAxis,yAxis,zAxis,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable){
-        super(width,height,xAxis,yAxis,zAxis,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable);   
+        super(width,height,xAxis,yAxis,zAxis,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable);
         this.setCompomnent(this.prepairComponent());
         this.applyparentComponentEdites();
         this.applyComponentEdit(this);
@@ -26,8 +26,6 @@ export default class Table extends ParentComponent{
         this.rowSpace = rowSpace;
         this.colSpace = colSpace;
         this.applyTableEdit();
-        this.newColumn();
-        this.newRow();
         console.log('table');
     };
 
@@ -46,7 +44,7 @@ export default class Table extends ParentComponent{
         // if (isFullPreemption) {
         // } else {
         //     if (this.getIsContentEditable()) {
-        //     } 
+        //     }
         // }
         let current = document.createElement('div');
         current.classList.add('parentComponent');
@@ -54,7 +52,7 @@ export default class Table extends ParentComponent{
         return comp;
     };
 
-    
+
     newColumn(){
         if (this.getRows().length == 0) {
             this.newRow(1,0,0,true);
@@ -107,7 +105,7 @@ export default class Table extends ParentComponent{
         if (this.getRows().length > 1) {
             this.getRows().splice(-1,1);
             this.getCompomnent().removeChild(this.getCompomnent().lastChild);
-        }        
+        }
     }
 
 
@@ -145,58 +143,60 @@ export default class Table extends ParentComponent{
         this.getCompomnent().style.borderSpacing = `${value}px ${this.getRowSpace()}px`;
     }
 
-    
+
     getRows(){ return this.rows;};
     getIsCollapse(){ return this.isCollapse;};
     getIsSticyCol(){ return this.isSticyCol;};
     getIsSticyRow(){ return this.isSticyRow;};
     getRowSpace(){ return this.rowSpace;};
     getColSpace(){ return this.colSpace;};
-    
-    
+
+
 
 
     compomnentIn = (e) =>{
-        componentList.getAddComponentList().remove();
-        e.stopPropagation();
-        if (this != currentComponentParent) {
-            setCurrentComponentParentFlag(true);
-        }
-
-        if (currentComponentParentFlag) {
-            setCurrentComponent(null);
-            compomnentBtn.getEditContainer().remove();
-            setIsSupComponent(true);
-            this.addControlBtn();
-            // compomnentBtn.setRowColNum(this.getRows().length,this.getRows()[0].getCells().length);
-            compomnentBtn.prepairTableSideBtn(this.getIsContentEditable());
-            this.getCompomnent().parentNode.appendChild(compomnentBtn.getSideBtnContainer());
-            setCurrentComponentParentFlag(false);
-            setCurrentComponentParent(this);
-        }
-
-
-        if (e.detail === 2) {
-            if(this != currentComponent){
-                setCurrentComponentFlag(true);
+        if (!IsReadOnly){
+            componentList.getAddComponentList().remove();
+            e.stopPropagation();
+            if (this != currentComponentParent) {
+                setCurrentComponentParentFlag(true);
             }
 
-            if(currentComponentFlag){
-                setIsSupComponent(false);
-                setCurrentComponentFlag(false);
-                console.log('componentIn//table');
-                compomnentBtn.setComponentName('Table');
-                setCurrentComponent(this);
-                compomnentBtn.prepairTableEdit(this.getIsCollapse(),this.getIsSticyCol(),this.getIsSticyRow(),this.getRowSpace(),this.getColSpace(),
-                this.getWidth(),this.getHeight(),this.getXAxis(),this.getYAxis(),this.getZAxis(),this.getOpacity(),this.getRotation(),this.getPadding(),this.getskew(),
-                this.getBackGrounColor(),this.getBackGrounDesign(),this.getBorderColor(),this.getBorderDesign(),
-                this.getBorderStyle(),this.getBorderWidth(),this.getBorderRadius(),this.getpolygon(),
-                this.getIsSizesEditable(),this.getIsDesignEditable(),this.getIsContentEditable());
-                this.getCompomnent().parentNode.appendChild(compomnentBtn.getEditContainer());
+            if (currentComponentParentFlag) {
+                setCurrentComponent(null);
+                compomnentBtn.getEditContainer().remove();
+                setIsSupComponent(true);
+                this.addControlBtn();
+                // compomnentBtn.setRowColNum(this.getRows().length,this.getRows()[0].getCells().length);
+                compomnentBtn.prepairTableSideBtn(this.getIsContentEditable());
+                this.getCompomnent().parentNode.appendChild(compomnentBtn.getSideBtnContainer());
+                setCurrentComponentParentFlag(false);
+                setCurrentComponentParent(this);
+            }
+
+
+            if (e.detail === 2) {
+                if(this != currentComponent){
+                    setCurrentComponentFlag(true);
                 }
+
+                if(currentComponentFlag){
+                    setIsSupComponent(false);
+                    setCurrentComponentFlag(false);
+                    console.log('componentIn//table');
+                    compomnentBtn.setComponentName('Table');
+                    setCurrentComponent(this);
+                    compomnentBtn.prepairTableEdit(this.getIsCollapse(),this.getIsSticyCol(),this.getIsSticyRow(),this.getRowSpace(),this.getColSpace(),
+                        this.getWidth(),this.getHeight(),this.getXAxis(),this.getYAxis(),this.getZAxis(),this.getOpacity(),this.getRotation(),this.getPadding(),this.getskew(),
+                        this.getBackGrounColor(),this.getBackGrounDesign(),this.getBorderColor(),this.getBorderDesign(),
+                        this.getBorderStyle(),this.getBorderWidth(),this.getBorderRadius(),this.getpolygon(),
+                        this.getIsSizesEditable(),this.getIsDesignEditable(),this.getIsContentEditable());
+                    this.getCompomnent().parentNode.appendChild(compomnentBtn.getEditContainer());
+                }
+            }
         }
     }
-    
+
 
 
 
@@ -206,7 +206,7 @@ export default class Table extends ParentComponent{
     }
 
     removeComponentFormat(){
-        
+
         this.setIsCollapse(true);
         this.setIsSticyCol(false);
         this.setIsSticyRow(false);

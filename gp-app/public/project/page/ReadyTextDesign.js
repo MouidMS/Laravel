@@ -12,14 +12,12 @@ export default class ReadyTextDesign{
     fontSize;
     fontName;
     foreColor;
-    justifyCenter;
-    justifyLeft;
-    justifyRight;
-    justifyFull;
+    align;
     subscript;
     superscript;
-                    
-    constructor(name,bold,italic,underline,strikethrough,backColor,fontSize,fontName,foreColor,justifyCenter,justifyLeft,justifyRight,justifyFull,subscript,superscript){
+    link;
+
+    constructor(name,bold,italic,underline,strikethrough,backColor,fontSize,fontName,foreColor,align,subscript,superscript,link){
         this.name =name;
         this.bold = bold;
         this.italic = italic;
@@ -29,12 +27,10 @@ export default class ReadyTextDesign{
         this.fontSize = fontSize;
         this.fontName = fontName;
         this.foreColor = foreColor;
-        this.justifyCenter = justifyCenter;
-        this.justifyLeft = justifyLeft;
-        this.justifyRight = justifyRight;
-        this.justifyFull = justifyFull;
+        this.align = align;
         this.subscript = subscript;
         this.superscript = superscript;
+        this.link = link;
     };
 
     setName(value){
@@ -64,23 +60,19 @@ export default class ReadyTextDesign{
     setforeColor(value){
         this.foreColor = value;
     }
-    setjustifyCenter(value){
-        this.justifyCenter = value;
+    setAlign(value){
+        this.setAlign = value;
     }
-    setjustifyLeft(value){
-        this.justifyLeft = value;
-    }
-    setjustifyRight(value){
-        this.justifyRight = value;
-    }
-    setjustifyFull(value){
-        this.justifyFull = value;
-    }
+
     setsubscript(value){
         this.subscript = value;
     }
     setsuperscript(value){
         this.superscript = value;
+    }
+
+    setLink(value){
+        this.link = value;
     }
 
 
@@ -111,26 +103,20 @@ export default class ReadyTextDesign{
     getforeColor(){
         return this.foreColor;
     }
-    getjustifyCenter(){
-        return this.justifyCenter;
+    getAlign(){
+        return this.align;
     }
-    getjustifyLeft(){
-        return this.justifyLeft;
-    }
-    getjustifyRight(){
-        return this.justifyRight;
-    }
-    getjustifyFull(){
-        return this.justifyFull;
-    }
+
+
     getsubscript(){
         return this.subscript;
     }
     getsuperscript(){
         return this.superscript;
     }
+    getLink(){return this.link};
 
-  
+
 
 
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Intervention\Image\ImageManager;
 
 use App\Models\Files;
 use App\Http\Requests\StoreFilesRequest;
@@ -116,7 +117,7 @@ class FilesController extends Controller
         $data = array();
 
         $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:png,jpg,jpeg'
+            'file' => 'required|mimes:png,jpg,jpeg|max:2048'
         ]);
 
         if ($validator->fails()) {
@@ -128,7 +129,7 @@ class FilesController extends Controller
             if($request->file('file')) {
 
                 $file = $request->file('file');
-                $filename = time().'_'.$file->getClientOriginalName();
+                $filename = $file->getClientOriginalName();
 
                 // File extension
                 $extension = $file->getClientOriginalExtension();
@@ -143,6 +144,11 @@ class FilesController extends Controller
                 $filepath = url('files/'.$filename);
 
                 // Response
+                $imgae = new Image();
+                $imgae->path = $filepath;
+                $imgae->user_id = Auth::id();
+                $imgae->save();
+
                 $data['success'] = 1;
                 $data['message'] = 'Uploaded Successfully!';
                 $data['filepath'] = $filepath;
@@ -175,19 +181,33 @@ class FilesController extends Controller
             if($request->file('file')) {
 
                 $file = $request->file('file');
-                $filename = time().'_'.$file->getClientOriginalName();
+
+                // resize image to fixed size
+                $fileNew =Image::make($file)->resize(10, 10);
+                $filename = time().'_'.$fileNew->getClientOriginalName();
 
                 // File extension
-                $extension = $file->getClientOriginalExtension();
-
+                $extension = $fileNew->getClientOriginalExtension();
                 // File upload location
                 $location = 'files';
 
                 // Upload file
-                $file->move($location,$filename);
+                $fileNew->move($location,$filename);
+
 
                 // File path
                 $filepath = url('files/'.$filename);
+
+                $image = $request->file('file');
+                $filenames = time().'.'.$image->getClientOriginalExtension();
+
+                $destinationPath =url('files/'.$filename);
+
+                $img = Image::make($image->getRealPath());
+                $img->resize(300, 300, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->save($destinationPath.'/'.$filenames);
 
                 // Response
                 $data['success'] = 1;
@@ -203,6 +223,8 @@ class FilesController extends Controller
 
         return response()->json($data);
     }
+
+
 
 
 }

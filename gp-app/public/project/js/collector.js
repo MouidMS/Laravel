@@ -23,7 +23,9 @@ menu.classList.add('menuSetting');
 let Open = document.createElement('button');
 Open.insertAdjacentHTML('beforeend', `<i class="fa-solid fa-folder-open"></i>`);
 Open.insertAdjacentHTML('beforeend', `Open`);
-Open.addEventListener('click', function(){});
+Open.addEventListener('click', function(){
+    window.location = 'page-collector-id/'+currentCollector.getId();
+});
 menu.appendChild(Open);
 
 let AddProject = document.createElement('button');

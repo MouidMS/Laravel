@@ -1,17 +1,19 @@
 import ParentComponent from "./ParentComponent.js";
-import {compomnentBtn,componentList,isFullPreemption} from "./main.js";
+import {compomnentBtn, componentList, isFullPreemption, IsReadOnly} from "./main.js";
 import { currentComponent,setCurrentComponent,currentComponentFlag,setCurrentComponentFlag ,setIsSupComponent,currentComponentParent, setCurrentComponentParent} from "./Component.js";
 
 
 export default class Shap extends ParentComponent{
 
-    constructor(width,height,xAxis,yAxis,zAxis,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable){
+    constructor(width,height,xAxis,yAxis,zAxis,
+        opacity,rotation,padding,skew,
+        backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,
+        isSizesEditable,isDesignEditable,isContentEditable){
         super(width,height,xAxis,yAxis,zAxis,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable);
         this.setCompomnent(this.prepairComponent());
-        this.applyTextEdits();
         this.applyparentComponentEdites();
         this.applyComponentEdit(this);
-        console.log('paragraph');
+        console.log('Shap');
     };
 
     prepairComponent(){
@@ -26,29 +28,33 @@ export default class Shap extends ParentComponent{
         return comp;
     }
     compomnentIn = (e) =>{
-        componentList.getAddComponentList().remove();
-        if(this != currentComponent){
-            setCurrentComponentFlag(true);
-        }
+        if(!IsReadOnly) {
+            componentList.getAddComponentList().remove();
+            if(this != currentComponent){
+                setCurrentComponentFlag(true);
+            }
 
-        console.log(currentComponentFlag)
-        if(currentComponentFlag){
-            setCurrentComponentParent(null);
-            compomnentBtn.getSideBtnContainer().remove();
-            setIsSupComponent(false);
-            setCurrentComponentFlag(false);
+            console.log(currentComponentFlag)
+            if(currentComponentFlag){
+                setCurrentComponentParent(null);
+                compomnentBtn.getSideBtnContainer().remove();
+                setIsSupComponent(false);
+                setCurrentComponentFlag(false);
                 console.log('componentIn');
                 console.log("Shap");
                 compomnentBtn.setComponentName('Shap');
                 setCurrentComponent(this);
+                compomnentBtn.prepairParagraphSideBtn(this.getIsSizesEditable(),this.getIsDesignEditable(),this.getIsContentEditable());
+                this.getCompomnent().parentNode.appendChild(compomnentBtn.getSideBtnContainer());
                 this.addControlBtn();
                 compomnentBtn.prepairShapEdit(this.getWidth(),this.getHeight(),this.getXAxis(),
-                this.getYAxis(),this.getZAxis(),this.getOpacity(),this.getRotation(),this.getPadding(),this.getskew(),
-                this.getBackGrounColor(),this.getBackGrounDesign(),this.getBorderColor(),this.getBorderDesign(),
-                this.getBorderStyle(),this.getBorderWidth(),this.getBorderRadius(),this.getpolygon(),
-                this.getIsSizesEditable(),this.getIsDesignEditable(),this.getIsContentEditable());
+                    this.getYAxis(),this.getZAxis(),this.getOpacity(),this.getRotation(),this.getPadding(),this.getskew(),
+                    this.getBackGrounColor(),this.getBackGrounDesign(),this.getBorderColor(),this.getBorderDesign(),
+                    this.getBorderStyle(),this.getBorderWidth(),this.getBorderRadius(),this.getpolygon(),
+                    this.getIsSizesEditable(),this.getIsDesignEditable(),this.getIsContentEditable());
                 this.getCompomnent().parentNode.appendChild(compomnentBtn.getEditContainer());
 
+            }
         }
     }
 
@@ -78,6 +84,5 @@ export default class Shap extends ParentComponent{
         this.setBorderWidth(0,0)
         this.setBorderRadius(0,0)
         this.setPolygon("none")
-        console.log(this.getText());
     }
 }

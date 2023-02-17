@@ -79,7 +79,7 @@ Route::put('update-curd/{id}', [ProjectController::class, 'update1']);
 Route::delete('delete-curd/{id}', [ProjectController::class, 'destroy1']);
 
 //update project
-Route::delete('delete-project/{id}/{value}', [ProjectController::class, 'DeleteProject']);
+Route::get('delete-project/{id}/{value}', [ProjectController::class, 'DeleteProject']);
 Route::put('update-project-rename/{id}/{rename}', [ProjectController::class, 'RenameProject']);
 Route::put('update-project-dec/{id}/{rename}', [ProjectController::class, 'EditDecProject']);
 Route::post('get-dec', [ProjectController::class, 'getDecProject']);
@@ -94,10 +94,27 @@ Route::get('delete-friends/{id}', [ProjectController::class, 'DeleteFreind']);
 
 //pages
 Route::get('page-project/{id}', [ProjectController::class, 'PageProject']);
+Route::get('page-project-id/{id}', [ProjectController::class, 'setIdPage']);
+
+
 Route::get('page-receive/{id}', [ProjectController::class, 'PageReceive']);
+Route::get('page-receive-id/{id}', [ProjectController::class, 'setIdReceive']);
+
+
 Route::get('page-community/{id}', [ProjectController::class, 'PageCommunity']);
+Route::get('page-community-id/{id}', [ProjectController::class, 'setIdCommuinty']);
+
+
+Route::get('page-collector/{id}', [ProjectController::class, 'PageCollector']);
+Route::get('page-collector-id/{id}', [ProjectController::class, 'setIdCollector']);
+
+
+Route::get('info-project/{id}', [ProjectController::class, 'getProjectInfo']);
+
+
 
 //community
+Route::get('get-community', [ProjectController::class, 'getCommuitny']);
 Route::get('get-community-like/{id}', [ProjectController::class, 'getCommunityLike']);
 Route::get('add-community-like/{id}', [ProjectController::class, 'addCommunityLike']);
 Route::get('remove-community-like/{id}', [ProjectController::class, 'removeCommunityLike']);
@@ -108,15 +125,22 @@ Route::get('remove-community-like/{id}', [ProjectController::class, 'removeCommu
 //project-recv
 Route::get('fetch-rev', [ProjectController::class, 'ReseveProject']);
 Route::get('rev', [ProjectController::class, 'getSimpleData']);
+/*******************************/
+Route::get('rev_get/{id}', [ProjectController::class, 'getReceiveProjectToListProject']);
+
+
+
 
 //collector
 //Route::post('collector', [CollectorController::class, 'store']);
 /*** old *****/
-Route::get('collector', [CollectorController::class, 'index']);
+Route::get('collector', [CollectorController::class, 'index'])->middleware(['auth','verified']);;
 Route::get('collector/get', [CollectorController::class, 'fetch']);
 Route::get('collector/add', [CollectorController::class, 'addProjectInsideCollector']);
 /*** new *****/
-Route::get('collector', [ProjectController::class, 'indexWritinerCommunity']);
+Route::get('community', [ProjectController::class, 'indexWritinerCommunity']);
+
+
 Route::get('get-collector', [ProjectController::class, 'getCollector']);
 Route::get('rename-collector/{id}/{rename}', [ProjectController::class, 'RenameCollector']);
 Route::get('delete-collector/{id}', [ProjectController::class, 'DeleteCollector']);
@@ -127,15 +151,6 @@ Route::post('type-project-collector', [ProjectController::class, 'getCollectorPr
 /*test*/
 Route::get('get-type-project-collector/{type}', [ProjectController::class, 'getCollectorProjectUsingGet']);
 Route::get('get-type-receive-collector/{type}', [ProjectController::class, 'getCollectorReceivesUsingGet']);
-
-
-
-
-
-
-
-
-
 
 
 //ready_text_edit
@@ -155,19 +170,25 @@ Route::get('get-type-receive-collector/{type}', [ProjectController::class, 'getC
         Route::get('delete-readytext', [ProjectController::class, 'deleteReadyText'])->middleware(['auth','verified']);
 
 
-
 //SearchUser
-Route::get('search-user/{email}', [ProjectController::class, 'SearchUsers'])->middleware(['auth','verified']);
+Route::get('search-user/{email}', [ProjectController::class, 'SearchUsers']);
+//SearcCommunity
+
+// not testing
+Route::get('search-community/{name_project}', [ProjectController::class, 'SearchCommunity']);
+Route::get('receive-community-project/{id_community}', [ProjectController::class, 'AddToReceiveFromCommunity'])->middleware(['auth','verified']);
+Route::get('share-community-project/{id_community}', [ProjectController::class, 'AddToShareFromCommunity'])->middleware(['auth','verified']);
+Route::get('copylink/{id_community}', [ProjectController::class, 'getCopyLink']);
 
 
 
 //favorites
 Route::get('favorite/{id_project}/{state}', [ProjectController::class, 'getFav']);
 
+
 //SherProject
 Route::post('sher', [ProjectController::class, 'AddSherProject']);
 Route::delete('delete-sher/{id}', [ProjectController::class, 'DeleteSherProject']);
-
 
 
 //SherFrinedProject
@@ -175,24 +196,29 @@ Route::post('sherfrined', [ProjectController::class, 'AddSherFriend']);
 Route::delete('delete-sherfrined/{id}', [ProjectController::class, 'DeleteSherFriend']);
 
 //likes
-Route::get('like/{user_id}/{project_id}', [ProjectController::class, 'addLike']);
-Route::delete('delete-like/{id}', [ProjectController::class, 'DeleteLike']);
-
+Route::get('like/{user_id}/{project_id}', [ProjectController::class, 'addLike'])->middleware(['auth','verified']);
+Route::get('delete-like/{user_id}/{project_id}', [ProjectController::class, 'DeleteLike'])->middleware(['auth','verified']);
 
 //document
-Route::get('document', [ProjectController::class, 'indexDocument']);
+Route::get('document', [ProjectController::class, 'indexDocument'])->middleware(['auth','verified']);
 
 //EditText
-Route::get('edit-text', [ProjectController::class, 'indexTextEdit']);
-
+Route::get('edit-text', [ProjectController::class, 'indexTextEdit'])->middleware(['auth','verified']);
 
 
 //ProfileFrined
-Route::get('profile-friend/{id}', [ProjectController::class, 'indexProfileFrined']);
+Route::get('profile-friend/{id}', [ProjectController::class, 'indexProfileFrined'])->middleware(['auth','verified']);;
 
 
 //Notifications
 Route::get('get-notification', [ProjectController::class, 'getNotification']);
+Route::get('delete-notification/{id}', [ProjectController::class, 'DeleteNotification']);
+
+//Back
+Route::get('back', [ProjectController::class, 'BackPage']);
+
+//Save Project
+Route::post('save-project', [ProjectController::class, 'SaveProject']);
 
 
 
@@ -205,16 +231,6 @@ Route::get('get-notification', [ProjectController::class, 'getNotification']);
 
 
 
-
-
-
-/*
-Route::get('/vatttan', function () {
-    $apdf = new Apdf();
-    $apdf->print('
-<h1>Hi World!</h1>
-<p style="text-align: right ; color: red;">السلام عليكم</p>');
-});*/
 
 Route::get('/doc-to-pdf',[DocumentController::class, 'convertDocToPDF']);
 Route::get('/readJson',[JSONController::class, 'ReadJsonFromDatabase']);
@@ -227,9 +243,12 @@ Route::get('/index',[ProjectController::class, 'index']);
 Route::get('/uploadFile',[FilesController::class, 'index']);
 Route::post('ajaxImageUpload', [FilesController::class, 'ajaxImageUploadPost'])->name('ajaxImageUpload');
 
+
+
 Route::get('/image-upload',  [FilesController::class, 'index']);
 //Route::post('/image-upload', [FilesController::class, 'uploadFile'])->name('uploadFile');
 Route::post('/image-upload-img', [FilesController::class, 'uploadFileImg'])->name('uploadFileImg');
 Route::post('/image-upload-pdf', [FilesController::class, 'uploadFilePDF'])->name('uploadFilePDF');
+Route::post('/resize-file', [FilesController::class, 'resizeImage'])->name('resizeImage');
 
 
