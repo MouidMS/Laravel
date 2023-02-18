@@ -158,18 +158,33 @@ class ProjectController extends Controller
     }
 
 
+//    public function DeleteSherProject($id)
+//    {
+//
+//        $getIdSherProject = DB::table('sher_projects')
+//            ->where('project_id', $id)
+//            ->get('id');
+//
+//        if (array_key_exists(0, json_decode($getIdSherProject))) {
+//            $getIdSherProject = $getIdSherProject[0]->id;
+//            $project = SherProject::find($getIdSherProject);
+//            if ($project) {
+//                $project->delete();
+//                return response()->json('Done');
+//            }
+//        } else {
+//            return response()->json('Not found');
+//        }
+//    }
+
     public function DeleteSherProject($id)
     {
+        $getIdSherProject = DB::table('sher_projects')
+            ->where('project_id', $id)
+            ->value('id');
 
-        $getIdSherProject = DB::table('sher_projects')->where('project_id', $id)->get('id');
-
-        if (array_key_exists(0, json_decode($getIdSherProject))) {
-            $getIdSherProject = $getIdSherProject[0]->id;
-            $project = SherProject::find($getIdSherProject);
-            if ($project) {
-                $project->delete();
-                return response()->json('Done');
-            }
+        if (optional(SherProject::find($getIdSherProject))->delete()) {
+            return response()->json('Done');
         } else {
             return response()->json('Not found');
         }
@@ -266,19 +281,34 @@ class ProjectController extends Controller
     }
 
 
-    public function DeleteLike($user_id, $project_id){
-        if(Auth::id()){
-            if (DB::table('likes')->where('user_id', $user_id)->where('project_id_sher_project', $project_id)->exists()) {
-                DB::table('likes')->where('user_id', $user_id)->where('project_id_sher_project', $project_id)->delete();
-                return redirect(url('community'));
-            } else {
-                return redirect(url('community'));
-            }
-        }else{
-            return redirect(url('login'));
+//    public function DeleteLike($user_id, $project_id){
+//        if(Auth::id()){
+//            if (DB::table('likes')->where('user_id', $user_id)->where('project_id_sher_project', $project_id)->exists()) {
+//                DB::table('likes')->where('user_id', $user_id)->where('project_id_sher_project', $project_id)->delete();
+//                return redirect(url('community'));
+//            } else {
+//                return redirect(url('community'));
+//            }
+//        }else{
+//            return redirect(url('login'));
+//
+//        }
+//    }
 
+
+    public function DeleteLike($user_id, $project_id)
+    {
+        $like = Like::where('user_id', $user_id)
+            ->where('project_id_sher_project', $project_id)
+            ->first();
+
+        if ($like) {
+            $like->delete();
         }
+
+        return redirect(url('community'));
     }
+
 
 
     public function getLikes($id_project)
@@ -1325,14 +1355,12 @@ public function RenameCollector($id,$rename){
     }
 
     public function DeleteProject($id,$value){
-
         if($value == 1){
-            $student = Receive::find($id);
-            if($student)
+            $receive = Receive::find($id);
+            if($receive)
             {
                 $id = Auth::id();
-                $student->delete();
-
+                $receive->delete();
                 if(DB::table('receives')->where('id',$id)->exists()){
                     return response()->json('wrong');
                 }else{
@@ -1343,21 +1371,18 @@ public function RenameCollector($id,$rename){
             {
                 return response()->json('notExist');
             }
-
         }else if ($value == 0){
-            $student = Project::find($id);
-            if($student)
+            $receive = Project::find($id);
+            if($receive)
             {
                 $id = Auth::id();
-                $path="users/".$id."/projects/".$student->id.".json";
+                $path="users/".$id."/projects/".$receive->id.".json";
                 Storage::delete($path);
-                $student->delete();
-
+                $receive->delete();
                 if(DB::table('projects')->where('id',$id)->exists()){
                     return response()->json('wrong');
                 }else{
                     return response()->json('done');
-
                 }
             }
             else
@@ -1809,36 +1834,26 @@ public function RenameCollector($id,$rename){
      */
     public function store($type): RedirectResponse
     {
-
-
         DB::beginTransaction();
         User::where('id', Auth::id())->lockForUpdate()->first();
 
-
         $id = Auth::id();
 
-
         if (Auth::user()) {
-
               $pr =DB::table('projects')->insertGetId([
                     'user_id' => $id,
                     'name' => 'Untitled',
                     'type' => $type,
                     'right_to' => $id,
-
                   'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                   'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
              ]);
-
               $lastId = DB::getPdo()->lastInsertId();
-
             $affected = DB::table('projects')
                 ->where('id', $lastId)
                 ->update(['path' => $id . '/projects/' .  $lastId . '.json',]);
 
-
             $data = [];
-
                 $data =array (
                     'page' =>
                         array (
@@ -1994,12 +2009,9 @@ public function RenameCollector($id,$rename){
             $collector=0;
             $project=$lastId;
 
-//             return view(route('page-project-id'), compact('receive','type','commuinty','collector','project'));
-
             return redirect()->to('page-project-id/'.$lastId)->with( ['receive' => $receive,'commuinty'=>$commuinty , 'collector'=>$collector,'project'>$project,'type'>$type] );
 
         } else {
-// redirect the user to the login page
             return redirect('/login');
         }
 
@@ -2111,8 +2123,6 @@ public function RenameCollector($id,$rename){
 
         return redirect()->route('project.index')
             ->with('success','User deleted successfully');
-
-        // redirect
 
     }
 

@@ -148,9 +148,8 @@ export default class CompomnentBtn extends BasicEdit{
 
     prepairEdit(){
         let component;
-        this.drager = document.createElement('button');
+        this.drager = document.createElement('div');
         this.drager.id = 'cddrager';
-        this.drager.innerText= "DR";
         this.drager.addEventListener('mousedown', this.dragElement);
 
         this.coordinates = document.createElement('div');
@@ -173,7 +172,7 @@ export default class CompomnentBtn extends BasicEdit{
 
         this.resizer = document.createElement('div');
         this.resizer.id = 'cdresize';
-        this.resizer.innerText = "R";
+        // this.resizer.innerText = "R";
         this.resizer.addEventListener('mousedown', this.resizeElement);
 
         this.size = document.createElement('div');

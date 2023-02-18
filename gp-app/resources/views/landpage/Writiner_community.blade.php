@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="refresh" content="301">
+    <meta name="author" content="Feras,Muhammad,Yazeed,Muayyad"/>
+    <meta name="keywords" content="Recant, Collector, ReadyText Edit,Community"/>
+    <meta name="description"
+          content="This feature allows people to upload their files and research papers to the community page"/>
+    <meta name="theme-color" content="#f5f5ff" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
     <title>community</title>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
@@ -677,7 +686,7 @@
 <header>
     <div class="container">
         <i class="fa-solid fa-bars toggle-menu" id="btn-toggleMenu"></i>
-        <a href="{{url('/')}}" id="logoHead"><img src="./project/images/Logopage.png" alt="logo" class="logo_img"></a>
+        <a href="{{url('/')}}" id="logoHead"><img src="./project/images/logo.png" alt="logo" class="logo_img"></a>
         <nav>
             <ul class="main-nav" id="main-navMenu">
                 <li><a href="{{url('writiner')}}">Home</a></li>
@@ -829,6 +838,8 @@
         <div class="doc-container">
             <div class="grid-item-section">
                 @foreach( App\Http\Controllers\ProjectController::getCommuitny()  as $value)
+                    <div class="grid-item">
+                    <div class="holder-item">
                     <div id="main">
                         <div id="projectTop">
                             <a href="{{url('page-community-id/'.$value->id)}}">
@@ -885,7 +896,11 @@
                                 <i class="fa-solid fa-link"></i>
                             </button>
                         </div>
-            </div>
+                        <div id="projectOwner"><img src="../project/images/black_noun_002_03536.jpg" alt=""></div>
+
+                    </div>
+                    </div>
+                    </div>
             @endforeach
 
     </div>
@@ -899,20 +914,37 @@
 <!-- End start writiner-home -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
-<script src="./project/js/header.js"></script>
-<script src="./project/js/Documents.js"></script>
-<script src="./project/js/popup.js"></script>
+<script src="../project/js/header.js"></script>
+<script src="../project/js/Documents.js"></script>
+<script src="../project/js/popup.js"></script>
 
 <script>
     // justAlert()
-    function myFunction(id) {
-        navigator.clipboard.writeText('http://127.0.0.1:8000/page-community-id/'+id);
-        alert("Copied the link!");
-    }
+    // function myFunction(id) {
+    //     navigator.clipboard.writeText('http://127.0.0.1:8000/page-community-id/'+id);
+    //     alert("Copied the link!");
+    // }
+    //
+    // function justAlert(){
+    //     alert("Done!");
+    // }
 
-    function justAlert(){
-        alert("Done!");
-    }
+
+
+    // let btn_toggleMenu =document.getElementById("btn-toggleMenu")
+    // let main_navMenu =document.getElementById("main-navMenu")
+
+    // let menuFlagm = true;
+    // btn_toggleMenu.addEventListener("click", function (e) {
+    //     if (menuFlagm){
+    //         main_navMenu.style.display="flex";
+    //     }else {
+    //         main_navMenu.style.display="none";
+    //     };
+    //     menuFlagm = !menuFlagm;
+    // });
+
+
 </script>
 
 </body>

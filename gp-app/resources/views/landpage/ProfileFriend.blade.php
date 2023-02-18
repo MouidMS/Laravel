@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="../project/css/Doc-popup.css">
     <!-- Header CSS File  -->
     <link rel="stylesheet" href="../project/css/Header_Style.css">
-
     <!-- Render All Elements Normally -->
     <link rel="stylesheet" href="../project/css/normalize.css">
     <!-- Google Fonts -->
@@ -25,59 +24,68 @@
 
 </head>
 <body>
-<!-- Start header  -->
+<!-- Start Header  -->
 <header>
     <div class="container">
-        <i class="fa-solid fa-bars toggle-menu" id="btn-toggleMenu"></i>
-        <a href="{{url('/')}}"><img src="../project/images/Logopage.png" alt="logo" class="logo_img"></a>
-        <nav>
+        <i class="fa-solid fa-bars toggle-menu"  id="btn-toggleMenu"></i>
+        <a href="{{url('/')}}" id="logoHead"><img src="../project/images/logo.png" alt="logo" class="logo_img"></a>
+        <nav id="mainMenuHead">
             <ul class="main-nav" id="main-navMenu">
-                <li><a href="{{url('/writiner')}}">Home</a></li>
-                <li><a href="{{url('/edit-text')}}">Edit Text</a></li>
-                <li><a href="{{url('/document')}}">Documents</a></li>
-                <li><a href="{{url('/community')}}">Commnuity</a></li>
+                <li><a class="active" href="{{url('/writiner')}}">Home</a></li>
+                <li><a href="{{url('/edit-text')}}">ReadyEdit Text</a></li>
+                <li><a href="{{url('/document')}}">Collector</a></li>
+                <li><a href="{{url('/community')}}">Community</a></li>
             </ul>
         </nav>
         <div class="navbar-account">
+
             <div class="search" id="search">
-                <input type="text" class="searchBar" placeholder="Serach...">
-                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" class="searchBar" id="searchBar" placeholder="Serach...">
+                <i id="iconSearch" class="fa-solid fa-magnifying-glass"></i>
             </div>
             <div class="ballStar">
-                <div class="star"></div>
+
+                @if(\Illuminate\Support\Facades\DB::table('notifications')->where('user_id_receive',\Illuminate\Support\Facades\Auth::id())->exists())
+                    <div class="star"></div>
+                @else
+
+                @endif
+
                 <i class="fa-solid fa-bell" onclick="toggleMenuNot()"></i>
             </div>
             <div class="notification-menu">
                 <div class="notification-menu-wrap" id="notificationMenu">
-                    <div class="menu">
-                        <button>
-                            <div class="massage">
-                                <i class="fa-solid fa-bell"></i>
-                                <p class="Message-text">ssssssssssssssssssssss</p>
+
+                    @if(\Illuminate\Support\Facades\DB::table('notifications')->where('user_id_receive',\Illuminate\Support\Facades\Auth::id())->exists())
+
+                        @foreach(\Illuminate\Support\Facades\DB::table('notifications')->where('user_id_receive',\Illuminate\Support\Facades\Auth::id())->get() as $value)
+                            <div class="menu">
+                                <button>
+                                    <div class="massage">
+                                        <i class="fa-solid fa-bell"></i>
+                                        <p class="Message-text">{{$value->text}}</p>
+                                    </div>
+                                    <a href="{{url('delete-notification/'.$value->id)}}"><div class="close">
+                                            <i class="fa-solid fa-xmark close"></i>
+                                        </div></a>
+                                </button>
+
                             </div>
-                            <div class="close">
-                                <i class="fa-solid fa-xmark close"></i>
-                            </div>
-                        </button>
-                        <button>
-                            <div class="massage">
-                                <i class="fa-solid fa-bell"></i>
-                                <p class="Message-text">ssssssssssssssssssssss</p>
-                            </div>
-                            <div class="close">
-                                <i class="fa-solid fa-xmark close"></i>
-                            </div>
-                        </button>
-                        <button>
-                            <div class="massage">
-                                <i class="fa-solid fa-bell"></i>
-                                <p class="Message-text">ssssssssssssssssssssss</p>
-                            </div>
-                            <div class="close">
-                                <i class="fa-solid fa-xmark close"></i>
-                            </div>
-                        </button>
-                    </div>
+                        @endforeach
+
+                    @else
+                        <div class="menu">
+                            <button>
+                                <div class="massage">
+                                    <p class="Message-text">There are no new alerts for you</p>
+                                </div>
+
+                            </button>
+
+                        </div>
+                    @endif
+
+
                 </div>
             </div>
             <div class="fff">
@@ -93,8 +101,8 @@
                             Profile
                         </a>
                         <a href="#">
-                            <i class="fa-solid fa-fill-drip"></i>
-                            Theme
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            Search Friends
                         </a>
 
                         <a href="#" onclick="document.getElementById('form1').submit();">
@@ -109,8 +117,8 @@
             </div>
         </div>
     </div>
-</header>
-<!-- End header  -->
+        </header>
+<!-- End Header  -->
 
 <!-- card-FriendProfile -->
 <div class="container-card">

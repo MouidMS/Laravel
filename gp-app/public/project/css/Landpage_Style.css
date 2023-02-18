@@ -85,6 +85,10 @@ header .main-nav li a {
     overflow: hidden;
     color: #393941;
 }
+
+
+
+
 header .main-nav li a::before {
     content: "";
     position: absolute;
@@ -95,20 +99,57 @@ header .main-nav li a::before {
     left: -100%;
     transition: var(--main--transiton);
 }
+
+
+
+
 header .main-nav > li > a:hover::before {
     left: 0;
 }
-header .nav-part {
-    display: flex;
-    align-items: center;
-    height: 72px;
+
+@media (max-width: 1200px) {
+    header .main-nav {
+        display: none;
+        top: 72px;
+        right: 0;
+        width: 100%;
+        position: absolute;
+        z-index: 1;
+        height: 100vh;
+        flex-direction: column;
+        background-color: #F5F5FF;
+    }
+    header .main-nav li a{
+        padding: 16px 32px;
+    }
+
+    header .main-nav li a::before{
+        display: none;
+    }
+    header .main-nav li a:hover{
+        background-color:#b4b0b0;
+    }
+    header .main-nav li a{
+        padding: 16px 32px;
+        font-weight: 600;
+    }
 }
+
+
 header .bar-menu {
     display: none;
     position: relative;
     font-size: 24px;
     margin-left: 24px;
 }
+
+
+header .nav-part {
+    display: flex;
+    align-items: center;
+    height: 72px;
+}
+
 header .login-part {
     display: flex;
     justify-content: center;
@@ -145,9 +186,9 @@ header .login-part .profile-img {
     cursor: pointer;
 }
 @media (max-width: 1200px) {
-    header .main-nav li a {
-        display: none;
-    }
+    /*header .main-nav li a {*/
+    /*    display: none;*/
+    /*}*/
     header .login,header  .logout {
         /* display: none; */
         font-weight: 600;
@@ -317,13 +358,30 @@ header .login .login-img .profile-img {
     color: var(--primary_60-color);
 }
 .landing .text .signin-part3 button{
-    background-color: transparent;
+    background-color: #38528a;
     border-color: transparent;
-    color: #1a73e8;
+    height: 37px;
+    width: 154px;
+    color: #E96922;
     padding-left: 12px;
     padding-right: 12px;
     min-width: auto;
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid;
+    font-weight: 500;
+    border-radius: 7px;
+    margin-left: 16px;
+    margin-top: 16px;
 }
+
+.landing .text .signin-part3 button:focus{
+    background-color: #dee5ee;
+    border-radius: 5px;
+    border: 2px solid;
+}
+
+
 .landing .image-part4 img {
     width: 500px;
     max-width: 100%;
@@ -431,6 +489,8 @@ header .login .login-img .profile-img {
     justify-content: center;
 }
 .services .srv-box-1 .FS-textBox h1 {
+font-size: 26px;
+    padding: 0 8px;
 
 
 
@@ -887,3 +947,5 @@ header .login .login-img .profile-img {
     color: white;
     border-top: 1px solid #444;
 }
+
+

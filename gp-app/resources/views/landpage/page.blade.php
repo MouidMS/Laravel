@@ -246,11 +246,13 @@
         <button id="print">print</button>
         <button id="test">JSON</button>
     </div>
-    <button class="controlbtn" id="settingbtn" >ST</button>
-    <a href="{{url('back')}}"><button class="controlbtn" id="Back" >BK</button></a>
-    <button class="controlbtn" id="Display" >DS</button>
-    <button class="controlbtn" id="Save" >SV</button>
-    <button class="controlbtn" id="addpage" >+</button>
+
+
+    <button class="controlbtn" id="settingbtn" ><i class="fa-solid fa-gear"></i></button>
+    <a href="{{url('back')}}"> <button class="controlbtn" id="Back" ><i class="fa-solid fa-circle-arrow-left"></i></button></a>
+    <button class="controlbtn" id="Display" ><i class="fa-solid fa-display"></i></button>
+    <button class="controlbtn" id="Save" ><i class="fa-solid fa-floppy-disk"></i></button>
+    <button class="controlbtn" id="addpage">+</button>
 
 
 </div>

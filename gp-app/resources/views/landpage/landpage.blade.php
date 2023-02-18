@@ -2,10 +2,18 @@
     <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="refresh" content="301">
+    <meta name="author" content="Feras,Muhammad,Yazeed,Muayyad"/>
+    <meta name="keywords" content="Overveiw,Features,Team,Communiuty"/>
+    <meta name="description"
+          content="Build a beautiful,modern document with flexible environment and creative interfaces."/>
+    <meta name="theme-color" content="#f5f5ff" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Writiner</title>
+
+
+
     <link rel="icon" type="image/x-icon" href="./project/images/Ravicon-loading.png">
 
     <!-- Main Writiner_home CSS File -->
@@ -26,13 +34,12 @@
 <header id="Overveiw">
     <div class="container">
         <div class="logo-part">
-            <a href="{{url('/')}}"><img src="./project/images/Logopage.png" alt="logo" class="logo_img"></a>
+            <a href="{{url('/')}}"><img src="./project/images/logo.png" alt="logo" class="logo_img"></a>
         </div>
         <!-- start new update -->
         <div class="nav-part">
             <nav>
-
-                <ul class="main-nav" id="main-nav-js">
+                <ul class="main-nav" id="main-navMenu">
                     <li><a href="#Overveiw">Overveiw</a></li>
                     <li><a href="#Features">Features</a></li>
                     <li><a href="#Team">Team</a></li>
@@ -64,7 +71,7 @@
             @endauth
             @endif
 
-                <i class="fa-solid fa-bars bar-menu" id="bar-menu-js"></i>
+                <i class="fa-solid fa-bars bar-menu" id="btn-toggleMenu"></i>
             </div>
 
 
@@ -120,7 +127,8 @@
                 <div class="FS-textBox">
                     <h1>
                         <a href="" class="typewrite" data-period="2000"
-                           data-type='[ "Hi, Im Moayed.", "I am Back-End.", "I Love Back-End.", "I Love to Develop." ]'>
+                           data-type='[ "work from the best editors !", "your success begins with us", "your success begins with us"]'>
+{{--                           data-type='[ "Hi, Im Moayed.", "I am Back-End.", "I Love Back-End.", "I Love to Develop." ]'>--}}
                             <span class="wrap"></span>
                         </a>
                     </h1>
@@ -288,9 +296,11 @@
             </div>
         </div>
     </div>
-    <p class="copyright">2023</p>
+    <p class="copyright">&copy; 2023 Mfmyteam.com </p>
 </div>
-<script type="text/javascript" src="./project/js/Landpage.js"></script>
+<script type="text/javascript" src="../project/js/Landpage.js"></script>
+
+
 </body>
 
 </html>

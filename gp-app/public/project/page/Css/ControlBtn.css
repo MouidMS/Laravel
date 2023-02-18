@@ -76,17 +76,20 @@
 /* //////////////////////////////////////// */
 
 #cddrager{
-    position:absolute;
-    left: 0px;
-    top: -20px;
-    background-color: transparent;
-    border: none;
+    position: absolute;
+    left: -15px;
+    top: -15px;
+    border: 1px solid #8A2BE2;
+    background-color: rgb(255,255,255);
     cursor: move;
     display: inline;
     z-index: 200;
     user-select: none;
     padding: 2px;
+    height: 12px;
+    width: 12px;
 }
+
 #cddrager:hover{
     background-color: #ddd;
 }

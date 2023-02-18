@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="refresh" content="301">
+    <meta name="author" content="Feras,Muhammad,Yazeed,Muayyad"/>
+    <meta name="keywords" content="Recant, Collector, ReadyText Edit,Community"/>
+    <meta name="description"
+          content="It is a page that displays projects that have been created recently. Projects are also received from friends or from the community page."/>
+    <meta name="theme-color" content="#f5f5ff" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
     <title>Writiner_home</title>
     <link rel="icon" type="image/x-icon" href="./project/images/Ravicon-loading.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -181,7 +190,7 @@
     <header>
         <div class="container">
             <i class="fa-solid fa-bars toggle-menu"  id="btn-toggleMenu"></i>
-            <a href="{{url('/')}}" id="logoHead"><img src="./project/images/Logopage.png" alt="logo" class="logo_img"></a>
+            <a href="{{url('/')}}" id="logoHead"><img src="./project/images/logo.png" alt="logo" class="logo_img"></a>
             <nav id="mainMenuHead">
                 <ul class="main-nav" id="main-navMenu">
                     <li><a class="active" href="{{url('/writiner')}}">Home</a></li>

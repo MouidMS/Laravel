@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="refresh" content="301">
+    <meta name="author" content="Feras,Muhammad,Yazeed,Muayyad"/>
+    <meta name="keywords" content="Recant, Collector, ReadyText Edit,Community"/>
+    <meta name="description"
+          content="It is a feature in the application that is a set of adjustments that are limited to the basic text formatting tools."/>
+    <meta name="theme-color" content="#f5f5ff" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
     <title>ReadyEdit Text</title>
 
     <link rel="icon" type="image/x-icon" href="./project/images/Ravicon-loading.png">

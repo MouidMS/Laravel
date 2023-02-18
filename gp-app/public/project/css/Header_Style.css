@@ -35,7 +35,7 @@ header .toggle-menu {
     cursor: pointer;
     width: 30px;
     height: 30px;
-    margin-right: 21%;
+    /*margin-right: 21%;*/
 }
 header .toggle-menu:hover {
     border-radius: 50%;
@@ -255,6 +255,7 @@ header .navbar-account .fff .profile-menu-wrap .menu {
     display: flex;
     flex-direction: column;
 }
+
 header .navbar-account .fff .profile-menu-wrap .menu .menu-info {
     display: flex;
     padding: 0.8rem 1rem;
@@ -262,6 +263,24 @@ header .navbar-account .fff .profile-menu-wrap .menu .menu-info {
     align-items: center;
     color: #f5f5ff;
 }
+
+header .navbar-account .fff .profile-menu-wrap .menu .menu-info h2{
+    text-transform: capitalize;
+    word-wrap: break-word;
+    width: 100px;
+}
+header .navbar-account .fff .profile-menu-wrap .menu .menu-info .textOverflow1 {
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+header .navbar-account .fff .profile-menu-wrap .menu .menu-info .textOverflow1:hover {
+    z-index: 1;
+    overflow-x: initial;
+    white-space: initial;
+    text-overflow:initial;
+}
+
 header .navbar-account .fff .profile-menu-wrap .menu .menu-info > .hhh {
     width: 32px;
     border-radius: 50%;

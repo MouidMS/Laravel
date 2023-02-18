@@ -266,8 +266,6 @@ header .navbar-account .search .searchBar:focus{
 
 
 
-
-
 header .navbar-account .ballStar:hover {
     border-radius: 50%;
     background-color: #393941;
@@ -484,7 +482,7 @@ header .navbar-account .notification-menu .notification-menu-wrap .menu a > i {
 }
 @media (min-width: 991px) {
     .doc-container {
-        width: 800px;
+        width: 950px;
     }
 }
 .doc-container h1 {
@@ -534,24 +532,24 @@ header .navbar-account .notification-menu .notification-menu-wrap .menu a > i {
     justify-content: space-between;
     margin-bottom: 32px;
 }
-.writiner-home-homescreenmain .grid-item-section {
+ .grid-item-section {
     grid-area: item-section;
     display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
+    grid-template-columns: repeat(auto-fill,minmax(190px,1fr));
     gap: 32px;
     margin-top: 16px;
     padding: 0 16px 16px;
     position: relative;
     grid-template-rows:repeat(auto, 50px);
 }
-.writiner-home-homescreenmain .grid-item-section .grid-item {
+ .grid-item-section .grid-item {
     position: relative;
     height: 200px;
 }
-.writiner-home-homescreenmain .grid-item-section .grid-item:hover {
+ .grid-item-section .grid-item:hover {
   z-index: 5;
 }
-.writiner-home-homescreenmain .grid-item-section .grid-item .holder-item {
+ .grid-item-section .grid-item .holder-item {
     position: absolute;
     width: 180px;
     height: 180px;
@@ -560,13 +558,13 @@ header .navbar-account .notification-menu .notification-menu-wrap .menu a > i {
     transform: translate(-50%,-50%);
 }
 
-.writiner-home-homescreenmain .grid-item-section .grid-item .grid-item-thumbnail {
+ .grid-item-section .grid-item .grid-item-thumbnail {
     height: 130px;
     border: 1px solid black;
     border-radius: 20px 20px 0 0;
 
 }
-.writiner-home-homescreenmain .grid-item-section .grid-item .grid-item-thumbnail .icon-star ::before {
+ .grid-item-section .grid-item .grid-item-thumbnail .icon-star ::before {
     position: absolute;
     width: 32px;
     height: 32px;
@@ -578,10 +576,10 @@ header .navbar-account .notification-menu .notification-menu-wrap .menu a > i {
     top: 0;
     right: 0;
 }
-.writiner-home-homescreenmain .grid-item-section .grid-item .grid-item-thumbnail .icon-star .star{
+ .grid-item-section .grid-item .grid-item-thumbnail .icon-star .star{
     color: rgb(255, 255, 255);
 }
-.writiner-home-homescreenmain .grid-item-section .grid-item .grid-item-thumbnail .icon-fileline {
+ .grid-item-section .grid-item .grid-item-thumbnail .icon-fileline {
     position: absolute;
     top: 40%;
     left: 50%;
@@ -589,7 +587,7 @@ header .navbar-account .notification-menu .notification-menu-wrap .menu a > i {
     font-size: 56px;
 }
 
-.writiner-home-homescreenmain .grid-item-section .grid-item .grid-item-metadata {
+ .grid-item-section .grid-item .grid-item-metadata {
     height: 50px;
     border: 1px solid black;
     border-radius: 0 0 20px 20px;
@@ -599,30 +597,30 @@ header .navbar-account .notification-menu .notification-menu-wrap .menu a > i {
     padding-right: 8px;
 
 }
-.writiner-home-homescreenmain .grid-item-section .grid-item .grid-item-metadata .item-title {
+.grid-item-section .grid-item .grid-item-metadata .item-title {
     justify-content: start;
     margin-top: 4px;
 }
-.writiner-home-homescreenmain .grid-item-section .grid-item .grid-item-metadata .item-body{
+ .grid-item-section .grid-item .grid-item-metadata .item-body{
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-top: 8PX 0;
 }
-.writiner-home-homescreenmain .grid-item-section .grid-item .grid-item-metadata .item-body .icon-setting{
+ .grid-item-section .grid-item .grid-item-metadata .item-body .icon-setting{
     position: relative;
 }
-.writiner-home-homescreenmain .grid-item-section .grid-item .grid-item-metadata .item-body .setting-project{
+ .grid-item-section .grid-item .grid-item-metadata .item-body .setting-project{
     position: absolute;
     bottom: 12%;
     left: -10px;
 }
 
-.writiner-home-homescreenmain .grid-item-section .grid-item .grid-item-metadata .item-body .setting-project .menu-item{
+ .grid-item-section .grid-item .grid-item-metadata .item-body .setting-project .menu-item{
     display: flex;
     flex-direction: column;
 }
-.writiner-home-homescreenmain .grid-item-section .grid-item .grid-item-metadata .item-body .setting-project .menu-item button{
+ .grid-item-section .grid-item .grid-item-metadata .item-body .setting-project .menu-item button{
     display: flex;
     padding: 10px;
     background-color: rgb(32, 28, 28);
@@ -631,33 +629,33 @@ header .navbar-account .notification-menu .notification-menu-wrap .menu a > i {
     cursor: pointer;
     border: 0;
 }
-.writiner-home-homescreenmain .grid-item-section .grid-item .grid-item-metadata .item-body .setting-project .menu-item button:hover{
+ .grid-item-section .grid-item .grid-item-metadata .item-body .setting-project .menu-item button:hover{
     background-color: #fafafa;
     color: #1b1a1a;
 }
-.writiner-home-homescreenmain .grid-item-section .grid-item .grid-item-metadata .item-body .setting-project .menu-item i{
+ .grid-item-section .grid-item .grid-item-metadata .item-body .setting-project .menu-item i{
     margin-right: 8px;
 }
-.writiner-home-homescreenmain .grid-item-section .grid-item .grid-item-metadata .item-body .setting-project.open-menu{
+ .grid-item-section .grid-item .grid-item-metadata .item-body .setting-project.open-menu{
     max-height: 400px;
     z-index: 4;
 }
-.writiner-home-homescreenmain .grid-item-section .grid-item .grid-item-metadata .item-body .setting-project .menu-item{
+ .grid-item-section .grid-item .grid-item-metadata .item-body .setting-project .menu-item{
     box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px,
     rgba(6, 24, 44, 0.65) 0px 4px 6px -1px,
     rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
 }
-.writiner-home-homescreenmain .grid-item-section .grid-item .grid-item-metadata .item-body > div{
+ .grid-item-section .grid-item .grid-item-metadata .item-body > div{
     display: flex;
     gap: 8px;
     align-items: center;
 
 }
-.writiner-home-homescreenmain .grid-item-section .grid-item .grid-item-metadata .item-body > div > p{
+ .grid-item-section .grid-item .grid-item-metadata .item-body > div > p{
     font-size: 14px;
 
 }
-.writiner-home-homescreenmain .grid-item-section .grid-item .grid-item-metadata .item-body > div > .profiles-item_img{
+ .grid-item-section .grid-item .grid-item-metadata .item-body > div > .profiles-item_img{
     height: 16px;
     border-radius: 50%;
 }
@@ -691,6 +689,7 @@ header .navbar-account .notification-menu .notification-menu-wrap .menu a > i {
     /* background-color: #92929b; */
     transition: 1s;
     box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+
 }
 #main:hover{
     /*transform: scale(1.2,1.2);*/
@@ -776,8 +775,8 @@ header .navbar-account .notification-menu .notification-menu-wrap .menu a > i {
 
 #projectOwner{
     position: absolute;
-    right: -10px;
-    top: -10px;
+    right: 155px;
+    top: -24px;
     width: 56px;
     height: 56px;
     background-color: white;
@@ -805,8 +804,22 @@ header .navbar-account .notification-menu .notification-menu-wrap .menu a > i {
     right:  -130px;
     /* display: none; */
 }
+
 .aaaa h5{
     font-size: 11px;
+}
+@media (max-width: 375px) {
+    .aaaa{
+        top: 210px;
+        right: 40px;
+    }
+}
+
+@media (min-width: 376px) and (max-width: 1024px) {
+    .aaaa{
+        top: 210px;
+        right: 40px;
+    }
 }
 #desViewer{
     background-color: white;
@@ -935,9 +948,27 @@ header .navbar-account .notification-menu .notification-menu-wrap .menu a > i {
     z-index: 1;
 }
 
+
+
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
     visibility: visible;
+}
+
+@media (min-width: 376px) and (max-width: 1024px) {
+    .tooltip .tooltiptext{
+        top: 2px;
+        left: -112px;
+
+    }
+}
+
+@media (max-width: 375px) {
+    .tooltip .tooltiptext{
+        top: 2px;
+        left: -112px;
+
+    }
 }
 
 .viewDs-Lk:hover {

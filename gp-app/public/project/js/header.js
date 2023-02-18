@@ -4,10 +4,10 @@ let searchBar =document.getElementById("searchBar")
 let search = document.getElementById('iconSearch');
 
 
-search.addEventListener("click" ,function(){
-    console.log("kjkjbjhjhjhvggfgtry")
-    searchBar.classList.toggle('avtive-searsh')
-})
+// search.addEventListener("click" ,function(){
+//     console.log("kjkjbjhjhjhvggfgtry")
+//     searchBar.classList.toggle('avtive-searsh')
+// })
 
 document.addEventListener("mouseup", function(){
     console.log("jjnlj")

@@ -292,7 +292,7 @@ body{
     border-radius: 50%;
     background-color:#aedada;
     user-select: none;
-
+    cursor: pointer;
 }
 
 #settingbtn{
