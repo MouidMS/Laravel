@@ -1,0 +1,74 @@
+#mainContainer{
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 140px;
+    height: 140px;
+}
+#mainContainer::after{
+    content: "Loading";
+    position: absolute;
+    top: 106px;
+    left: 11px;
+    font-size: 25px;
+    font-weight: 900;
+    animation: loading 1.2s linear infinite;
+}
+#contanier{
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin-left: 19px;
+    animation: bin 0.7s linear infinite;
+}
+
+@keyframes loading {
+    0%{content: "Loading";}
+    25%{content: "Loading .";}
+    50%{content: "Loading . .";}
+    75%{content: "Loading . . .";}
+}
+
+
+@keyframes bin {
+    0%{margin-left: 19px;}
+    25%{margin-left: 10px;}
+    50%{margin-left: 19px;}
+}
+
+#bin1{
+    position: absolute;
+    width: 38.71px;
+    height: 55.85px;
+    left: 40px;
+    top: 5px;
+
+    background: #1A1850;
+    border-radius: 11px;
+    transform: matrix(0.97, 0.19, -0.27, 0.98, 0, 0);
+    z-index: 1;
+}
+#bin2{
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    left: 5px;
+    top: 5px;
+    border-radius: 50%;
+    background: #A5B4FC;
+}
+#bin3{
+    position: absolute;
+    width: 35.26px;
+    height: 32.54px;
+    left: 32px;
+    top: 54px;
+
+    background: #E96922;
+    mix-blend-mode: normal;
+    border-radius: 13px 1px;
+    transform: matrix(0.85, -0.42, 0.6, 0.88, 0, 0);
+
+}
