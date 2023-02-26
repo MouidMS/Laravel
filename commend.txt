@@ -1,0 +1,37 @@
+دخول الى مجلدات بأستخدام الاوامر :
+cd name_folder 
+
+
+
+الخروج من المجلد:
+cd.. 
+
+
+
+تشغيل أول مره المشروع:
+php artisan migrate  
+مع
+php artisan serve  
+مع
+php artisan storage:link    
+
+
+تشغيل المشروع:
+php artisan serve  
+
+
+
+تنظيف البيانات السابقة:
+php artisan migrate:fresh
+
+---------------------------------------------------------------------------------
+ملفات المشروع:
+1- ملفات css , js 
+
+public -> project 
+
+
+
+2- صفحات html php 
+
+resources-> views -> landpage
