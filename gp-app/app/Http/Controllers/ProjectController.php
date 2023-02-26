@@ -1368,6 +1368,7 @@ class ProjectController extends Controller
     }
 
     public function DeleteProject($id,$value){
+        //test
         if($value == 1){
             $receive = Receive::find($id);
             if($receive)
