@@ -853,7 +853,7 @@ class ProjectController extends Controller
     /********* Start Collector *********/
 
     public function getCollector(){
-       $collector= DB::table('collectors')->where('user_id',Auth::id())->get();
+        $collector= DB::table('collectors')->where('user_id',Auth::id())->get();
 //       $collector = $collector[0];
 //        $collectorArray=  json_decode($collector[1]->collector);
 //
@@ -881,7 +881,7 @@ class ProjectController extends Controller
 //            echo print_r($items);
             $value->collectorArrya= $items;
 
-           unset($value->user_id);
+            unset($value->user_id);
             unset($value->collector);
 
 
@@ -911,39 +911,39 @@ class ProjectController extends Controller
 
     public function IdCollectorProject($id){
         $project = Project::Find($id);
-            if($project){
-                return response()->json([
-                    'id_project'=>$project->id,
-                    'name_project'=>$project->name,
-                    'type'=>$project->type,
-                    'updated_at'=>$project->updated_at]);
-            }else{
-                return response()->json('Not found');
-            }
+        if($project){
+            return response()->json([
+                'id_project'=>$project->id,
+                'name_project'=>$project->name,
+                'type'=>$project->type,
+                'updated_at'=>$project->updated_at]);
+        }else{
+            return response()->json('Not found');
+        }
     }
 
 //    public function Rename
 
-public function RenameCollector($id,$rename){
+    public function RenameCollector($id,$rename){
 
         $collector = Collector::Find($id);
-            if($collector){
-                if (Auth::id() == $collector->user_id){
-                   $ck= DB::table('collectors')
-                        ->where('id',$id)
-                        ->update([
-                            'name' =>$rename,
-                        ]);
-                    return response()->json(DB::table('collectors')->where('id',$id)->select('name')->get()[0]->name);
-                }else{
-                    return response()->json('Access is not authorized');
-                }
+        if($collector){
+            if (Auth::id() == $collector->user_id){
+                $ck= DB::table('collectors')
+                    ->where('id',$id)
+                    ->update([
+                        'name' =>$rename,
+                    ]);
+                return response()->json(DB::table('collectors')->where('id',$id)->select('name')->get()[0]->name);
             }else{
-                return response()->json('Not found');
-
+                return response()->json('Access is not authorized');
             }
+        }else{
+            return response()->json('Not found');
 
-}
+        }
+
+    }
 
 
     public function DeleteCollector($id){
@@ -982,7 +982,7 @@ public function RenameCollector($id,$rename){
         }
     }
 
-/*Request $request*/
+    /*Request $request*/
     public function CreateNewCollector(Request $request){
 
         $student = new Collector();
@@ -1152,7 +1152,7 @@ public function RenameCollector($id,$rename){
             $id =  DB::table('ready_text_edits')->where('user_id',$id_user)->get('id');
 
 
-                DB::table('ready_text_edits')
+            DB::table('ready_text_edits')
                 ->where('id',$id[0]->id)
                 ->update([
                     'json' =>json_encode($json),
@@ -1248,7 +1248,7 @@ public function RenameCollector($id,$rename){
     }
     public function getLinkAndSaveImage(){
 
-}
+    }
 
 
 
@@ -1301,14 +1301,14 @@ public function RenameCollector($id,$rename){
 
             if (array_key_exists(0, json_decode($id_like))) {
                 $get_like = $this->getLikes($id_like[0]->id);
-                    $value->likes =$get_like;
-                }else{
-                    $value->likes = null;
-                }
+                $value->likes =$get_like;
+            }else{
+                $value->likes = null;
+            }
 
         }
         $data = $this->ReseveProject();
-       return response()->json(['projects'=>$project,'receives'=>$data]);
+        return response()->json(['projects'=>$project,'receives'=>$data]);
     }
 
 
@@ -1372,7 +1372,7 @@ public function RenameCollector($id,$rename){
             $receive = Receive::find($id);
             if($receive)
             {
-                $id = Auth::id();
+//                $id_user = Auth::id();
                 $receive->delete();
                 if(DB::table('receives')->where('id',$id)->exists()){
                     return response()->json('wrong');
@@ -1388,10 +1388,10 @@ public function RenameCollector($id,$rename){
             $receive = Project::find($id);
             if($receive)
             {
-                $id = Auth::id();
-                $path="users/".$id."/projects/".$receive->id.".json";
+                $id_user = Auth::id();
+                $path="users/".$id_user."/projects/".$receive->id.".json";
                 Storage::delete($path);
-                $receive->delete();
+                DB::table('projects')->where('id', $id)->where('user_id',Auth::id())->delete();
                 if(DB::table('projects')->where('id',$id)->exists()){
                     return response()->json('wrong');
                 }else{
@@ -1484,7 +1484,7 @@ public function RenameCollector($id,$rename){
             }
 
         }
-            return response()->json($friends);
+        return response()->json($friends);
     }
 
     function AddFriends($id)
@@ -1540,13 +1540,13 @@ public function RenameCollector($id,$rename){
     }
 
     public static function ifFollowOrNot($id){
-       $ck= DB::table('friends')->where('user_id',Auth::id())->where('user_id_friend',$id)->exists();
+        $ck= DB::table('friends')->where('user_id',Auth::id())->where('user_id_friend',$id)->exists();
 
-       if($ck){
-           return true;
-       }else{
-           return false;
-       }
+        if($ck){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     function getCountFollower(Request $request){
@@ -1615,7 +1615,7 @@ public function RenameCollector($id,$rename){
 
 
 
-        function getSimpleData(){
+    function getSimpleData(){
         $id = Auth::id();
         $project = DB::table('projects')->where('user_id', $id)->select('id','type','name','updated_at')->get();
 
@@ -1628,7 +1628,7 @@ public function RenameCollector($id,$rename){
             $value->info = $receive_id[0];
         }
 
-            return response()->json(['projects'=>$project,'receives'=>$receive]);
+        return response()->json(['projects'=>$project,'receives'=>$receive]);
     }
 
 
@@ -1658,7 +1658,7 @@ public function RenameCollector($id,$rename){
 //        return response()->json(['projects'=>$project,'friends'=>$friend,'others'=>$system]);
 
         $nav = DB::table('notifications')->where('user_id_receive', $id)->get();
-                return response()->json($nav);
+        return response()->json($nav);
     }
 
 
@@ -1817,23 +1817,23 @@ public function RenameCollector($id,$rename){
         }
 */
 
-/*
-            $data = [];
-            foreach ($project as $projects)
-                $data[] = [
-                    "info" => [
-                        "id" => $projects->id,
-                        "name" => $projects->name,
-                    ],
-                    "project" => [
-                        "nameProject" => "example",
-                        "date" => date("Y/m/d"),
-                        "owner" => $projects->name
-                    ],
-                ];
-            Storage::disk('jsonUser')->put($id . '/projects/' . $projects->name . '.json', json_encode($data));
-            return $data;
-*/
+        /*
+                    $data = [];
+                    foreach ($project as $projects)
+                        $data[] = [
+                            "info" => [
+                                "id" => $projects->id,
+                                "name" => $projects->name,
+                            ],
+                            "project" => [
+                                "nameProject" => "example",
+                                "date" => date("Y/m/d"),
+                                "owner" => $projects->name
+                            ],
+                        ];
+                    Storage::disk('jsonUser')->put($id . '/projects/' . $projects->name . '.json', json_encode($data));
+                    return $data;
+        */
 
 //        return view('projects.create'); // page html path(.../project/create)
     }
@@ -1852,166 +1852,166 @@ public function RenameCollector($id,$rename){
         $id = Auth::id();
 
         if (Auth::user()) {
-              $pr =DB::table('projects')->insertGetId([
-                    'user_id' => $id,
-                    'name' => 'Untitled',
-                    'type' => $type,
-                    'right_to' => $id,
-                  'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                  'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-             ]);
-              $lastId = DB::getPdo()->lastInsertId();
+            $pr =DB::table('projects')->insertGetId([
+                'user_id' => $id,
+                'name' => 'Untitled',
+                'type' => $type,
+                'right_to' => $id,
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+            $lastId = DB::getPdo()->lastInsertId();
             $affected = DB::table('projects')
                 ->where('id', $lastId)
                 ->update(['path' => $id . '/projects/' .  $lastId . '.json',]);
 
             $data = [];
-                $data =array (
-                    'page' =>
-                        array (
-                        ),
-                    'paragraphs' =>
-                        array (
-                        ),
-                    'topics' =>
-                        array (
-                        ),
-                    'image' =>
-                        array (
-                        ),
-                    'icons' =>
-                        array (
-                        ),
-                    'lists' =>
-                        array (
-                        ),
-                    'tables' =>
-                        array (
-                        ),
-                    'topicLists' =>
-                        array (
-                        ),
-                    'shapes' =>
-                        array (
-                        ),
-                    'pagenContener' =>
-                        array (
-                        ),
-                    'pageNumber' => 'none',
-                    'pageNumberColor' => '#000000',
-                    'pageDesign' => 'none',
-                    'backGrounColor' => '#ffffff',
-                    'borderColor' =>
-                        array (
-                            0 => '#000000',
-                            1 => '#000000',
-                            2 => '#000000',
-                            3 => '#000000',
-                            4 => '#000000',
-                        ),
-                    'borderDesign' => 'none',
-                    'borderStyle' =>
-                        array (
-                            0 => 'solid',
-                            1 => 'solid',
-                            2 => 'solid',
-                            3 => 'solid',
-                            4 => 'solid',
-                        ),
-                    'borderWidth' =>
-                        array (
-                            0 => 0,
-                            1 => 0,
-                            2 => 0,
-                            3 => 0,
-                            4 => 0,
-                        ),
-                    'borderRadius' =>
-                        array (
-                            0 => 0,
-                            1 => 0,
-                            2 => 0,
-                            3 => 0,
-                            4 => 0,
-                        ),
-                    'isDesignEditable' => true,
-                    'isContentEditable' => true,
-                    'pages' =>
-                        array (
-                            0 =>
-                                array (
-                                    'page' =>
-                                        array (
-                                        ),
-                                    'paragraphs' =>
-                                        array (
-                                        ),
-                                    'topics' =>
-                                        array (
-                                        ),
-                                    'image' =>
-                                        array (
-                                        ),
-                                    'icons' =>
-                                        array (
-                                        ),
-                                    'lists' =>
-                                        array (
-                                        ),
-                                    'tables' =>
-                                        array (
-                                        ),
-                                    'topicLists' =>
-                                        array (
-                                        ),
-                                    'shapes' =>
-                                        array (
-                                        ),
-                                    'pagenContener' =>
-                                        array (
-                                        ),
-                                    'pageNumber' => 'none',
-                                    'pageNumberColor' => '#000000',
-                                    'pageDesign' => 'none',
-                                    'backGrounColor' => '#ffffff',
-                                    'borderColor' =>
-                                        array (
-                                            0 => '#000000',
-                                            1 => '#000000',
-                                            2 => '#000000',
-                                            3 => '#000000',
-                                            4 => '#000000',
-                                        ),
-                                    'borderDesign' => 'none',
-                                    'borderStyle' =>
-                                        array (
-                                            0 => 'solid',
-                                            1 => 'solid',
-                                            2 => 'solid',
-                                            3 => 'solid',
-                                            4 => 'solid',
-                                        ),
-                                    'borderWidth' =>
-                                        array (
-                                            0 => 0,
-                                            1 => 0,
-                                            2 => 0,
-                                            3 => 0,
-                                            4 => 0,
-                                        ),
-                                    'borderRadius' =>
-                                        array (
-                                            0 => 0,
-                                            1 => 0,
-                                            2 => 0,
-                                            3 => 0,
-                                            4 => 0,
-                                        ),
-                                    'isDesignEditable' => true,
-                                    'isContentEditable' => true,
-                                ),
-                        ),
-                );
+            $data =array (
+                'page' =>
+                    array (
+                    ),
+                'paragraphs' =>
+                    array (
+                    ),
+                'topics' =>
+                    array (
+                    ),
+                'image' =>
+                    array (
+                    ),
+                'icons' =>
+                    array (
+                    ),
+                'lists' =>
+                    array (
+                    ),
+                'tables' =>
+                    array (
+                    ),
+                'topicLists' =>
+                    array (
+                    ),
+                'shapes' =>
+                    array (
+                    ),
+                'pagenContener' =>
+                    array (
+                    ),
+                'pageNumber' => 'none',
+                'pageNumberColor' => '#000000',
+                'pageDesign' => 'none',
+                'backGrounColor' => '#ffffff',
+                'borderColor' =>
+                    array (
+                        0 => '#000000',
+                        1 => '#000000',
+                        2 => '#000000',
+                        3 => '#000000',
+                        4 => '#000000',
+                    ),
+                'borderDesign' => 'none',
+                'borderStyle' =>
+                    array (
+                        0 => 'solid',
+                        1 => 'solid',
+                        2 => 'solid',
+                        3 => 'solid',
+                        4 => 'solid',
+                    ),
+                'borderWidth' =>
+                    array (
+                        0 => 0,
+                        1 => 0,
+                        2 => 0,
+                        3 => 0,
+                        4 => 0,
+                    ),
+                'borderRadius' =>
+                    array (
+                        0 => 0,
+                        1 => 0,
+                        2 => 0,
+                        3 => 0,
+                        4 => 0,
+                    ),
+                'isDesignEditable' => true,
+                'isContentEditable' => true,
+                'pages' =>
+                    array (
+                        0 =>
+                            array (
+                                'page' =>
+                                    array (
+                                    ),
+                                'paragraphs' =>
+                                    array (
+                                    ),
+                                'topics' =>
+                                    array (
+                                    ),
+                                'image' =>
+                                    array (
+                                    ),
+                                'icons' =>
+                                    array (
+                                    ),
+                                'lists' =>
+                                    array (
+                                    ),
+                                'tables' =>
+                                    array (
+                                    ),
+                                'topicLists' =>
+                                    array (
+                                    ),
+                                'shapes' =>
+                                    array (
+                                    ),
+                                'pagenContener' =>
+                                    array (
+                                    ),
+                                'pageNumber' => 'none',
+                                'pageNumberColor' => '#000000',
+                                'pageDesign' => 'none',
+                                'backGrounColor' => '#ffffff',
+                                'borderColor' =>
+                                    array (
+                                        0 => '#000000',
+                                        1 => '#000000',
+                                        2 => '#000000',
+                                        3 => '#000000',
+                                        4 => '#000000',
+                                    ),
+                                'borderDesign' => 'none',
+                                'borderStyle' =>
+                                    array (
+                                        0 => 'solid',
+                                        1 => 'solid',
+                                        2 => 'solid',
+                                        3 => 'solid',
+                                        4 => 'solid',
+                                    ),
+                                'borderWidth' =>
+                                    array (
+                                        0 => 0,
+                                        1 => 0,
+                                        2 => 0,
+                                        3 => 0,
+                                        4 => 0,
+                                    ),
+                                'borderRadius' =>
+                                    array (
+                                        0 => 0,
+                                        1 => 0,
+                                        2 => 0,
+                                        3 => 0,
+                                        4 => 0,
+                                    ),
+                                'isDesignEditable' => true,
+                                'isContentEditable' => true,
+                            ),
+                    ),
+            );
 
             Storage::disk('jsonUser')->put($id . '/projects/' .$lastId.'.json', json_encode($data));
             DB::commit();
@@ -2107,13 +2107,13 @@ public function RenameCollector($id,$rename){
         $userData->name = request('name');
         $userData->save();
 
-    /*    $book = new Project();
-        $book->user_id = $request->user_id;
-       $name = $request->name;
-        $book->path = $request->path;
+        /*    $book = new Project();
+            $book->user_id = $request->user_id;
+           $name = $request->name;
+            $book->path = $request->path;
 
-        DB::table('projects')->where('id', 87)->update('gggg');
-*/
+            DB::table('projects')->where('id', 87)->update('gggg');
+    */
 
         return response()->json($userData);
 

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
             //-------------------------------
             $table->bigInteger('owner_id')->unsigned()->index();
-            $table->foreign('owner_id')->references('user_id')->on('projects')->onDelete('cascade');
+//            $table->foreign('owner_id')->references('user_id')->on('projects')->onDelete('cascade');
             //-------------------------------
             $table->string('isCopy');
 
