@@ -425,14 +425,6 @@
     {{--console.log({{$data}})--}}
 
 
-
-
-
-
-
-
-
-
     // setProjectMetaData
     // console.log(isFullPreemption,ProjectTyp,IsReadOnly,'s',projectDes,projectName);
 

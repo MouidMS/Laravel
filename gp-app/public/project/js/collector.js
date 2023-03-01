@@ -11,6 +11,39 @@ let poupParent = document.getElementById('poupParent');
 let iconsearch = document.getElementById('iconSearch').style.visibility = "hidden";
 
 
+/*********************** pupRedXmark *********************/
+
+let popupRedXmark = document.getElementById('popupRedXmark');
+let closePopRedXmark = document.getElementById('closePopRedXmark');
+let H_puptext = document.getElementById('H-puptext');
+let P_puptext = document.getElementById('P-puptext');
+
+function displayMesage(message,state,time){
+    P_puptext.innerText = message;
+    console.log(popupRedXmark.children[0])
+    if (state){
+        popupRedXmark.children[0].style.borderColor = 'green';
+        H_puptext.innerText = 'Done';
+        H_puptext.style.color = 'green';
+    }else {
+        popupRedXmark.children[0].style.borderColor = 'red';
+        H_puptext.innerText = 'Oopes!'
+        H_puptext.style.color = 'red';
+    }
+    popupRedXmark.style.display = 'block';
+    if (time != 0){
+        setTimeout(function (){closePopRedXmark.click()},1000 * time)
+    }
+}
+
+
+closePopRedXmark.addEventListener('click', function (){
+    popupRedXmark.style.display = 'none';
+})
+
+
+
+
 //==============================================================
 
 export let sitting = document.createElement('div');
@@ -229,6 +262,7 @@ window.addEventListener('click',function () {
             success: function (response) {
                 menuFlag = true;
                 currentCollector.setName(response)
+                displayMesage(" Collector Renamed",true,3);
             }, error: function (xhr, ajaxOptions, thrownError) {
                 alert(xhr.status);
                 alert(thrownError);
@@ -245,6 +279,7 @@ window.addEventListener('click',function () {
             success: function (response) {
                 menuFlag = true;
                 currentCollector.deleteDoc();
+                displayMesage(" Collector Deleted",true,3);
                 console.log(response)
             }, error: function (xhr, ajaxOptions, thrownError) {
                 alert(xhr.status);
@@ -261,6 +296,7 @@ window.addEventListener('click',function () {
             dataType: "json",
             success: function (response) {
                 console.log(response)
+                displayMesage("Updated Collector",true,3);
             }, error: function (xhr, ajaxOptions, thrownError) {
                 alert(xhr.status);
                 alert(thrownError);
@@ -324,6 +360,8 @@ function GetTypeCollector(type){
                 // console.log(response[0].id,response[0].user_name,response[0].name,response[0].updated_at,response[0].type,response[0].collectorArrya);
                 colletorList.push(collector);
                 doc_body.appendChild(collector.getContainer());
+                displayMesage(" Create New Collector",true,3);
+
             }, error: function (xhr, ajaxOptions, thrownError) {
                 alert(xhr.status);
                 alert(thrownError);

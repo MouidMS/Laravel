@@ -1,11 +1,11 @@
-import Compomnent, { currentComponent,setCurrentComponent,currentComponentFlag,setCurrentComponentFlag, setIsSupComponent} from "./Component.js";
-import { compInFlag } from "./ParentComponent.js";
-import TableHeader from "./TableHeader.js";
-import TableCell from "./TableCell.js";
+import Compomnent, { currentComponent,setCurrentComponent,currentComponentFlag,setCurrentComponentFlag, setIsSupComponent} from "../ReadOnly/Component.js";
+import { compInFlag } from "../ReadOnly/ParentComponent.js";
+import TableHeader from "../ReadOnly/TableHeader.js";
+import TableCell from "../ReadOnly/TableCell.js";
 
 
 export default class TableRow{
-    
+
     compomnent;
     opacity;
     rotation;
@@ -44,18 +44,18 @@ export default class TableRow{
             curentCell = new TableCell("","none","none","normal","normal","normal",
                 1,0,5,0,
                 "#ffffff","none",['#000000','#000000','#000000','#000000','#000000'],"none",['solid','solid','solid','solid','solid'],[1,1,1,1,1],[0,0,0,0,0],"none",
-                true,true,true)    
+                true,true,true)
         }
         curentCell.addEvents();
         this.getCells().push(curentCell);
         this.getCompomnent().appendChild(curentCell.getCompomnent());
     }
 
-    deleteCell(){  
+    deleteCell(){
         if (this.getCells().length > 1) {
             this.getCells().splice(-1,1);
             this.getCompomnent().removeChild(this.getCompomnent().lastChild);
-        }          
+        }
     }
 
     prepairComponent(){
@@ -63,7 +63,7 @@ export default class TableRow{
         comp.classList.add('tableRow');
         return comp;
     }
-    
+
 
 
     setOpacity(value){
@@ -76,7 +76,7 @@ export default class TableRow{
     }
     setSkew(value){
         this.skew = value;
-        this.getCompomnent().style.transform = `skew(${value}deg)`; 
+        this.getCompomnent().style.transform = `skew(${value}deg)`;
     }
     setIsSizesEditable(value){
         this.isSizesEditable = value;
@@ -89,5 +89,5 @@ export default class TableRow{
     getIsSizesEditable(){return this.isSizesEditable;}
     getCells(){return this.cells;}
 
-    
+
 }

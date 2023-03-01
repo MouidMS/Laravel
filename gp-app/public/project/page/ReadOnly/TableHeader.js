@@ -1,6 +1,6 @@
-import SupTextComponent from "./SupTextComponent.js";
-import { currentComponent,setCurrentComponent,currentComponentFlag,setCurrentComponentFlag, setIsSupComponent} from "./Component.js";
-import { compInFlag } from "./ParentComponent.js";
+import SupTextComponent from "../ReadOnly/SupTextComponent.js";
+import { currentComponent,setCurrentComponent,currentComponentFlag,setCurrentComponentFlag, setIsSupComponent} from "../ReadOnly/Component.js";
+import { compInFlag } from "../ReadOnly/ParentComponent.js";
 
 
 export default class TableHeader extends SupTextComponent{
@@ -10,7 +10,7 @@ export default class TableHeader extends SupTextComponent{
     tableHeaderDrager;
 
     constructor(cellWidth,text,isLined,textEffect,wordSpace,letterSpace,lineHeight,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable){
-        super(isLined,textEffect,wordSpace,letterSpace,lineHeight,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable);   
+        super(isLined,textEffect,wordSpace,letterSpace,lineHeight,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable);
         this.setCompomnent(this.prepairComponent());
         this.applyTextEdits();
         this.applyComponentEdit(this);
@@ -21,7 +21,7 @@ export default class TableHeader extends SupTextComponent{
     };
 
     prepairComponent(){
-       
+
         let comp = document.createElement('td');
         comp.classList.add('TableHeader');
         let curent;
@@ -43,8 +43,8 @@ export default class TableHeader extends SupTextComponent{
         this.getCompomnent().style.width = `${value}px`;
         this.getCompomnent().style.minWidth = `${value}px`;
     }
-    
-    
+
+
     setText(value){
         this.text = value;
         this.getCompomnent().children[0].innerHTML = value;
@@ -77,7 +77,7 @@ export default class TableHeader extends SupTextComponent{
             }
 
         };
-    
+
         // When user releases the mouse, remove the existing event listeners
         const mouseUpHandler = (e) =>{
             this.getCompomnent().children[1].classList.remove('resizing');
@@ -87,9 +87,9 @@ export default class TableHeader extends SupTextComponent{
 
         document.addEventListener('mousemove', mouseMoveHandler);
         document.addEventListener('mouseup', mouseUpHandler);
-    
+
     }
-    
+
     saveHText = (e) =>{
         this.text = this.getTableHeaderText().innerHTML;
     }

@@ -1,4 +1,4 @@
-import { currentPage } from "./Page.js";
+import { currentPage } from "../ReadOnly/Page.js";
 
 
 export let currentComponent;
@@ -42,7 +42,7 @@ export default class Compomnent{
     rotation;
     padding;
     skew;
-    
+
     backGrounColor;
     backGrounDesign;
     borderColor ;
@@ -65,7 +65,7 @@ export default class Compomnent{
         this.padding = padding;
         this.skew = skew;
         this.backGrounColor = backGrounColor;
-        this.backGrounDesign = backGrounDesign; 
+        this.backGrounDesign = backGrounDesign;
         this.borderColor = borderColor;
         this.borderDesign = borderDesign;
         this.borderStyle = borderStyle;
@@ -87,36 +87,36 @@ export default class Compomnent{
         this.setSkew(this.getskew());
         this.setBackGrounColor(this.getBackGrounColor());
         this.setBackGrounDesign(this.getBackGrounDesign());
-        
+
         for (let index = 1; index <= 4; index++) {
             this.setBorderColor(this.getBorderColor()[index],index);
             this.setBorderStyle(this.getBorderStyle()[index],index);
             this.setBorderWidth(this.getBorderWidth()[index],index);
             this.setBorderRadius(this.getBorderRadius()[index],index);
-            
+
         }
         this.setBorderDesign(this.getBorderDesign());
         this.setPolygon(this.getpolygon());
     }
-    
+
     setCompomnent(value){
         this.compomnent = value;
     }
-    
+
     setOpacity(value){
         this.opacity = value;
         this.getCompomnent().style.opacity = `${value}`;
     }
-    
+
     setRotation(value){
-        this.rotation = value;    
+        this.rotation = value;
         this.getCompomnent().style.transform = `rotate(${value}deg)`;
     }
     setPadding(value,obj){
         this.padding = value;
         if (obj.constructor.name == "List") {
             if (obj.getStyleType() != "none") {
-                let paddingLeft = (parseInt(value) + ((obj.getItem().length.toString().length * 10) + 15)) 
+                let paddingLeft = (parseInt(value) + ((obj.getItem().length.toString().length * 10) + 15))
                 this.getCompomnent().style.padding = `${value}px ${value}px ${value}px ${paddingLeft}px`;
                 console.log(paddingLeft)
             } else {
@@ -130,19 +130,19 @@ export default class Compomnent{
         this.skew = value;
         this.getCompomnent().style.transform = `skew(${value}deg)`;
     }
-    
-    
-    
+
+
+
     setBackGrounColor(value){
         this.backGrounColor = value;
         this.getCompomnent().style.backgroundColor  =  this.getBackGrounColor();
     }
     setBackGrounDesign(value){
-        
+
         if (value == 'none') {
             this.getCompomnent().classList.remove(this.getBackGrounDesign());
             this.backGrounDesign = value;
-            
+
         }else{
             this.getCompomnent().classList.remove(this.getBackGrounDesign());
             this.backGrounDesign = value;
@@ -150,11 +150,11 @@ export default class Compomnent{
         }
     }
     setBorderDesign(value){
-        
+
         if (value == 'none') {
             this.getCompomnent().classList.remove(this.getBorderDesign());
             this.borderDesign = value;
-            
+
         }else{
             this.getCompomnent().classList.remove(this.getBorderDesign());
             this.borderDesign = value;
@@ -167,11 +167,11 @@ export default class Compomnent{
         if (index == 0) {
             for (let index = 0; index < this.borderColor.length; index++) {
                 this.borderColor[index] = value;
-                
+
             }
         } else {
             this.borderColor[index] = value;
-            
+
         }
         this.applyBorderEdites();
     }
@@ -202,14 +202,14 @@ export default class Compomnent{
         if (index == 0) {
             for (let index = 0; index < this.borderRadius.length; index++) {
                 this.borderRadius[index] = value;
-                
+
             }
         } else {
             this.borderRadius[index] = value;
         }
         this.applyBorderEdites();
     }
-    
+
     setPolygon(value){
         this.polygon = value;
         this.getCompomnent().style.clipPath = value;
@@ -224,8 +224,8 @@ export default class Compomnent{
     setIsSizesEditable(value){
         this.isSizesEditable = value;
     };
-    
-    
+
+
     applyBorderEdites(){
 
         this.getCompomnent().style.borderColor = `${this.getBorderColor()[1]} ${this.getBorderColor()[2]} ${this.getBorderColor()[3]} ${this.getBorderColor()[4]}`;

@@ -153,7 +153,7 @@ let projectId;
 let projectDes;
 let projectName;
 
-
+//export function getInfo(projectId){
 export function getInfo(projectId,communityId,receiveId,collectorId){
     if (projectId != 0 ){
         projectId = projectId;

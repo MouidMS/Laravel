@@ -93,7 +93,6 @@ let H_puptext = document.getElementById('H-puptext');
 let P_puptext = document.getElementById('P-puptext');
 
 function displayMesage(message,state,time){
-    console.log("jjkbrjkkrkjre")
     P_puptext.innerText = message;
     console.log(popupRedXmark.children[0])
     if (state){
@@ -109,7 +108,6 @@ function displayMesage(message,state,time){
     if (time != 0){
         setTimeout(function (){closePopRedXmark.click()},1000 * time)
     }
-
 }
 
 
@@ -554,20 +552,19 @@ function DeleteSherFriend(id){
 
 function deleteProject(id,value){
 
-
     $.ajax({
         type: "GET",
         url: "/delete-project/" + id+"/"+value,
         dataType: "json",
         success: function (response) {
-            if (response == 'done') {
+            if (response === 'done') {
                 currentProjectMenu.removeProject();
                 menuFlag = true;
                 displayMesage('Project Deleted',true,3);
-            } else if(response == 'wrong'){
+            } else if(response === 'wrong'){
                 menuFlag = true;
                 displayMesage('Peoject was\'t deleted, Server error',false,3)
-            } else if (response == 'notExist'){
+            } else if (response === 'notExist'){
                 currentProjectMenu.removeProject();
                 menuFlag = true;
                 displayMesage('Project is\'t exist',false,3);
@@ -1822,20 +1819,6 @@ projectSortBtn.addEventListener('change', function (){
     addAllProject();
 })
 
-function base256Encode(str) {
-    var result = "";
-    for (var i = 0; i < str.length; i++) {
-        // Convert the 8-bit binary value to decimal
-        var dec = str.charCodeAt(i);
-
-        // Convert the decimal value to ASCII character
-        var char = String.fromCharCode(dec);
-
-        // Append the ASCII character to the result string
-        result += char;
-    }
-    return result;
-}
 // open-menu
 //
 // profileMenu

@@ -1,11 +1,11 @@
-import ImageComponent from "./ImageComponent.js"
-import {isFullPreemption} from "./main.js";
-import { currentComponent,setCurrentComponent,currentComponentFlag,setCurrentComponentFlag,setIsSupComponent} from "./Component.js";
-import { compInFlag } from "./ParentComponent.js";
+import ImageComponent from "../ReadOnly/ImageComponent.js"
+import {isFullPreemption} from "../ReadOnly/main.js";
+import { currentComponent,setCurrentComponent,currentComponentFlag,setCurrentComponentFlag,setIsSupComponent} from "../ReadOnly/Component.js";
+import { compInFlag } from "../ReadOnly/ParentComponent.js";
 
 
 export default class Image extends ImageComponent{
-    
+
     path;
     constructor(path,
         blur,brightness,contrast,grayscale,hueRotate,invert,saturate,sepia,
@@ -31,11 +31,11 @@ export default class Image extends ImageComponent{
         current.appendChild(comp);
         return comp;
     }
-    
 
 
 
-    
+
+
     setPath(value){
         if (isFullPreemption) {
             if (value == '' || value == null) {
@@ -44,7 +44,7 @@ export default class Image extends ImageComponent{
             }else{
                 this.path = value;
                 this.getCompomnent().src = value;
-            }   
+            }
         } else {
             if (this.getIsContentEditable()) {
                 if (value == '' || value == null) {
@@ -53,7 +53,7 @@ export default class Image extends ImageComponent{
                 }else{
                     this.path = value;
                     this.getCompomnent().src = value;
-                }   
+                }
             }
         }
     }
@@ -63,7 +63,7 @@ export default class Image extends ImageComponent{
     getPath(){
         return this.path;
     };
-    
-    
+
+
 
 }

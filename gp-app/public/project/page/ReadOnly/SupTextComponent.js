@@ -1,5 +1,5 @@
-import { currentPage } from "./Page.js";
-import Compomnent from "./Component.js";
+import { currentPage } from "../ReadOnly/Page.js";
+import Compomnent from "../ReadOnly/Component.js";
 
 export default class SupTextComponent extends Compomnent{
     text;
@@ -23,7 +23,7 @@ export default class SupTextComponent extends Compomnent{
         this.letterSpace = letterSpace;
         this.lineHeight = lineHeight;
     };
-    
+
     applyTextEdits(){
         this.setIsLined(this.getIsLined())
         this.setTextEffect(this.getTextEffect())
@@ -44,7 +44,7 @@ export default class SupTextComponent extends Compomnent{
         if (value == 'none') {
             this.getCompomnent().classList.remove(this.getIsLined());
             this.isLined = value;
-            
+
         }else{
             this.getCompomnent().classList.remove(this.getIsLined());
             this.isLined = value;
@@ -55,7 +55,7 @@ export default class SupTextComponent extends Compomnent{
         if (value == 'none') {
             this.getCompomnent().classList.remove(this.getTextEffect());
             this.textEffect = value;
-            
+
         }else{
             this.getCompomnent().classList.remove(this.getTextEffect());
             this.textEffect = value;
@@ -65,7 +65,7 @@ export default class SupTextComponent extends Compomnent{
     setWordSpace(value){
         this.wordSpace = value;
         if (value == "normal") {
-            this.getCompomnent().style.wordSpacing = `${value}`;            
+            this.getCompomnent().style.wordSpacing = `${value}`;
         } else {
             this.getCompomnent().style.wordSpacing = `${value}px`;
         }
@@ -77,7 +77,7 @@ export default class SupTextComponent extends Compomnent{
         if (value == "normal") {
             this.getCompomnent().style.letterSpacing = `${value}`;
         } else {
-            this.getCompomnent().style.letterSpacing = `${value}px`;            
+            this.getCompomnent().style.letterSpacing = `${value}px`;
         }
     }
     setLineHeight(value){
@@ -85,10 +85,10 @@ export default class SupTextComponent extends Compomnent{
         if (value == "normal") {
             this.getCompomnent().style.lineHeight = `${value}`;
         } else {
-            this.getCompomnent().style.lineHeight = `${value}px`;            
+            this.getCompomnent().style.lineHeight = `${value}px`;
         }
     }
-   
+
     saveText = (e) =>{
         this.text = this.getCompomnent().innerHTML;
         // console.log(this.getText())

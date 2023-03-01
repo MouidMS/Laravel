@@ -1,7 +1,7 @@
-import ParentComponent from "./ParentComponent.js";
-import {isFullPreemption} from "./main.js";
-import { currentComponent,setCurrentComponent,currentComponentFlag,setCurrentComponentFlag,setIsSupComponent} from "./Component.js";
-import { compInFlag } from "./ParentComponent.js";
+import ParentComponent from "../ReadOnly/ParentComponent.js";
+import {isFullPreemption} from "../ReadOnly/main.js";
+import { currentComponent,setCurrentComponent,currentComponentFlag,setCurrentComponentFlag,setIsSupComponent} from "../ReadOnly/Component.js";
+import { compInFlag } from "../ReadOnly/ParentComponent.js";
 
 
 export default class Icon extends ParentComponent{
@@ -39,8 +39,8 @@ export default class Icon extends ParentComponent{
         current.appendChild(comp);
         return comp;
     }
-    
-    
+
+
 
     setIcon(value){
         let classlist;
@@ -61,7 +61,7 @@ export default class Icon extends ParentComponent{
                 classlist.forEach(element => {
                     this.getCompomnent().classList.add(element);
                 });
-            }   
+            }
         } else {
             if (this.getIsContentEditable()) {
                 if (value == 'none') {
@@ -70,7 +70,7 @@ export default class Icon extends ParentComponent{
                         this.getCompomnent().classList.remove(element);
                     });
                     this.icon = value;
-                    
+
                 }else{
                     classlist = this.icon.split(" ");
                     classlist.forEach(element => {
@@ -81,7 +81,7 @@ export default class Icon extends ParentComponent{
                     classlist.forEach(element => {
                         this.getCompomnent().classList.add(element);
                     });
-                } 
+                }
             }
         }
     }

@@ -1,4 +1,4 @@
-import ParentComponent from "./ParentComponent.js"
+import ParentComponent from "../ReadOnly/ParentComponent.js"
 
 export default class ImageComponent extends ParentComponent{
 
@@ -23,7 +23,7 @@ export default class ImageComponent extends ParentComponent{
         this.saturate = saturate;
         this.sepia = sepia;
     }
-    
+
     applyImageEdits(){
         this.setBlur(this.getBlur());
         this.setBrightness(this.getBrightness());

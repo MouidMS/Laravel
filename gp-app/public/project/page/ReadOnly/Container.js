@@ -1,13 +1,12 @@
-import { container } from './main.js';
+import { container,pageParent } from './main.js';
 import Page from './Page.js';
-import {pageParent} from "./main.js"
 
-
+//fdsfsdfdsfdsfsdfsdfds
 
 export default class Container extends Page{
 
     pages = [];
-    
+
     constructor(){
         // backGrounColor,pageDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,pageNumber,pageNumberColor
         super('#ffffff',"none",['#000000','#000000','#000000','#000000','#000000'],"none",['solid','solid','solid','solid','solid'],[0,0,0,0,0],[0,0,0,0,0],"none","#000000",true,true);
@@ -46,10 +45,10 @@ export default class Container extends Page{
         console.log(index)
         console.log(index == 0 )
         if (index == 0 ) {}else{
-            
+
             this.getPages()[index] = this.getPages()[index - 1];
             this.getPages()[index - 1] = current;
-    
+
             pageParent.insertBefore(pageParent.children[index],pageParent.children[index - 1]);
             pageParent.children[index - 1].scrollIntoView();
 
@@ -61,18 +60,18 @@ export default class Container extends Page{
         console.log(index)
         console.log(index == 0 )
         if (index == this.getPages().length - 1 ) {}else{
-            
+
             this.getPages()[index] = this.getPages()[index + 1];
             this.getPages()[index + 1] = current;
-    
+
             pageParent.insertBefore(pageParent.children[index + 1],pageParent.children[index]);
             pageParent.children[index + 1].scrollIntoView();
 
-        }   
+        }
     }
     delete = (page) =>{
         let index = this.getPages().indexOf(page);
-        
+
         this.getPages().splice(index,1);
         console.log(pageParent)
         pageParent.removeChild(page.getPage().parentNode.parentNode);

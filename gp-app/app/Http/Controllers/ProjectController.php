@@ -100,6 +100,9 @@ class ProjectController extends Controller
         return response()->json($filename);
     }
 
+
+
+
     public function getFav($id_project, $state, Request $request)
     {
         $id_user = Auth::id();
@@ -468,8 +471,8 @@ class ProjectController extends Controller
 
 
     public function setIdReceive($id){
-        $sher_project = Receive::Find($id);
         $id = base64_decode($id);
+        $sher_project = Receive::Find($id);
 
         if($sher_project){
             $id_user_ouner = DB::table('projects')->where('id', $sher_project->project_id)->select('user_id', 'name','type')->get();
@@ -482,7 +485,7 @@ class ProjectController extends Controller
             $collector = 0;
             $project=0;
             $linkBack='receive';
-            return view('landpage.page', compact('receive','type','commuinty','collector','project','linkBack'));
+            return view('landpage.ReadOnlyText', compact('receive','type','commuinty','collector','project','linkBack'));
         }else{
             return redirect(url('login'));
 
@@ -543,25 +546,6 @@ class ProjectController extends Controller
                 'type'=> $id_user_ouner[0]->type,
             ]);
 
-//            $type = $id_user_ouner[0]->type;
-//            $data = [
-//                'name_project' => $id_user_ouner[0]->name,
-//                'name_user' => $name_user[0]->name,
-//                'file' => $filename,
-//                "read_only"=> true,
-//                "permission"=> false,
-//                'type'=> $id_user_ouner[0]->type,
-//
-//            ];
-//
-//            $receive = 0;
-//            $commuinty = $id;
-//            $collector = 0;
-//            $project=0;
-//
-//
-//            return view('landpage.page', compact('data','receive','type','commuinty','collector','project'));
-
         } else {
             return response()->json('Not Found');
         }
@@ -582,7 +566,7 @@ class ProjectController extends Controller
             $collector = 0;
             $project=0;
             $linkBack='commuinty';
-            return view('landpage.page', compact('receive','type','commuinty','collector','project','linkBack'));
+            return view('landpage.ReadOnlyText', compact('receive','type','commuinty','collector','project','linkBack'));
         }else{
             return redirect(url('login'));
         }
@@ -640,7 +624,7 @@ class ProjectController extends Controller
             $collector = $id;
             $project=0;
             $linkBack='collector';
-            return view('landpage.page', compact('receive','type','commuinty','collector','project','linkBack'));
+            return view('landpage.ReadOnlyText', compact('receive','type','commuinty','collector','project','linkBack'));
         } else
             return redirect(url('login'));
 
@@ -771,15 +755,8 @@ class ProjectController extends Controller
             $save->updated_at = $projectNew->updated_at;
             $save->save();
 
-
-//            $pr =DB::table('receives')->insertGetId([
-//                'user_id' => Auth::id(),
-//                'project_id' => $projectNew->user_id,
-//                'isCopy' => $rec->isCopy,
-//                'updated_at' => $projectNew->updated_at
-//            ]);
             $url = url()->previous();
-            return redirect($url);
+            return redirect($url)->with('update', 'added to your projects successfully!');
         } else {
             return response()->json('Not Found');
 
@@ -830,7 +807,7 @@ class ProjectController extends Controller
                 ->update(['path' => Auth::id() . '/projects/' . $lastId . '.json',]);
             $filename_new = Storage::disk('jsonUser')->put(Auth::id() . '/projects/' . $lastId . '.json', $filename);
             $url = url()->previous();
-            return redirect($url);
+            return redirect($url)->with('update', 'copy project successfully!');
         } else {
             return response()->json('Not Found');
         }

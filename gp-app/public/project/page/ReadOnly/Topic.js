@@ -1,15 +1,15 @@
-import  TextComponent  from "./TextComponent.js";
-import { currentComponent,setCurrentComponent,currentComponentFlag,setCurrentComponentFlag, setIsSupComponent} from "./Component.js";
-import { compInFlag } from "./ParentComponent.js";
+import  TextComponent  from "../ReadOnly/TextComponent.js";
+import { currentComponent,setCurrentComponent,currentComponentFlag,setCurrentComponentFlag, setIsSupComponent} from "../ReadOnly/Component.js";
+import { compInFlag } from "../ReadOnly/ParentComponent.js";
 
 
 export default class Topic extends TextComponent{
     topicLevel;
 
-   
-  
+
+
     constructor(text,topicLevel,isLined,textEffect,wordSpace,letterSpace,lineHeight,width,height,xAxis,yAxis,zAxis,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable){
-        super(text,isLined,textEffect,wordSpace,letterSpace,lineHeight,width,height,xAxis,yAxis,zAxis,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable);   
+        super(text,isLined,textEffect,wordSpace,letterSpace,lineHeight,width,height,xAxis,yAxis,zAxis,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable);
         this.setCompomnent(this.prepairComponent());
         this.applyTextEdits();
         this.applyparentComponentEdites();
@@ -30,7 +30,7 @@ export default class Topic extends TextComponent{
         return comp;
     }
 
-    
+
     setTopicLevel(value){
         this.topicLevel = value;
         this.getCompomnent().style.fontWeight = `900`;
@@ -64,5 +64,5 @@ export default class Topic extends TextComponent{
         return this.topicLevel;
     }
 
-   
+
 }

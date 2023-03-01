@@ -33,6 +33,102 @@
 
 </head>
 <body>
+<div class="P-popupRedXmark" id="popupRedXmarkCopy" style="display: none;">
+    <div class="popupRedXmark">
+        <button id="closePopRedXmarkCopy"><i class="fa-solid fa-xmark"></i></button>
+        <div class="poptext">
+            <h1 id="H-puptextCopy">Done!</h1>
+            <p id="P-puptextCopy"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    let popupRedXmarkCopy = document.getElementById('popupRedXmarkCopy');
+    let closePopRedXmarkCopy = document.getElementById('closePopRedXmarkCopy');
+    let H_puptextCopy = document.getElementById('H-puptextCopy');
+    let P_puptextCopy = document.getElementById('P-puptextCopy');
+
+    function displayMesage(message,state,time){
+        P_puptextCopy.innerText = message;
+        console.log(popupRedXmarkCopy.children[0])
+        if (state){
+            popupRedXmarkCopy.children[0].style.borderColor = 'green';
+            H_puptextCopy.innerText = 'Done';
+            H_puptextCopy.style.color = 'green';
+        }else {
+            popupRedXmarkCopy.children[0].style.borderColor = 'red';
+            H_puptextCopy.innerText = 'Oopes!'
+            H_puptextCopy.style.color = 'red';
+        }
+        popupRedXmark.style.display = 'block';
+        if (time != 0){
+            setTimeout(function (){
+                closePopRedXmarkCopy.click();
+                popupRedXmarkCopy.style.display = 'none';
+            },1000 * time)
+        }
+    }
+
+
+    function myFunction(id) {
+        var id_hash = btoa(id)
+        navigator.clipboard.writeText('http://127.0.0.1:8000/page-community-id/'+id_hash);
+        // window.location.reload();
+
+        // alert("Copied the link!");
+        displayMesage("Link copied!", true, 5);
+
+    }
+</script>
+
+@if (session('update'))
+    <!-- popupRedXmark-->
+    <div class="P-popupRedXmark" id="popupRedXmark" style="display: block;">
+        <div class="popupRedXmark">
+            <button id="closePopRedXmark"><i class="fa-solid fa-xmark"></i></button>
+            <div class="poptext">
+                <h1 id="H-puptext">Done!</h1>
+                <p id="P-puptext">{{ session('update') }}</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        /*********************** pupRedXmark *********************/
+
+        let popupRedXmark = document.getElementById('popupRedXmark');
+        let closePopRedXmark = document.getElementById('closePopRedXmark');
+        let H_puptext = document.getElementById('H-puptext');
+        let P_puptext = document.getElementById('P-puptext');
+
+        function displayMesage(message,state,time){
+            P_puptext.innerText = message;
+            console.log(popupRedXmark.children[0])
+            if (state){
+                popupRedXmark.children[0].style.borderColor = 'green';
+                H_puptext.innerText = 'Done';
+                H_puptext.style.color = 'green';
+            }else {
+                popupRedXmark.children[0].style.borderColor = 'red';
+                H_puptext.innerText = 'Oopes!'
+                H_puptext.style.color = 'red';
+            }
+            popupRedXmark.style.display = 'block';
+            if (time != 0){
+                setTimeout(function (){
+                    closePopRedXmark.click();
+                    popupRedXmark.style.display = 'none';
+                },1000 * time)
+            }
+        }
+
+
+        displayMesage('{{ session('update') }}', true, 5);
+    </script>
+@endif
+
+
+
 <div id="poupParent">
     <div id="poupChild">
         <div class="popupShare" id="popupShare">
@@ -459,13 +555,38 @@
 
 <script>
     // justAlert()
-    function myFunction(id) {
-        var id_hash = btoa(id)
-        navigator.clipboard.writeText('http://127.0.0.1:8000/page-community-id/'+id_hash);
-        // window.location.reload();
 
-        alert("Copied the link!");
-    }
+    // function displayMesage(message,state,time){
+    //     P_puptext.innerText = message;
+    //     console.log(popupRedXmark.children[0])
+    //     if (state){
+    //         popupRedXmark.children[0].style.borderColor = 'green';
+    //         H_puptext.innerText = 'Done';
+    //         H_puptext.style.color = 'green';
+    //     }else {
+    //         popupRedXmark.children[0].style.borderColor = 'red';
+    //         H_puptext.innerText = 'Oopes!'
+    //         H_puptext.style.color = 'red';
+    //     }
+    //     popupRedXmark.style.display = 'block';
+    //     if (time != 0){
+    //         setTimeout(function (){
+    //             closePopRedXmark.click();
+    //             popupRedXmark.style.display = 'none';
+    //         },1000 * time)
+    //     }
+    // }
+    //
+    //
+    // function myFunction(id) {
+    //     var id_hash = btoa(id)
+    //     navigator.clipboard.writeText('http://127.0.0.1:8000/page-community-id/'+id_hash);
+    //     // window.location.reload();
+    //
+    //     // alert("Copied the link!");
+    //     displayMesage("Link copied!", true, 5);
+    //
+    // }
     //
     // function justAlert(){
     //     alert("Done!");
@@ -496,6 +617,8 @@
         document.fillterform.submit();
 
     }
+
+
 
 </script>
 

@@ -1,20 +1,24 @@
-import {container, isFullPreemption} from './main.js';
-import Paragraph from './Paragraph.js';
-import Topic from './Topic.js';
-import Icon from './Icon.js';
-import Image from './Image.js'
-import List from './List.js';
-import ListItem from './ListItem.js';
-import ListTopic from './ListTopic.js';
-import Table from './Table.js';
-import TableCell from './TableCell.js';
-import TableHeader from './TableHeader.js';
-import TableRow from './TableRow.js';
-import Shap from './Shap.js';
-import { heighestComponent } from './ParentComponent.js';
+import {container, isFullPreemption} from '../ReadOnly/main.js';
+import Paragraph from '../ReadOnly/Paragraph.js';
+import Topic from '../ReadOnly/Topic.js';
+import Icon from '../ReadOnly/Icon.js';
+import Image from '../ReadOnly/Image.js'
+import List from '../ReadOnly/List.js';
+import ListItem from '../ReadOnly/ListItem.js';
+import ListTopic from '../ReadOnly/ListTopic.js';
+import Table from '../ReadOnly/Table.js';
+import TableCell from '../ReadOnly/TableCell.js';
+import TableHeader from '../ReadOnly/TableHeader.js';
+import TableRow from '../ReadOnly/TableRow.js';
+import Shap from '../ReadOnly/Shap.js';
+import { heighestComponent } from '../ReadOnly/ParentComponent.js';
 
 
 export let currentPage;
+
+export function setCurrentPage(value) {
+    currentPage = value;
+}
 
 let Xcord,Ycord;
 
@@ -44,7 +48,7 @@ export default class Page{
     shapes = [];
 
     pagenContener;
-    
+
     pageNumber;
     pageNumberColor;
     pageDesign;
@@ -75,12 +79,12 @@ export default class Page{
 
     }
 
-    
+
     setPage(){
         let page = document.createElement('div');
         let outer1 = document.createElement('div');
         outer1.classList.add('outer1');
-        outer1.appendChild(page);        
+        outer1.appendChild(page);
         let outer2 = document.createElement('div');
         outer2.classList.add('outer2');
         outer2.appendChild(outer1);
@@ -126,7 +130,7 @@ export default class Page{
                     pny ='98.1%';
                     break;
                 }
-                this.getpagenContener().style.display = "block";   
+                this.getpagenContener().style.display = "block";
                 this.getpagenContener().style.left = pnx;
                 this.getpagenContener().style.top = pny;
                 root.style.setProperty('--pnX', pnx);
@@ -156,9 +160,9 @@ export default class Page{
             this.getPage().style.borderImage  = value;
         }
 
-            
-            
-        
+
+
+
     };
 
 
@@ -179,11 +183,11 @@ export default class Page{
         if (index == 0) {
             for (let index = 0; index < this.borderColor.length; index++) {
                 this.borderColor[index] = borderColor;
-                
+
             }
         } else {
             this.borderColor[index] = borderColor;
-            
+
         }
         this.applyEdites();
 
@@ -198,7 +202,7 @@ export default class Page{
             this.borderStyle[index] = borderStyle;
         }
     this.applyEdites();
-        
+
     };
     setborderWidth(borderWidth,index){
         if (index == 0) {
@@ -214,7 +218,7 @@ export default class Page{
         if (index == 0) {
             for (let index = 0; index < this.borderRadius.length; index++) {
                 this.borderRadius[index] = borderRadius;
-                
+
             }
         } else {
             this.borderRadius[index] = borderRadius;
@@ -229,63 +233,63 @@ export default class Page{
         this.isContentEditable = value;
     }
 
-  
 
 
-    
-    
+
+
+
     setPageWidth(){
         let lowestCmponent = 0;
-        
+
         this.getParagraphs().forEach(e =>{
             let newHeight = e.getYAxis() + e.getHeight();
             if( newHeight > lowestCmponent){
-                lowestCmponent = newHeight; 
+                lowestCmponent = newHeight;
             }
         })
         this.getTopics().forEach(e =>{
             let newHeight = e.getYAxis() + e.getHeight();
             if( newHeight > lowestCmponent){
-                lowestCmponent = newHeight; 
+                lowestCmponent = newHeight;
             }
         })
         this.getImage().forEach(e =>{
             let newHeight = e.getYAxis() + e.getHeight();
             if( newHeight > lowestCmponent){
-                lowestCmponent = newHeight; 
+                lowestCmponent = newHeight;
             }
         })
         this.getIcons().forEach(e =>{
             let newHeight = e.getYAxis() + e.getHeight();
             if( newHeight > lowestCmponent){
-                lowestCmponent = newHeight; 
+                lowestCmponent = newHeight;
             }
         })
         this.getLists().forEach(e =>{
             let newHeight = e.getYAxis() + e.getHeight();
             if( newHeight > lowestCmponent){
-                lowestCmponent = newHeight; 
+                lowestCmponent = newHeight;
             }
         })
         this.getTables().forEach(e =>{
             let newHeight = e.getYAxis() + e.getHeight();
             if( newHeight > lowestCmponent){
-                lowestCmponent = newHeight; 
+                lowestCmponent = newHeight;
             }
         })
         this.getTopicLists().forEach(e =>{
             let newHeight = e.getYAxis() + e.getHeight();
             if( newHeight > lowestCmponent){
-                lowestCmponent = newHeight; 
+                lowestCmponent = newHeight;
             }
         })
         this.getShapes().forEach(e =>{
             let newHeight = e.getYAxis() + e.getHeight();
             if( newHeight > lowestCmponent){
-                lowestCmponent = newHeight; 
+                lowestCmponent = newHeight;
             }
         })
-        
+
         heighestlowestCmponent = lowestCmponent + 20;
         this.setPageHeight(lowestCmponent + 20);
     }
@@ -295,8 +299,8 @@ export default class Page{
         this.getPage().parentNode.style.height = `${value + 40}px`;
         this.getPage().parentNode.parentNode.style.height = `${value + 80}px`;
     }
-    
-    
+
+
     getPage(){
         return this.page;
     };
@@ -328,7 +332,7 @@ export default class Page{
     getShapes(){
         return this.shapes;
     }
- 
+
     getbackGrounColor(){
         return this.backGrounColor;
     };
@@ -363,7 +367,7 @@ export default class Page{
     getIsContentEditable(){return this.isContentEditable;}
 
 
-    
+
     applyEdites(){
 
         this.getPage().parentNode.style.borderColor = `${this.getborderColor()[1]} ${this.getborderColor()[2]} ${this.getborderColor()[3]} ${this.getborderColor()[4]}`;
@@ -375,7 +379,7 @@ export default class Page{
         this.getPage().parentNode.style.left = `${20 - this.getborderWidth()[4]}px`;
         this.getPage().parentNode.style.top = `${20 - this.getborderWidth()[1]}px`;
     }
-    
+
 
 
 
@@ -421,6 +425,6 @@ export default class Page{
     }
 
 
-   
+
 
 }

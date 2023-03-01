@@ -135,13 +135,15 @@ class FilesController extends Controller
                 $extension = $file->getClientOriginalExtension();
 
                 // File upload location
-                $location = 'files';
+                $location = 'users/'.Auth::id();
 
                 // Upload file
                 $file->move($location,$filename);
 
                 // File path
-                $filepath = url('files/'.$filename);
+                $filepath = url('users/'.Auth::id().'/'.$filename);
+
+
 
                 // Response
                 $imgae = new Image();

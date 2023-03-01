@@ -1,7 +1,7 @@
-import ParentComponent from "./ParentComponent.js";
-import { currentComponent,setCurrentComponent,currentComponentFlag,setCurrentComponentFlag,setIsSupComponent,setCurrentComponentParent,setCurrentComponentParentFlag,currentComponentParent,currentComponentParentFlag} from "./Component.js";
-import { compInFlag } from "./ParentComponent.js";
-import TableRow from "./TableRow.js";
+import ParentComponent from "../ReadOnly/ParentComponent.js";
+import { currentComponent,setCurrentComponent,currentComponentFlag,setCurrentComponentFlag,setIsSupComponent,setCurrentComponentParent,setCurrentComponentParentFlag,currentComponentParent,currentComponentParentFlag} from "../ReadOnly/Component.js";
+import { compInFlag } from "../ReadOnly/ParentComponent.js";
+import TableRow from "../ReadOnly/TableRow.js";
 
 
 export default class Table extends ParentComponent{
@@ -15,7 +15,7 @@ export default class Table extends ParentComponent{
     rows = [];
 
     constructor(isCollapse,isSticyCol,isSticyRow,rowSpace,colSpace,width,height,xAxis,yAxis,zAxis,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable){
-        super(width,height,xAxis,yAxis,zAxis,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable);   
+        super(width,height,xAxis,yAxis,zAxis,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable);
         this.setCompomnent(this.prepairComponent());
         this.applyparentComponentEdites();
         this.applyComponentEdit(this);
@@ -43,7 +43,7 @@ export default class Table extends ParentComponent{
         // if (isFullPreemption) {
         // } else {
         //     if (this.getIsContentEditable()) {
-        //     } 
+        //     }
         // }
         let current = document.createElement('div');
         current.classList.add('parentComponent');
@@ -51,7 +51,7 @@ export default class Table extends ParentComponent{
         return comp;
     };
 
-    
+
     newColumn(){
         if (this.getRows().length == 0) {
             this.newRow(1,0,0,true);
@@ -104,7 +104,7 @@ export default class Table extends ParentComponent{
         if (this.getRows().length > 1) {
             this.getRows().splice(-1,1);
             this.getCompomnent().removeChild(this.getCompomnent().lastChild);
-        }        
+        }
     }
 
 
@@ -142,15 +142,15 @@ export default class Table extends ParentComponent{
         this.getCompomnent().style.borderSpacing = `${value}px ${this.getRowSpace()}px`;
     }
 
-    
+
     getRows(){ return this.rows;};
     getIsCollapse(){ return this.isCollapse;};
     getIsSticyCol(){ return this.isSticyCol;};
     getIsSticyRow(){ return this.isSticyRow;};
     getRowSpace(){ return this.rowSpace;};
     getColSpace(){ return this.colSpace;};
-    
-    
+
+
 
 
 }

@@ -1,9 +1,9 @@
 
 
-import SupTextComponent from "./SupTextComponent.js";
-import {isFullPreemption} from "./main.js";
-import { currentComponent,setCurrentComponent,currentComponentFlag,setCurrentComponentFlag, setIsSupComponent} from "./Component.js";
-import { compInFlag } from "./ParentComponent.js";
+import SupTextComponent from "../ReadOnly/SupTextComponent.js";
+import {isFullPreemption} from "../ReadOnly/main.js";
+import { currentComponent,setCurrentComponent,currentComponentFlag,setCurrentComponentFlag, setIsSupComponent} from "../ReadOnly/Component.js";
+import { compInFlag } from "../ReadOnly/ParentComponent.js";
 
 
 export default class ListTopic extends SupTextComponent{
@@ -15,9 +15,9 @@ export default class ListTopic extends SupTextComponent{
     itemText;
     itemNum;
 
-    
+
     constructor(itemSpace,sideText,text,isLined,textEffect,wordSpace,letterSpace,lineHeight,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable){
-        super(isLined,textEffect,wordSpace,letterSpace,lineHeight,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable);   
+        super(isLined,textEffect,wordSpace,letterSpace,lineHeight,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable);
         this.setCompomnent(this.prepairComponent());
         this.applyTextEdits();
         this.applyComponentEdit(this);
@@ -30,7 +30,7 @@ export default class ListTopic extends SupTextComponent{
     prepairComponent(){
     // <li><div id="itemContainer"><span id="itemText" contenteditable="true">fbssssssssdt</span><span id="itemDot"></span><span id="itemNum" contenteditable="true">12233234</span></div></li>
 
-    
+
         let comp = document.createElement('li');
         comp.classList.add('listItem');
 
@@ -53,7 +53,7 @@ export default class ListTopic extends SupTextComponent{
 
         comp.appendChild(curent);
 
-    
+
         return comp;
     }
 
@@ -67,7 +67,7 @@ export default class ListTopic extends SupTextComponent{
         this.getitemNum().innerHTML = value;
     }
 
-    
+
     setItemSpace(value){
         this.itemSpace = value;
         this.getCompomnent().style.marginBottom = `${value}px`;

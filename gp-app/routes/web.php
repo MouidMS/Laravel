@@ -112,6 +112,7 @@ Route::get('page-collector-id/{id}', [ProjectController::class, 'setIdCollector'
 
 Route::get('info-project/{id}', [ProjectController::class, 'getProjectInfo']);
 
+Route::get('read-project', [ProjectController::class, 'ReadOnlyProject']);
 
 
 //community

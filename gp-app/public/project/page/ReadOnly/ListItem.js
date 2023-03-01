@@ -1,7 +1,7 @@
-import SupTextComponent from "./SupTextComponent.js";
-import {isFullPreemption} from "./main.js";
-import { currentComponent,setCurrentComponent,currentComponentFlag,setCurrentComponentFlag, setIsSupComponent} from "./Component.js";
-import { compInFlag } from "./ParentComponent.js";
+import SupTextComponent from "../ReadOnly/SupTextComponent.js";
+import {isFullPreemption} from "../ReadOnly/main.js";
+import { currentComponent,setCurrentComponent,currentComponentFlag,setCurrentComponentFlag, setIsSupComponent} from "../ReadOnly/Component.js";
+import { compInFlag } from "../ReadOnly/ParentComponent.js";
 
 
 export default class ListItem extends SupTextComponent{
@@ -9,7 +9,7 @@ export default class ListItem extends SupTextComponent{
     itemSpace;
 
     constructor(itemSpace,text,isLined,textEffect,wordSpace,letterSpace,lineHeight,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable){
-        super(isLined,textEffect,wordSpace,letterSpace,lineHeight,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable);   
+        super(isLined,textEffect,wordSpace,letterSpace,lineHeight,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable);
         this.setCompomnent(this.prepairComponent());
         this.applyTextEdits();
         this.applyComponentEdit(this);
@@ -19,7 +19,7 @@ export default class ListItem extends SupTextComponent{
     };
 
     prepairComponent(){
-       
+
         let comp = document.createElement('li');
         comp.classList.add('listItem');
         comp.classList.add('TextRoot');
@@ -27,7 +27,7 @@ export default class ListItem extends SupTextComponent{
         return comp;
     }
 
-    
+
     setText(value){
         this.text = value;
         this.getCompomnent().innerHTML = value;

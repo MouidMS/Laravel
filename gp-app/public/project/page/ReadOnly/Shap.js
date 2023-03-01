@@ -1,4 +1,4 @@
-import ParentComponent from "./ParentComponent.js";
+import ParentComponent from "../ReadOnly/ParentComponent.js";
 import { currentComponent,setCurrentComponent,currentComponentFlag,setCurrentComponentFlag ,setIsSupComponent,currentComponentParent, setCurrentComponentParent} from "./Component.js";
 
 
@@ -8,7 +8,7 @@ export default class Shap extends ParentComponent{
         opacity,rotation,padding,skew,
         backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,
         isSizesEditable,isDesignEditable,isContentEditable){
-        super(width,height,xAxis,yAxis,zAxis,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable);   
+        super(width,height,xAxis,yAxis,zAxis,opacity,rotation,padding,skew,backGrounColor,backGrounDesign,borderColor,borderDesign,borderStyle,borderWidth,borderRadius,polygon,isSizesEditable,isDesignEditable,isContentEditable);
         this.setCompomnent(this.prepairComponent());
         this.applyparentComponentEdites();
         this.applyComponentEdit(this);

@@ -45,6 +45,20 @@
 
 </head>
 <body id="gg">
+
+
+<!-- popupRedXmark-->
+<div class="P-popupRedXmark" id="popupRedXmark">
+    <div class="popupRedXmark" >
+        <button id="closePopRedXmark"><i class="fa-solid fa-xmark"></i></button>
+        <div class="poptext">
+            <h1 id="H-puptext">Oopes!</h1>
+            <P id="P-puptext">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt harum iste molestias adipisci repudiandae! Vitae excepturi officia nihil odio perspiciatis accusamus suscipit soluta voluptas nesciunt et debitis, enim earum nostrum!</P>
+        </div>
+    </div>
+</div>
+
+
 <!-- Start header  -->
 <header>
     <div class="container">
