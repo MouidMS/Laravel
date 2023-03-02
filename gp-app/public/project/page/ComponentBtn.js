@@ -1607,8 +1607,7 @@ export default class CompomnentBtn extends BasicEdit{
                 let newLeft = (e.clientX) - pagerect.left;
                 let newTop = (e.clientY) - pagerect.top;
                 if (isSupComponent) {
-                    currentComponentParent.setXAxis(newLeft);
-                    currentComponentParent.setYAxis(newTop);
+                    currentComponentParent.setXandY(newLeft,newTop)
                     if (page !== currentPage) {
                         page.deleteComponent(currentComponentParent);
                         currentPage.pushComponent(currentComponentParent);
@@ -1617,8 +1616,7 @@ export default class CompomnentBtn extends BasicEdit{
 
                     }
                 } else {
-                    currentComponent.setXAxis(newLeft);
-                    currentComponent.setYAxis(newTop);
+                    currentComponent.setXandY(newLeft,newTop)
                     if (page !== currentPage) {
                         page.deleteComponent(currentComponent);
                         currentPage.pushComponent(currentComponent);

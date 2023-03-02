@@ -1321,7 +1321,7 @@ function getFile(id){
                                             el.isSizesEditable,el.isDesignEditable,el.isContentEditable);
                                         break;
                                     case "topic":
-                                        curentListItem = new ListTopic(el.itemSpace,el.text,el.isLined,
+                                        curentListItem = new ListTopic(el.itemSpace,el.sideText,el.text,el.isLined,
                                             el.textEffect,el.wordSpace,el.letterSpace,el.lineHeight,
                                             el.opacity,el.rotation,el.padding,el.skew,
                                             el.backGrounColor,el.backGrounDesign,

@@ -528,7 +528,7 @@ export default class Page{
                         C.isSizesEditable,C.isDesignEditable,C.isContentEditable);
                     component.addEvents();
                     C.item.forEach(e => {
-                        let curentListItem = new ListItem(e.itemSpace,e.text,e.isLined,
+                        let curentListItem = new ListItem(e.itemSpace,e.sideText,e.text,e.isLined,
                             e.textEffect,e.wordSpace,e.letterSpace,e.lineHeight,
                             e.opacity,e.rotation,e.padding,e.skew,
                             e.backGrounColor,e.backGrounDesign,

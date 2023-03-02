@@ -90,9 +90,9 @@ export default class ParentComponent extends Compomnent{
         if (Y < 0) {
             Y = 0;
         } else if(Y > rect.height){
-            Y = (Y - (Y - rect.height)) - this.getWidth();
-        }else if(Y + this.getWidth() >rect.height){
-            Y = (Y - ((Y + this.getWidth()) - rect.height))
+            Y = (Y - (Y - rect.height)) - this.getHeight();
+        }else if(Y + this.getHeight() >rect.height){
+            Y = (Y - ((Y + this.getHeight()) - rect.height))
         }
         this.setYAxis(Y);
     }
