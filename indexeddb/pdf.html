@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PDF Database Example</title>
+
+  <script>
+    const DB_NAME = 'pdf_database';
+    const DB_VERSION = 1;
+    const STORE_NAME = 'pdf_store';
+    // Open the IndexedDB database
+    const request = window.indexedDB.open(DB_NAME, DB_VERSION);
+    let db;
+    request.onerror = (event) => {
+      console.error('Error opening database:', event.target.error);
+    };
+    request.onsuccess = (event) => {
+      db = event.target.result;
+    };
+
+    // Create the PDF object store if it doesn't exist
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
+      const store = db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+    };
+
+    // Upload PDF file and save it to the database
+    function uploadPdf(file) {
+      const reader = new FileReader();
+      reader.readAsArrayBuffer(file);
+      reader.onload = (event) => {
+        const arrayBuffer = event.target.result;
+        const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
+        const pdfObject = { file: blob };
+        
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        const store = tx.objectStore(STORE_NAME);
+        const request = store.add(pdfObject);
+        
+        tx.oncomplete = () => {
+          console.log('PDF file saved to database with ID:', request.result);
+        };
+        
+        tx.onerror = (event) => {
+          console.error('Error saving PDF file:', event.target.error);
+        };
+      };
+    }
+
+    function selectPdf(id, callback) {
+      const tx = db.transaction(STORE_NAME, 'readonly');
+      const store = tx.objectStore(STORE_NAME);
+      const request = store.get(id);
+      request.onerror = (event) => {
+        console.error('Error selecting PDF file:', event.target.error);
+      };
+      request.onsuccess = (event) => {
+        const pdfObject = event.target.result;
+        if (pdfObject) {
+          const blob = pdfObject.file;
+          const url = URL.createObjectURL(blob);
+          callback(url);
+        } else {
+          console.error('PDF file not found with ID:', id);
+        }
+      };
+      tx.oncomplete = () => {
+        console.log('Transaction complete');
+      };
+      tx.onerror = (event) => {
+        console.error('Transaction error:', event.target.error);
+      };
+    }
+
+  </script>
+</head>
+<body>
+  <input type="file" id="file-input">
+  <button id="select-button">Select PDF by ID</button>
+  <input type="text" id="id-input">
+
+
+  
+  <script>
+    // Example usage
+    const fileInput = document.getElementById('file-input');
+    fileInput.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      uploadPdf(file);
+    });
+
+    const selectButton = document.getElementById('select-button');
+    selectButton.addEventListener('click', () => {
+      const id = Number(document.getElementById('id-input').value);
+      selectPdf(id, (url) => {
+        const iframe = document.createElement('iframe');
+        iframe.src = url;
+        document.body.appendChild(iframe);
+      });
+    });
+  </script>
+
+</body>
+</html>
